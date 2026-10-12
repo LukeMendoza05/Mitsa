@@ -45,15 +45,15 @@ Interfaces: assertTestTarget(config) returns validated target or throws before n
 
 ### Task 3: database and SSR proof
 
-Blocked by real hosted evidence: custom roles lack managed `auth` schema USAGE, and the operator cannot grant it. Keep failing acceptance assertions. Do not treat the earlier catalog-only proof as sufficient, alter the approved privilege model, or start Task 4. See `docs/foundation-checkpoint.md`.
+The user separately reviewed and approved the Auth-only adapter exception after the managed-schema grant blocker. Migration 20261012070606 passed a single-transaction rollback proof, then committed atomically with its history. Final review found two test gaps, both corrected with targeted RED/GREEN evidence. All three complete final aggregates passed 85 tests each. See `docs/foundation-checkpoint.md`. Tasks 1–3 are complete; Task 4 remains gated.
 
-- [ ] Write failing real PostgreSQL/JWT tests before creating the proof schema.
+- [x] Observe missing-role/identity catalog tests RED before initial schema; observe real-JWT repair regressions RED before applying the reviewed adapter.
 - [x] Generate migration using Supabase CLI, implement membership/RLS roles/helper/command and inspect privileges.
-- [ ] Prove owner/manager/cashier, cross-shop/business denial, direct DML denial, metadata spoof, revoked membership/session denial, idempotency, rollback and concurrent row locks.
-- [ ] Write failing HTTP/browser tests for signed-out/signed-in SSR, cookies, refresh, logout, forged cookies and same-origin enforcement.
-- [ ] Implement only the minimum authentication compatibility harness and pass real tests.
-- [ ] Run npm run test, npm run test:e2e, npm run build, npm run typecheck, npm run test:integration, npm run db:reconcile and npm audit.
-- [ ] Review security boundaries and report exact evidence/blockers; stop before Task 4.
+- [x] Prove owner/manager/cashier, cross-shop/business denial, direct DML denial, metadata spoof, revoked membership/session denial, idempotency, rollback and concurrent row locks.
+- [x] Record RED HTTP/browser boundary tests and their subsequent signed-in/signed-out SSR, cookie, refresh, logout, forged-cookie and same-origin GREEN results.
+- [x] Implement only the minimum authentication compatibility harness and pass real tests.
+- [x] Run npm run test three times on final tests, npm run test:e2e, npm run build, npm run typecheck, npm run test:integration, npm run test:security, npm run db (db:reconcile) and npm audit.
+- [x] Review security boundaries, address findings, and record exact evidence/remaining pre-live risks; stop before Task 4.
 
 ## Checkpoint evidence
 

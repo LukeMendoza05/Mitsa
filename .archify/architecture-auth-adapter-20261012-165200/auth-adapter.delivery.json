@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "33d03401-6424-462f-900d-23c9ff747027",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-auth-adapter-20261012-165200\\candidate.json",
+  "output": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-auth-adapter-20261012-165200\\auth-adapter.html",
+  "specification": {
+    "sha256": "f730f41ecf10fffd1089b74b4bb3fb7b318a203a2e209eac3fcfc84c2f2ba215",
+    "bytes": 3345
+  },
+  "artifact": {
+    "sha256": "47b8543c585a47eee310650f81941430b6ccea07df4c755639f91ff3d95d3e4d",
+    "bytes": 757032
+  }
+}

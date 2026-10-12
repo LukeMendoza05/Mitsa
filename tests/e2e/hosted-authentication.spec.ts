@@ -102,4 +102,55 @@ test.describe("real hosted server-only authentication",()=>{
       expect((await publicClient(f.owner.session.access_token).schema("api").rpc("foundation_identity")).error?.code).toBe("42501");
     } finally { await db.query("update private.memberships set active=true where business_id=$1 and user_id=$2",[f.business,f.owner.id]); await db.end(); }
   });
+
+  test("rejected refresh clears expired cookies and returns only generic denial",async({page,context})=>{
+    const login=await page.request.post("/auth/login",{headers:{origin:"http://127.0.0.1:3000"},form:{email:f.cashier.email,password:f.cashier.password},maxRedirects:0});
+    expect(login.status()).toBe(303);
+    const cookies=(await context.cookies()).filter(c=>c.name.startsWith("sb-")).sort((a,b)=>a.name.localeCompare(b.name));
+    expect(cookies.length).toBeGreaterThan(0);
+    const value=cookies.map(c=>c.value).join("");
+    expect(value.startsWith("base64-")).toBe(true);
+    const stored=JSON.parse(Buffer.from(value.slice(7),"base64url").toString("utf8"));
+    // Revoke this actual server-issued session, then replay its expired cookie.
+    const revoker=publicClient();
+    expect((await revoker.auth.setSession({access_token:stored.access_token,refresh_token:stored.refresh_token})).error?.code).toBeUndefined();
+    expect((await revoker.auth.signOut({scope:"local"})).error?.code).toBeUndefined();
+    stored.expires_at=1; stored.expires_in=0;
+    const expired="base64-"+Buffer.from(JSON.stringify(stored)).toString("base64url");
+    const base=cookies[0].name.replace(/\.\d+$/,"");
+    await context.clearCookies({name:/^sb-/});
+    const chunks=[];
+    for(let start=0,index=0;start<expired.length;start+=3000,index++) chunks.push({name:expired.length>3000?`${base}.${index}`:base,value:expired.slice(start,start+3000),domain:"127.0.0.1",path:"/",httpOnly:true,secure:true,sameSite:"Lax" as const});
+    await context.addCookies(chunks);
+    const response=await page.request.get("/api/proof/session");
+    expect(response.status()).toBe(401);
+    expect(response.headers()["cache-control"]).toContain("no-store");
+    // Boolean assertions avoid printing cookie or token-bearing bodies on failure.
+    expect((await response.text())===JSON.stringify({error:"Authentication required"})).toBe(true);
+    expect(response.headers().location===undefined).toBe(true);
+    expect(response.headers()["set-cookie"]?.includes("Max-Age=0")).toBe(true);
+    expect((await context.cookies()).some(c=>c.name.startsWith("sb-"))).toBe(false);
+    await page.goto("/proof");
+    await expect(page).toHaveURL("http://127.0.0.1:3000/login");
+    await expect(page.getByRole("button",{name:"Sign in"})).toBeVisible();
+  });
+
+  test("time-expired recovery tokens cannot create a session",async({request})=>{
+    const cfg=hostedConfig();
+    const admin=createClient(cfg.url,cfg.adminKey,{auth:{persistSession:false,autoRefreshToken:false}});
+    const link=await admin.auth.admin.generateLink({type:"recovery",email:f.manager.email});
+    expect(link.error).toBeNull();
+    const hash=link.data.properties?.hashed_token;
+    expect(hash).toBeTruthy();
+    const db=await database();
+    const prior=(await db.query("select recovery_sent_at from auth.users where id=$1",[f.manager.id])).rows[0];
+    try {
+      await db.query("update auth.users set recovery_sent_at=now()-interval '2 days' where id=$1",[f.manager.id]);
+      const response=await request.get(`/auth/confirm?type=recovery&token_hash=${hash}`,{maxRedirects:0});
+      expect(response.status()).toBe(400);
+      expect(response.headers()["set-cookie"]).toBeUndefined();
+      expect(response.headers()["cache-control"]).toContain("no-store");
+      expect((await request.get("/api/proof/session")).status()).toBe(401);
+    } finally { await db.query("update auth.users set recovery_sent_at=$2 where id=$1",[f.manager.id,prior.recovery_sent_at]); await db.end(); }
+  });
 });

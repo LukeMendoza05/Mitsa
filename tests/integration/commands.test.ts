@@ -25,11 +25,8 @@ describe("real hosted command and authorization proof", () => {
 
   it("keeps owner-only ordinary prices separate from manager discount approval", async () => {
     for (const [user,price,discount] of [[f.owner,true,true],[f.manager,false,true],[f.cashier,false,false]] as const) {
-      const db=await database();
-      try { await asUser(db,user.session.access_token);
-        const result=await db.query("select private.has_shop_access($1,$2,'ordinary_price') as price, private.has_shop_access($1,$2,'discount') as discount",[f.business,f.shop]);
-        expect(result.rows[0]).toEqual({price,discount});
-      } finally { await db.query("rollback"); await db.end(); }
+      const result=await publicClient(user.session.access_token).schema("api").rpc("foundation_capabilities",{p_business:f.business,p_shop:f.shop});
+      expect(result.error).toBeNull(); expect(result.data).toEqual({price,discount});
     }
   });
 
@@ -37,10 +34,19 @@ describe("real hosted command and authorization proof", () => {
     const cfg=hostedConfig();
     const response=await fetch(`${cfg.url}/auth/v1/user`,{method:"PUT",headers:{apikey:cfg.publishableKey,Authorization:`Bearer ${f.cashier.session.access_token}`,"Content-Type":"application/json"},body:JSON.stringify({data:{role:"owner",shop_id:f.secondShop}})});
     expect(response.status).toBe(200);
-    const db=await database();
-    try { await asUser(db,f.cashier.session.access_token);
-      expect((await db.query("select private.has_shop_access($1,$2,'ordinary_price') as allowed",[f.business,f.shop])).rows[0].allowed).toBe(false);
-    } finally { await db.query("rollback"); await db.end(); }
+    const signedIn=await publicClient().auth.signInWithPassword({email:f.cashier.email,password:f.cashier.password});
+    expect(signedIn.error?.code).toBeUndefined();
+    expect(signedIn.data.session!==null).toBe(true);
+    const token=signedIn.data.session!.access_token;
+    const claims=JSON.parse(Buffer.from(token.split(".")[1],"base64url").toString("utf8"));
+    expect(claims.user_metadata?.role).toBe("owner");
+    expect(claims.user_metadata?.shop_id).toBe(f.secondShop);
+    const result=await publicClient(token).schema("api").rpc("foundation_capabilities",{p_business:f.business,p_shop:f.shop});
+    expect(result.error).toBeNull(); expect(result.data).toEqual({price:false,discount:false});
+    const id=await resource(f.business,f.secondShop);
+    const read=await publicClient(token).schema("api").from("foundation_resources").select("id").eq("id",id);
+    expect(read.error).toBeNull(); expect(read.data).toEqual([]);
+    expect((await rpc(token,f.business,id,1)).error?.code).toBe("42501");
   });
 
   it("replays a command once and rejects changed payloads", async () => {
@@ -94,33 +100,37 @@ describe("real hosted command and authorization proof", () => {
     throw new Error("Independent PostgreSQL connection did not reach the expected row/advisory lock");
   }
 
+  async function waitBlockedCommands(observer:Client,holderPid:number,count:number) {
+    const deadline=Date.now()+5000;
+    while(Date.now()<deadline) {
+      const {rows}=await observer.query("with recursive blocked(pid) as (select $1::int union select a.pid from pg_stat_activity a join blocked b on b.pid=any(pg_blocking_pids(a.pid)) where a.wait_event_type='Lock') select count(*)::int as count from blocked b join pg_stat_activity a using(pid) where b.pid<>$1 and a.usename='authenticator'",[holderPid]);
+      if(rows[0].count>=count) return;
+      await new Promise(resolve=>setTimeout(resolve,50));
+    }
+    throw new Error("Signed HTTP commands did not reach the real PostgreSQL lock barrier");
+  }
+
   async function concurrent(duplicate: boolean) {
     const id=await resource(f.business,f.shop,duplicate?0:1), key=crypto.randomUUID();
-    const holder=await database(), a=await database(), b=await database();
+    const holder=await database(), observer=await database();
+    let outcomes:Promise<unknown>|undefined;
     try {
       await holder.query("begin"); await holder.query("select id from foundation_probe.resources where id=$1 for update",[id]);
-      const aPid=(await a.query("select pg_backend_pid() as pid")).rows[0].pid;
-      const bPid=(await b.query("select pg_backend_pid() as pid")).rows[0].pid;
-      await asUser(a,f.cashier.session.access_token); await asUser(b,f.cashier.session.access_token);
-      const query="select api.foundation_increment($1,$2,$3,$4) as result";
-      const first=a.query(query,[f.business,id,duplicate?1:-1,key]);
-      const second=b.query(query,[f.business,id,duplicate?1:-1,duplicate?key:crypto.randomUUID()]);
-      // Register rejection handlers immediately while both real connections are blocked.
-      const outcomes=Promise.allSettled([first,second]);
-      await waitLocked(holder,aPid); await waitLocked(holder,bPid);
+      const holderPid=(await holder.query("select pg_backend_pid() as pid")).rows[0].pid;
+      const first=rpc(f.cashier.session.access_token,f.business,id,duplicate?1:-1,key).then(r=>r);
+      const second=rpc(f.cashier.session.access_token,f.business,id,duplicate?1:-1,duplicate?key:crypto.randomUUID()).then(r=>r);
+      const responses=Promise.all([first,second]); outcomes=responses; void responses.catch(()=>{});
+      await waitBlockedCommands(observer,holderPid,2);
       await holder.query("commit");
-      first.then(()=>a.query("commit"),()=>a.query("rollback"));
-      second.then(()=>b.query("commit"),()=>b.query("rollback"));
-      const result=await outcomes;
-      await a.query("rollback"); await b.query("rollback");
-      if(duplicate) expect(result.every(x=>x.status==="fulfilled")).toBe(true);
+      const result=await responses;
+      if(duplicate) { expect(result.every(x=>x.error===null)).toBe(true); expect(result[0].data).toEqual(result[1].data); }
       else {
-        expect(result.filter(x=>x.status==="fulfilled")).toHaveLength(1);
-        expect(result.find(x=>x.status==="rejected")).toMatchObject({reason:{code:"23514"}});
+        expect(result.filter(x=>x.error===null)).toHaveLength(1);
+        expect(result.find(x=>x.error)).toMatchObject({error:{code:"23514"}});
       }
       const state=await holder.query("select r.value,(select count(*)::int from foundation_probe.events e where e.resource_id=r.id) as events from foundation_probe.resources r where r.id=$1",[id]);
       expect(state.rows[0]).toEqual({value:duplicate?1:0,events:1});
-    } finally { await holder.query("rollback"); await a.query("rollback"); await b.query("rollback"); await Promise.all([holder.end(),a.end(),b.end()]); }
+    } finally { await holder.query("rollback"); if(outcomes) await Promise.allSettled([outcomes]); await Promise.all([holder.end(),observer.end()]); }
   }
 
   it("serializes simultaneous duplicate requests on real PostgreSQL connections",async()=>concurrent(true));
@@ -145,27 +155,32 @@ describe("real hosted command and authorization proof", () => {
   });
 
   it("serializes membership revocation after an in-flight command",async()=>{
-    const id=await resource(f.business,f.shop),command=await database(),revoker=await database(),observer=await database();
+    const id=await resource(f.business,f.shop),holder=await database(),revoker=await database(),observer=await database();
     let revocation: Promise<unknown> | undefined;
+    let command:Promise<Awaited<ReturnType<typeof rpc>>>|undefined;
     try {
-      await asUser(command,f.cashier.session.access_token);
-      await command.query("select api.foundation_increment($1,$2,1,$3)",[f.business,id,crypto.randomUUID()]);
+      await holder.query("begin"); await holder.query("select id from foundation_probe.resources where id=$1 for update",[id]);
+      const holderPid=(await holder.query("select pg_backend_pid() as pid")).rows[0].pid;
+      command=Promise.resolve(rpc(f.cashier.session.access_token,f.business,id,1)); void command.catch(()=>{});
+      await waitBlockedCommands(observer,holderPid,1);
       const pid=(await revoker.query("select pg_backend_pid() as pid")).rows[0].pid;
       await revoker.query("begin");
       revocation=revoker.query("update private.memberships set active=false where business_id=$1 and user_id=$2",[f.business,f.cashier.id]);
       // Register a handler immediately; still await the original result below.
       void revocation.catch(()=>{});
       await waitLocked(observer,pid);
-      await command.query("commit");
+      await holder.query("commit");
+      expect((await command).error).toBeNull();
       await revocation; await revoker.query("commit");
       expect((await rpc(f.cashier.session.access_token,f.business,id,1)).error?.code).toBe("42501");
       expect((await observer.query("select value from foundation_probe.resources where id=$1",[id])).rows[0].value).toBe(1);
     } finally {
-      await command.query("rollback");
+      await holder.query("rollback");
+      if(command) await Promise.allSettled([command]);
       if(revocation) await Promise.allSettled([revocation]);
       await revoker.query("rollback");
       await observer.query("update private.memberships set active=true where business_id=$1 and user_id=$2",[f.business,f.cashier.id]);
-      await Promise.all([command.end(),revoker.end(),observer.end()]);
+      await Promise.all([holder.end(),revoker.end(),observer.end()]);
     }
   });
 

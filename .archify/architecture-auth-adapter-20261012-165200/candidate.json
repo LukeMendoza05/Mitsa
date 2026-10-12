@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Reviewed foundation design: Auth adapter trust boundary",
+    "output": ".archify/architecture-auth-adapter-20261012-165200/auth-adapter.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    { "id": "browser", "type": "external", "label": "Staff browser", "sublabel": "Untrusted input; HttpOnly session", "pos": [40,80], "size": [260,76] },
+    { "id": "server", "type": "backend", "label": "Next.js SSR server", "sublabel": "User session; publishable key only", "pos": [450,80], "size": [260,76] },
+    { "id": "gateway", "type": "security", "label": "PostgREST gateway", "sublabel": "Verifies JWT; establishes request role", "pos": [860,80], "size": [260,76] },
+    { "id": "commands", "type": "backend", "label": "Business authorization", "sublabel": "app_authz / app_command: NOBYPASSRLS", "pos": [860,340], "size": [260,76] },
+    { "id": "business", "type": "database", "label": "Private business / proof tables", "sublabel": "FORCE RLS; separate table owner", "pos": [450,340], "size": [260,76] },
+    { "id": "adapter", "type": "security", "label": "private.current_actor()", "sublabel": "postgres-owned; no arguments; UUID/null", "pos": [860,600], "size": [260,76] },
+    { "id": "auth", "type": "database", "label": "Managed Auth users / sessions", "sublabel": "SELECT only; no business table access", "pos": [450,600], "size": [260,76] }
+  ],
+  "connections": [
+    { "id": "browser-server", "from": "browser", "to": "server", "label": "HTTPS", "variant": "emphasis" },
+    { "id": "server-gateway", "from": "server", "to": "gateway", "label": "User JWT", "variant": "security" },
+    { "id": "gateway-business", "from": "gateway", "to": "commands", "label": "Invoker API", "variant": "security" },
+    { "id": "command-tables", "from": "commands", "to": "business", "label": "RLS / atomic writes" },
+    { "id": "command-actor", "from": "commands", "to": "adapter", "label": "Current actor", "variant": "security" },
+    { "id": "adapter-auth", "from": "adapter", "to": "auth", "label": "Live session lookup", "variant": "security" }
+  ],
+  "cards": [
+    { "dot": "rose", "title": "Authentication-only elevation", "items": ["The fixed adapter is the sole postgres-owned authentication exception.", "It requires authenticator session provenance and the authenticated request role.", "It checks claim types, expiry, audience and the matching live Auth user/session.", "No identity arguments, business reads, mutations, tokens or session rows are returned."] },
+    { "dot": "emerald", "title": "Business authorization remains separate", "items": ["API wrappers are invokers; private business helpers and commands keep non-bypass owners.", "Active membership, assigned shops and owner-only ordinary price authority remain database checks.", "Custom roles cannot log in, assume managed roles, access Auth tables, or own business tables."] },
+    { "dot": "amber", "title": "Scope and evidence", "items": ["Approved design description; this is not a repository-revision provenance claim.", "Only Fire_Inv mjtejwafxriwntweussc is authorized for hosted foundation proofs.", "Operator/admin credentials remain outside Next.js and the browser.", "Tasks 1–3 only; all three original release stages remain planned. Task 4 is gated."] }
+  ]
+}

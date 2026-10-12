@@ -10,3 +10,9 @@ These describe the approved target architecture, not completed application modul
 - [Transfer lifecycle](../.archify/lifecycle-transfer-20261012-134200/transfer.html)
 
 Each folder retains candidate.json, HTML and artifact-bound finalizer/browser receipts. Architecture has an advisory about leading whitespace; it passed all required gates. No update notice was required.
+
+## Reviewed hosted authentication repair
+
+- [Auth adapter trust boundary](../.archify/architecture-auth-adapter-20261012-165200/auth-adapter.html)
+
+This additional Archify artifact describes the separately approved authentication design, including its postgres-owned read-only exception and the continuing non-bypass business boundary. It is a system-design diagram, not a repository-revision provenance claim. Showcase validation, delivery, strict checks and automated real-browser checks all passed with zero diagnostics. No screenshot capture or separate perceptual review was requested or claimed for this artifact; no update notice was required.

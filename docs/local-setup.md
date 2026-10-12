@@ -26,12 +26,14 @@ The database tools trust only the public Supabase Root 2021 CA in `config/supaba
 
 PostgreSQL `28P01` means database authentication failed. Use the project's database password, not the Supabase account password or API key; percent-encode special characters in the URI password. A valid API key does not prove a database password is valid. Never log either value while diagnosing failures.
 
-Remove template square brackets surrounding the password; they are not part of the connection string's password syntax. Credentials and verified TLS now work for Fire_Inv. Task 3 is instead blocked by managed Auth schema privileges: the custom roles lack USAGE and `postgres` has no grant option. A migration history entry containing GRANT does not prove the grant took effect. `npm run test:security` intentionally fails until a reviewed, supported design resolves this. Do not retry GRANT blindly or add a service-role runtime.
+Remove template square brackets surrounding the password; they are not part of the connection string's password syntax. Credentials and verified TLS work for Fire_Inv. The custom business roles intentionally have no managed Auth schema USAGE. The separately approved, read-only `private.current_actor()` adapter resolves that hosted compatibility boundary; see `auth-adapter-repair.md`. A migration history entry containing GRANT does not prove the grant took effect. Do not retry managed-schema GRANT blindly or add a service-role runtime.
 
 ## Hosted configuration gate
 
 Disable public signup and anonymous users; allow only local callback URLs for this proof. Expose API schema only after migration review. Create synthetic users with the Auth admin API from test tools. Initial operator bootstrap and the full invitation/password-recovery product flows remain Task 4; Task 3 proves the SSR callback/session boundary only.
 
 Apply only version-controlled migrations to the approved project. Before first migration, inspect identity and absence of conflicting business objects. After setup, verify the pinned database marker before fixture changes. Test cleanup targets its own UUID records only; no project/database reset or truncate.
+
+The one-time `scripts/apply-reviewed-adapter.mjs` records the exact approved repair's execution mechanism: hash/project/marker pinning, explicit same-client transaction, baseline record/security checks, migration-history insertion in that transaction, and no automatic retry after an uncertain commit. Its `--rollback-proof` and `--apply` modes were executed in that order. It intentionally refuses to run again once migration 20261012070606 exists; future changes require a separately reviewed forward migration. Do not use this tool as a general migration runner.
 
 Before any live use: separate production configuration, complete the remaining Stage 1 tasks, pass all release tests, and prove restoration of a backup in an isolated environment. This checkpoint is not live-ready.

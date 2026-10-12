@@ -1,5 +1,5 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
-import { database } from "../support/hosted";
+import { asUser, database, createSyntheticUser } from "../support/hosted";
 import type { Client } from "pg";
 
 describe("hosted foundation security", () => {
@@ -7,11 +7,11 @@ describe("hosted foundation security", () => {
   beforeAll(async () => { db = await database(); });
   afterAll(async () => { if (db) await db.end(); });
 
-  it("provides the managed Auth schema access required by private roles", async () => {
+  it("keeps managed Auth inaccessible to private business roles", async () => {
     const { rows } = await db.query("select rolname, has_schema_privilege(rolname,'auth','usage') as auth_usage from pg_roles where rolname in ('app_authz','app_command') order by rolname");
     expect(rows).toEqual([
-      { rolname: "app_authz", auth_usage: true },
-      { rolname: "app_command", auth_usage: true },
+      { rolname: "app_authz", auth_usage: false },
+      { rolname: "app_command", auth_usage: false },
     ]);
   });
 
@@ -38,12 +38,30 @@ describe("hosted foundation security", () => {
     expect(rows).toEqual([{cmd:"UPDATE",roles:["app_command"],with_check:"false"}]);
   });
 
-  it("provides only a scoped SELECT policy for the non-bypass session helper", async () => {
-    const {rows}=await db.query("select cmd,roles::text[] as roles,qual from pg_policies where schemaname='auth' and tablename='sessions' and policyname='foundation_current_session'");
-    expect(rows).toHaveLength(1);
-    expect(rows[0].cmd).toBe("SELECT"); expect(rows[0].roles).toEqual(["app_authz"]);
-    expect(rows[0].qual).toContain("auth.uid()"); expect(rows[0].qual).toContain("session_id");
+  it("removes obsolete helper access without changing managed Auth ownership or RLS", async () => {
+    const {rows}=await db.query("select policyname from pg_policies where schemaname='auth' and policyname='foundation_current_session'");
+    expect(rows).toEqual([]);
+    expect((await db.query("select has_column_privilege('app_authz','auth.sessions','id','select') as allowed")).rows[0].allowed).toBe(false);
     const flags=await db.query("select relrowsecurity,pg_get_userbyid(relowner) as owner from pg_class where oid='auth.sessions'::regclass");
     expect(flags.rows[0]).toEqual({relrowsecurity:true,owner:"supabase_auth_admin"});
   });
+
+  it("limits the private no-argument actor adapter to its reviewed boundary", async () => {
+    const {rows}=await db.query("select p.pronargs, p.prorettype::regtype::text as returns, p.prosecdef, pg_get_userbyid(p.proowner) as owner, p.proconfig from pg_proc p where p.oid=to_regprocedure('private.current_actor()')");
+    expect(rows).toEqual([{pronargs:0,returns:"uuid",prosecdef:true,owner:"postgres",proconfig:['search_path=""','row_security=on']}]);
+    const acl=await db.query("select grantee::regrole::text as grantee, privilege_type, is_grantable from pg_proc p, lateral aclexplode(p.proacl) where p.oid='private.current_actor()'::regprocedure order by grantee::regrole::text");
+    expect(acl.rows).toEqual(["app_authz","app_command","authenticated","postgres"].map(grantee=>({grantee,privilege_type:"EXECUTE",is_grantable:false})));
+    const exposed=await db.query("select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='api' order by p.proname");
+    expect(exposed.rows.map(r=>r.proname)).toEqual(["foundation_capabilities","foundation_identity","foundation_increment"]);
+  });
+
+  it("denies operator-injected claims rather than treating SET ROLE as verified authentication", async () => {
+    const user=await createSyntheticUser("context-negative");
+    try {
+      await asUser(db,user.session.access_token);
+      expect((await db.query("select private.current_actor() as actor")).rows[0].actor).toBeNull();
+      await db.query("select set_config('request.jwt.claims','not-json',true)");
+      expect((await db.query("select private.current_actor() as actor")).rows[0].actor).toBeNull();
+    } finally { await db.query("rollback"); }
+  },30000);
 });
