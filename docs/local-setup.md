@@ -26,6 +26,8 @@ The database tools trust only the public Supabase Root 2021 CA in `config/supaba
 
 PostgreSQL `28P01` means database authentication failed. Use the project's database password, not the Supabase account password or API key; percent-encode special characters in the URI password. A valid API key does not prove a database password is valid. Never log either value while diagnosing failures.
 
+Remove template square brackets surrounding the password; they are not part of the connection string's password syntax. Credentials and verified TLS now work for Fire_Inv. Task 3 is instead blocked by managed Auth schema privileges: the custom roles lack USAGE and `postgres` has no grant option. A migration history entry containing GRANT does not prove the grant took effect. `npm run test:security` intentionally fails until a reviewed, supported design resolves this. Do not retry GRANT blindly or add a service-role runtime.
+
 ## Hosted configuration gate
 
 Disable public signup and anonymous users; allow only local callback URLs for this proof. Expose API schema only after migration review. Create synthetic users with the Auth admin API from test tools. Initial operator bootstrap and the full invitation/password-recovery product flows remain Task 4; Task 3 proves the SSR callback/session boundary only.

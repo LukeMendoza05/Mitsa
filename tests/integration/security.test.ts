@@ -7,6 +7,14 @@ describe("hosted foundation security", () => {
   beforeAll(async () => { db = await database(); });
   afterAll(async () => { if (db) await db.end(); });
 
+  it("provides the managed Auth schema access required by private roles", async () => {
+    const { rows } = await db.query("select rolname, has_schema_privilege(rolname,'auth','usage') as auth_usage from pg_roles where rolname in ('app_authz','app_command') order by rolname");
+    expect(rows).toEqual([
+      { rolname: "app_authz", auth_usage: true },
+      { rolname: "app_command", auth_usage: true },
+    ]);
+  });
+
   it("uses non-login non-bypass command/helper roles that do not own tables", async () => {
     const { rows } = await db.query("select rolname, rolcanlogin, rolbypassrls, rolsuper from pg_roles where rolname in ('app_command','app_authz') order by rolname");
     expect(rows).toEqual([
@@ -26,12 +34,12 @@ describe("hosted foundation security", () => {
   });
 
   it("allows scoped membership locks without allowing membership updates", async () => {
-    const { rows } = await db.query("select cmd,roles,with_check from pg_policies where schemaname='private' and tablename='memberships' and policyname='command_membership_lock'");
+    const { rows } = await db.query("select cmd,roles::text[] as roles,with_check from pg_policies where schemaname='private' and tablename='memberships' and policyname='command_membership_lock'");
     expect(rows).toEqual([{cmd:"UPDATE",roles:["app_command"],with_check:"false"}]);
   });
 
   it("provides only a scoped SELECT policy for the non-bypass session helper", async () => {
-    const {rows}=await db.query("select cmd,roles,qual from pg_policies where schemaname='auth' and tablename='sessions' and policyname='foundation_current_session'");
+    const {rows}=await db.query("select cmd,roles::text[] as roles,qual from pg_policies where schemaname='auth' and tablename='sessions' and policyname='foundation_current_session'");
     expect(rows).toHaveLength(1);
     expect(rows[0].cmd).toBe("SELECT"); expect(rows[0].roles).toEqual(["app_authz"]);
     expect(rows[0].qual).toContain("auth.uid()"); expect(rows[0].qual).toContain("session_id");

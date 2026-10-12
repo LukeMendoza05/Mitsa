@@ -1,5 +1,6 @@
 do $$ declare invalid_count integer; begin
   assert (select count(*)=2 from pg_roles where rolname in ('app_authz','app_command') and not rolcanlogin and not rolbypassrls and not rolsuper), 'unsafe or missing custom role';
+  assert has_schema_privilege('app_authz','auth','usage') and has_schema_privilege('app_command','auth','usage'), 'private roles cannot access managed Auth schema';
   select count(*) into invalid_count from pg_class c join pg_namespace n on n.oid=c.relnamespace
     where n.nspname in ('private','foundation_probe') and c.relkind='r'
     and (not c.relrowsecurity or not c.relforcerowsecurity or pg_get_userbyid(c.relowner) in ('app_authz','app_command'));

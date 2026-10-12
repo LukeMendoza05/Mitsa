@@ -2,6 +2,8 @@
 
 Status: conditionally approved, 2026-10-12. Execution is authorized for Stage 1 Tasks 1–3 only. No product management, inventory operations, checkout, staff invitation feature, or live deployment is authorized at this checkpoint. Authentication/security proof uses synthetic identities and records only.
 
+Hosted proof blocker, 2026-10-12: the proposed custom roles cannot resolve `auth.uid()`, `auth.jwt()` or `auth.sessions` because they lack USAGE on managed schema `auth`. Fire_Inv's `postgres` operator has USAGE without grant option and cannot SET ROLE to either managed administrator. The initial migration's GRANT text is present in history but its intended schema privilege is absent. This architecture is not verified or accepted for domain implementation. No replacement privilege model is approved; stop for a separately reviewed decision before changing role inheritance, helper ownership or session validation. All release stages below remain in scope.
+
 ## Architecture and trust boundaries
 
 Next.js App Router + TypeScript on Vercel; Supabase Auth + PostgreSQL. The browser is untrusted. Request-scoped server clients forward the authenticated user identity with a publishable API key. Private database commands enforce authorization, row locking, idempotency and atomicity. No ordinary runtime service-role/secret key. No Redis, queues, microservices or general command bus.

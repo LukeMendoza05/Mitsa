@@ -45,6 +45,8 @@ Interfaces: assertTestTarget(config) returns validated target or throws before n
 
 ### Task 3: database and SSR proof
 
+Blocked by real hosted evidence: custom roles lack managed `auth` schema USAGE, and the operator cannot grant it. Keep failing acceptance assertions. Do not treat the earlier catalog-only proof as sufficient, alter the approved privilege model, or start Task 4. See `docs/foundation-checkpoint.md`.
+
 - [ ] Write failing real PostgreSQL/JWT tests before creating the proof schema.
 - [x] Generate migration using Supabase CLI, implement membership/RLS roles/helper/command and inspect privileges.
 - [ ] Prove owner/manager/cashier, cross-shop/business denial, direct DML denial, metadata spoof, revoked membership/session denial, idempotency, rollback and concurrent row locks.

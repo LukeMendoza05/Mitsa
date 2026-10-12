@@ -1,42 +1,70 @@
-# Tasks 1–3 evidence: incomplete checkpoint
+# Tasks 1–3 evidence: blocked checkpoint
 
-2026-10-12. Progress record only; Task 4 remains gated. Product management, inventory, checkout and staff invitation features are not implemented. No live deployment.
+2026-10-12, Asia/Manila. Tasks 1–2 are recorded and bootstrapped; Task 3 acceptance is incomplete. Task 4, product management, inventory operations, checkout and staff invitation features remain gated. No live deployment or unrelated project access.
 
-## Files and work
+## Work and files
 
-- Architecture, all three stages and decisions: `superpowers/specs/2026-10-12-foundation-design.md`, `requirements-traceability.md`, `diagrams.md`; six Archify artifacts under `.archify/`.
-- Next.js/TypeScript foundation, pinned npm dependencies, Vitest/Playwright; minimal foundation/login/proof pages and server-only Auth compatibility routes under `src/`.
-- Isolated target guard and synthetic reconciliation under `scripts/`; setup in `local-setup.md`.
-- Versioned migrations/catalog assertions under `supabase/`; unit, hosted integration and desktop/mobile tests under `tests/`.
+- Approved design and all three first-release stages: `superpowers/specs/2026-10-12-foundation-design.md`, `requirements-traceability.md`, `diagrams.md`; six Archify artifacts under `.archify/`.
+- Next.js/TypeScript, pinned dependencies, Vitest/Playwright; minimal foundation/login/proof pages and server-only Auth compatibility routes under `src/`.
+- Guarded test/operator configuration with verified TLS: `scripts/test-target.mjs`, `scripts/postgres-config.mjs`, public CA `config/supabase-ca.crt`; instructions in `local-setup.md`.
+- Five versioned, hosted migrations under `supabase/migrations/`; hosted SQL assertions under `supabase/tests/`; unit, integration and desktop/mobile browser suites under `tests/`.
+- This continuation corrected PostgreSQL `name[]` result handling in two catalog tests using `roles::text[]`, added an intentionally failing custom-role Auth schema access regression and corresponding SQL assertion, and updated the design, plan, setup, checkpoint and progress record. No new migration was applied. An empty, unapplied migration draft was removed.
 
-## Hosted configuration
+## Credentials and hosted configuration
 
-Only user-approved Fire_Inv (`mjtejwafxriwntweussc`, Sydney) was changed. The user supplied this project rather than the agent creating one. Public signup and anonymous sign-in are disabled. Site origin is `http://127.0.0.1:3000`; its exact `/auth/confirm` callback is allowlisted. The versioned authenticator setting exposes only `api`.
+Only user-approved Fire_Inv (`mjtejwafxriwntweussc`, Sydney) was accessed. Public signup and anonymous sign-in are disabled. The site origin is `http://127.0.0.1:3000`; its exact `/auth/confirm` callback is allowlisted. The versioned authenticator setting exposes only `api`.
 
-Next.js receives the publishable API key only. Test/operator credentials belong in gitignored `.secrets/operator.env`, parsed separately without modifying process.env. Credentials were supplied and examined without displaying them. The secret API key format is compatible, and a read-only Auth admin request to Fire_Inv succeeded. The database URL matches the approved host/project guard, but PostgreSQL rejects its password (`28P01`); database marker verification cannot complete. There is no service-role runtime fallback.
+The supplied admin key uses the supported modern secret-key format and was verified against Fire_Inv's Auth admin API. Real synthetic user creation and password sign-in succeeded during fixture setup. The database URI passed the approved target guard. Removing template square brackets around its password in memory allowed verified TLS and the pinned marker check to succeed; only that URI correction was then saved in gitignored `.secrets/operator.env`. No credential values were printed or committed.
 
-## Actual verification
+Next.js receives only the URL, publishable key and application origin. Operator credentials are parsed into a separate object, never process.env or browser configuration. Certificate and hostname verification stay enabled with Supabase's published public CA. There is no service-role runtime fallback.
 
-- `npm run test`: 15 unit tests passed, then integration passed the real public Auth settings test; two database suite setup hooks failed (`28P01`), preventing 16 cases from running. Aggregate did not reach browser tests.
-- `npm run test:unit`: passed 15/15, including actual pg configuration/CA assertions and target override rejection.
-- `npm run test:integration`: one passed, two suite setup failures, 16 cases skipped because the database password is rejected.
-- `npm run test:e2e`: six unsigned tests passed, two hosted setup hooks failed (`28P01`) and six subsequent cases did not run. No signed-in case passed.
-- `npm run test:e2e -- tests/e2e/authentication.spec.ts tests/e2e/foundation.spec.ts`: passed 6/6 on desktop/mobile, including invalid callback cache behavior.
-- `npm run build` and `npm run typecheck`: passed. `npm audit`: zero reported vulnerabilities.
-- `npm run db:reconcile`: failed database authentication (`28P01`). Successful hosted reconciliation is not claimed.
-- Hosted SQL catalog assertions passed through the connector. Temporary PostgreSQL reproduction showed zero lock-visible rows before the membership fix, then one visible row and UPDATE denied after it; both transactions rolled back.
-- Six Archify artifacts passed automated validation/delivery/browser gates. All six light-theme 1440×900 captures were visually inspected; additional automated theme/viewport captures were not separately inspected.
+## Confirmed hosted privilege blocker
 
-## Security review and repairs
+Real signed-JWT requests fail with PostgreSQL `42501`, `permission denied for schema auth`. Read-only catalog evidence:
 
-Independent Superpowers review found: pg URL query options could override target/TLS; membership FOR SHARE lacked UPDATE visibility; auth.sessions RLS hid rows from the non-bypass helper; SET ROLE on an operator connection was an invalid negative authorization test. Target guard regressions were observed fail then pass. Additive migrations permit scoped membership locks with WITH CHECK(false) and add current-actor/current-session SELECT for app_authz. The role test now checks authenticated's actual SET permissions and records session_user separately. No ownership, BYPASSRLS or runtime admin credential was added.
+| Check | Actual result |
+| --- | --- |
+| `app_authz` / `app_command` USAGE on `auth` | false / false |
+| Both roles EXECUTE on `auth.uid()` and `auth.jwt()` | true |
+| `app_authz` SELECT on `auth.sessions.id,user_id` | true |
+| Operator `current_user` / `session_user` | postgres / postgres |
+| Operator USAGE on `auth` WITH GRANT OPTION | false |
+| Operator may SET ROLE to `supabase_admin` / `supabase_auth_admin` | false / false |
 
-Credential preflight initially failed TLS with SELF_SIGNED_CERT_IN_CHAIN. The tools now use Supabase's published public CA and explicit pg fields rather than a connection-string parser; hostname and certificate verification remain enabled. TLS succeeds and PostgreSQL then reports the password rejection. Tests for this repair were observed fail then pass. A test type assertion initially failed the build and was corrected; the subsequent build and typecheck both passed.
+The first migration history contains `grant usage on schema auth to app_authz, app_command`, but the actual ACL grants neither role access. Recording a GRANT in migration history did not prove it took effect. The ordinary hosted operator cannot issue that grant as designed. Function execution and column grants alone cannot overcome missing schema access.
 
-Supabase security advisors now report only INFO for `private.businesses` having no RLS policy. This is intentional default-deny: the operator manages it, with no application grant/policy. Anonymous/authenticated EXECUTE on the platform's `public.rls_auto_enable()` helper was revoked by migration; its automatic RLS event trigger remains installed. [Advisor explanation](https://supabase.com/docs/guides/database/database-linter?lint=0008_rls_enabled_no_policy).
+The full updated `supabase/tests/security_catalog.sql` was executed through the connector and failed at the new assertion with `P0004: private roles cannot access managed Auth schema`. The earlier catalog-only pass is superseded. A scan of tracked files and built browser files found zero matches for the supplied administrative key, database URI or decoded database password. The operator file remains ignored by Git.
 
-## Open acceptance gates
+Per the user's explicit stop condition, no new schema repair, role inheritance, helper ownership change, bypass privilege, or service-role runtime was introduced. A supported managed-schema access arrangement or revised authorization-helper design needs separate review and proof before proceeding. No alternative has been declared secure.
 
-Real signed-JWT commands, concurrent connections, membership revocation race, assignment revocation, distinct signed-in SSR contexts, refresh/logout/recovery and reconciliation remain unproven pending credentials. New tests are authored, not passed. Time-expired recovery behavior still needs explicit evidence; invalid/replay cases do not prove expiry. Backup restoration remains a pre-live gate.
+## Exact automated results
 
-Next: correct Fire_Inv's database password in the isolated credential file, reverify the database marker, execute all remaining gates, fix failures and issue the completed Tasks 1–3 checkpoint. Task 4 requires the user's next approval.
+Latest runs on this continuation:
+
+| Command | Result |
+| --- | --- |
+| `npm run test` | exit 1: unit 15/15 passed; integration 7 passed, 11 failed (18 total); aggregate browser phase not reached |
+| `npm run test:e2e` | exit 1: 8 passed, 6 failed (14 total), desktop and Pixel 7 mobile layouts |
+| `npm run test:security` | exit 1: 4 passed, 1 failed; new Auth schema access regression detects both missing grants |
+| `npm run build` | exit 0; production compilation, TypeScript and route generation succeeded |
+| `npm run typecheck` | exit 0 |
+| `npm run db:reconcile` | exit 0: zero synthetic projection mismatches and zero commands without events |
+| `npm audit` | exit 0: zero reported vulnerabilities |
+
+The earlier standalone `npm run test:integration` run in this continuation passed 5 and failed 12 of 17. Two failures were `name[]` decoding mismatches, corrected by the explicit cast; the four existing security tests subsequently passed. The latest aggregate includes the added schema privilege regression and is the authoritative 18-case integration result above. No failures were skipped or converted to passes.
+
+Integration failures cover scoped signed-JWT reads/commands, owner/manager capability distinction, metadata spoof resistance, idempotency, injected audit rollback, duplicate and last-unit concurrency, membership/assignment revocation and its concurrency race, plus missing Auth schema access. Real connections were used, but failed commands never reached the expected row/advisory locks. These behaviors remain unverified.
+
+Passing integration evidence: four catalog/security cases, direct authenticated DML/custom-role assumption denial, public Auth settings, and synthetic projection reconciliation. Catalog evidence confirms non-login/non-bypass/non-superuser roles, eight private/probe tables with FORCE RLS and separate ownership, scoped lock/session policies, and restricted anonymous command execution. This does not establish usable authorized commands.
+
+Browser passes cover six unsigned/cache/origin/layout checks and two real recovery callback checks (fixed destination, server-issued HttpOnly cookie and single-use replay rejection). Six signed-in cases fail because the database identity check returns 403 or the proof page cannot render. Cookie refresh/logout/isolation/revocation assertions after those failures were not reached; they are not claimed passed. Time-expired recovery behavior remains unproven.
+
+Reconciliation is limited: read-only counts after the suites show 22 synthetic resources, **zero command results and zero events**. Commands failed before posting. Therefore the zero-mismatch result proves consistency of initial synthetic state only, not successful business or command reconciliation. The injected fault trigger was removed (remaining count zero).
+
+## Earlier evidence and remaining gates
+
+Independent Superpowers review found and led to fixes for target/TLS query overrides, membership lock visibility, missing auth.sessions RLS visibility and an invalid operator SET ROLE negative test. TLS configuration and target regressions were observed fail then pass. The new schema usage regression remains red. Existing migrations were not rewritten.
+
+Six Archify artifacts passed automated validation/delivery/browser checks; all six light-theme 1440×900 captures were visually inspected. Additional automated theme/viewport captures were not separately inspected. Earlier Supabase security advisors reported only intentional default-deny `private.businesses` INFO; no fresh advisor success is inferred from that earlier result.
+
+Tasks 1–3 cannot be declared complete. Resolve the managed-schema design blocker first, then rerun all real authorization, concurrency and SSR acceptance tests, add explicit recovery-expiry evidence, and verify successful event reconciliation. Backup restoration remains mandatory before live-shop use. All original release stages remain in scope. Task 4 requires the user's next approval and has not started.
