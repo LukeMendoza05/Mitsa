@@ -2,13 +2,12 @@ import { readFileSync } from "node:fs";
 import { parse } from "dotenv";
 import pg from "pg";
 import { assertTestTarget } from "./test-target.mjs";
+import {testDatabaseConfig} from "./postgres-config.mjs";
 
 const env=parse(readFileSync(".secrets/operator.env"));
 const approved=JSON.parse(readFileSync("config/test-target.json","utf8"));
 const target=assertTestTarget({projectRef:env.TEST_PROJECT_REF,url:env.TEST_SUPABASE_URL,databaseUrl:env.TEST_DATABASE_URL},approved);
-const url=new URL(env.TEST_DATABASE_URL);
-for(const key of ["sslmode","sslrootcert","sslcert","sslkey"]) url.searchParams.delete(key);
-const db=new pg.Client({connectionString:url.toString(),ssl:{rejectUnauthorized:true},connectionTimeoutMillis:15000});
+const db=new pg.Client(testDatabaseConfig(env.TEST_DATABASE_URL,approved));
 try {
   await db.connect();
   await db.query("begin isolation level repeatable read read only");

@@ -45,3 +45,12 @@ Plan: docs/superpowers/plans/2026-10-12-foundation-proof.md
 - Latest complete command runs: npm run test unit13pass then integration1failed/16skipped due missing credentials; npm run test:e2e sixpass/twofailed/sixnotrun due hosted setup; build/typecheckpass; reconciliation fails before connection with sanitized config error.
 - Version control: 11cd1b1 records documentation, bootstrap, tests and five synchronized migrations. Worktree verified clean; ignored credentials/tool downloads are absent from the index. Checkpoint is explicitly incomplete, not a passing release.
 - Credential blocker has persisted through the initial setup turn, credential-help turn and this continuation. Independent review, diagram inspection, local verification and version control are now complete; remaining required acceptance evidence needs user-supplied credentials.
+
+## Credential-supplied continuation
+
+- User supplied operator file. Verified target URL/username and modern secret-key format without outputting values. Read-only Auth admin list request to approved Fire_Inv succeeded; key is valid for that project.
+- Initial database TLS failed SELF_SIGNED_CERT_IN_CHAIN. Downloaded public CA from the exact link in Fire_Inv's Database Settings; scoped it to test/operator pg clients only. Certificate/hostname verification stays enabled; no global trust change.
+- TLS configuration regression RED (missing implementation), then GREEN 15/15 unit tests. One sandbox runner temporary-module error was resolved by running the same test command escalated. Build caught an incorrect pg type assertion; corrected assertion, then build/typecheck passed.
+- PostgreSQL now rejects the supplied password with 28P01. Read-only marker verification and fixture setup stop before writes. Asked user to correct only the database URL/password; no credential values displayed or changed.
+- Executed integration: real Auth settings test passes, two database setup failures, 16 cases not run. Executed aggregate: 15 unit tests pass, same integration result, no aggregate browser phase. Separate full E2E: six pass, two setup failures, six not run. Reconciliation fails authentication; audit zero vulnerabilities.
+- Ruling: trust Supabase's published CA only in isolated database tool configuration — required to retain verified TLS rather than bypass certificates — cost if wrong: connection fails closed; reviewed public CA fingerprint is documented.

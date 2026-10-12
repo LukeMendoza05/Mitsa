@@ -3,6 +3,7 @@ import { parse } from "dotenv";
 import { Client } from "pg";
 import { createClient } from "@supabase/supabase-js";
 import { assertTestTarget } from "../../scripts/test-target.mjs";
+import { testDatabaseConfig } from "../../scripts/postgres-config.mjs";
 
 // Never mutate process.env: Playwright may load tests before starting Next.js.
 // Operator credentials must not be inherited by the application process.
@@ -23,9 +24,7 @@ export function hostedConfig() {
 
 export async function database(requireMarker = true) {
   const target = hostedConfig();
-  const url = new URL(target.databaseUrl);
-  for (const key of ["sslmode", "sslrootcert", "sslcert", "sslkey"]) url.searchParams.delete(key);
-  const client = new Client({ connectionString: url.toString(), ssl: { rejectUnauthorized: true }, connectionTimeoutMillis: 15000 });
+  const client = new Client(testDatabaseConfig(target.databaseUrl,approved));
   await client.connect();
   if (requireMarker) {
     const { rows } = await client.query("select marker from foundation_probe.environment_identity where singleton = true");

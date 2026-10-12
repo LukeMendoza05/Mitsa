@@ -22,6 +22,10 @@ TEST_AUTH_ADMIN_KEY=the-project-secret-api-key
 
 Use the session pooler if direct IPv6 connectivity is unavailable. Copy the URI on port 5432 without query options or a fragment; the test tools enforce TLS verification themselves. Never use credentials from another project. Database/admin credentials are test/operator capabilities, not deployed application configuration. The future invitation function will hold its own admin secret separately; that feature is not implemented in Tasks 1–3.
 
+The database tools trust only the public Supabase Root 2021 CA in `config/supabase-ca.crt`, downloaded from the certificate link in Fire_Inv's Database Settings. Its SHA-256 fingerprint is `80:70:25:AD:50:D4:ED:21:9D:2C:9C:7D:29:9C:00:4F:82:4E:B0:0C:F7:F6:5A:FE:F6:07:D0:7B:72:E6:CA:FA`; expiry is 2031-04-26. This certificate is public, not a credential. Hostname and certificate verification remain enabled. No machine-wide trust store changes are required. See [Supabase SSL documentation](https://supabase.com/docs/guides/platform/ssl-enforcement).
+
+PostgreSQL `28P01` means database authentication failed. Use the project's database password, not the Supabase account password or API key; percent-encode special characters in the URI password. A valid API key does not prove a database password is valid. Never log either value while diagnosing failures.
+
 ## Hosted configuration gate
 
 Disable public signup and anonymous users; allow only local callback URLs for this proof. Expose API schema only after migration review. Create synthetic users with the Auth admin API from test tools. Initial operator bootstrap and the full invitation/password-recovery product flows remain Task 4; Task 3 proves the SSR callback/session boundary only.
