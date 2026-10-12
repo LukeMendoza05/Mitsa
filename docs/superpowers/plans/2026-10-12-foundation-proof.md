@@ -34,7 +34,7 @@
 
 ### Task 2: bootstrap and isolated tooling
 
-- [ ] Pin dependencies, disable lifecycle scripts and commit lockfile.
+- [x] Pin dependencies, disable lifecycle scripts and commit lockfile.
 - [x] Write failing target-guard tests (unapproved project, production purpose, URL/DB mismatch).
 - [x] Implement fail-closed target validation and pass unit tests.
 - [x] Add minimal Next.js foundation page, configuration and desktop/mobile E2E.
