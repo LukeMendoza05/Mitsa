@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Approved fireworks foundation — target architecture",
+    "output": ".archify/architecture-foundation-20261012-133000/foundation.html",
+    "quality_profile": "showcase"
+  },
+  "components": [
+    {
+      "id": "browser",
+      "type": "external",
+      "label": "Cashier browser",
+      "sublabel": "Untrusted input; no stored business data",
+      "pos": [
+        40,
+        160
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "next",
+      "type": "backend",
+      "label": "Next.js server",
+      "sublabel": "User session; publishable key only",
+      "pos": [
+        460,
+        160
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "api",
+      "type": "security",
+      "label": "API wrappers",
+      "sublabel": "Scoped reads; authorized commands",
+      "pos": [
+        880,
+        160
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "db",
+      "type": "database",
+      "label": "Private PostgreSQL",
+      "sublabel": "RLS; locks; atomic immutable history",
+      "pos": [
+        1300,
+        160
+      ],
+      "size": [
+        260,
+        72
+      ]
+    },
+    {
+      "id": "auth",
+      "type": "security",
+      "label": "Supabase Auth",
+      "sublabel": "Verified identity; server-only cookies",
+      "pos": [
+        460,
+        420
+      ],
+      "size": [
+        240,
+        72
+      ]
+    },
+    {
+      "id": "invite",
+      "type": "backend",
+      "label": "Invitation function",
+      "sublabel": "Separate admin-secret boundary",
+      "pos": [
+        880,
+        420
+      ],
+      "size": [
+        240,
+        72
+      ]
+    }
+  ],
+  "connections": [
+    {
+      "from": "browser",
+      "to": "next",
+      "label": "HTTPS forms"
+    },
+    {
+      "from": "next",
+      "to": "api",
+      "label": "User JWT"
+    },
+    {
+      "from": "api",
+      "to": "db",
+      "label": "Atomic command"
+    },
+    {
+      "from": "next",
+      "to": "auth",
+      "label": "Validate session",
+      "variant": "security"
+    },
+    {
+      "from": "next",
+      "to": "invite",
+      "label": "Owner-approved intent",
+      "variant": "security"
+    },
+    {
+      "from": "invite",
+      "to": "auth",
+      "label": "Admin invitation",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Approved target",
+      "items": [
+        "Next.js + Supabase on Vercel; no live deployment at this checkpoint",
+        "Tasks 1–3 prove infrastructure and security only"
+      ]
+    },
+    {
+      "dot": "rose",
+      "title": "Trust boundaries",
+      "items": [
+        "Browser values never authorize roles, rates, costs or totals",
+        "Ordinary Next.js runtime never holds administrative credentials"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Future domain invariants",
+      "items": [
+        "One transaction commits every business effect",
+        "Final records are corrected through linked reversals"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+{
+  "schema_version": 2,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Sale — finalized documents are never overwritten",
+    "output": ".archify/lifecycle-sale-20261012-134200/sale.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Approved business lifecycle"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal exits and corrections"
+    }
+  ],
+  "states": [
+    {
+      "id": "draft",
+      "type": "start",
+      "label": "Order draft",
+      "lane": "main",
+      "col": 0,
+      "sublabel": "Server-owned revision"
+    },
+    {
+      "id": "posted",
+      "type": "success",
+      "label": "Sale posted",
+      "lane": "main",
+      "col": 1,
+      "sublabel": "Immutable receipt"
+    },
+    {
+      "id": "reversed",
+      "type": "success",
+      "label": "Reversed",
+      "lane": "main",
+      "col": 2,
+      "sublabel": "Linked full reversal"
+    },
+    {
+      "id": "cancelled",
+      "type": "failure",
+      "label": "Cancelled order",
+      "lane": "terminal",
+      "col": 0,
+      "sublabel": "Before fulfilment"
+    },
+    {
+      "id": "partial",
+      "type": "waiting",
+      "label": "Partly reversed",
+      "lane": "terminal",
+      "col": 1,
+      "sublabel": "Stage 3 returns"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "draft",
+      "to": "posted",
+      "label": "Atomic checkout"
+    },
+    {
+      "from": "posted",
+      "to": "reversed",
+      "label": "Manager reversal"
+    },
+    {
+      "from": "draft",
+      "to": "cancelled",
+      "label": "Cancel"
+    },
+    {
+      "from": "posted",
+      "to": "partial",
+      "label": "Linked return"
+    },
+    {
+      "from": "partial",
+      "to": "reversed",
+      "label": "Remaining return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Immutable history",
+      "items": [
+        "Original sale, payment and receipt remain unchanged",
+        "Stage 1 permits authorized full-sale reversals",
+        "General partial/full customer returns belong to Stage 3"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "schema_version": 2,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Reservation — one order owns one complete allocation",
+    "output": ".archify/lifecycle-reservation-20261012-134200/reservation.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Approved business lifecycle"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal exits and corrections"
+    }
+  ],
+  "states": [
+    {
+      "id": "draft",
+      "type": "start",
+      "label": "Draft",
+      "lane": "main",
+      "col": 0,
+      "sublabel": "No stock held"
+    },
+    {
+      "id": "active",
+      "type": "active",
+      "label": "Active",
+      "lane": "main",
+      "col": 1,
+      "sublabel": "All components held"
+    },
+    {
+      "id": "consumed",
+      "type": "success",
+      "label": "Consumed",
+      "lane": "main",
+      "col": 2,
+      "sublabel": "Fulfil once"
+    },
+    {
+      "id": "cancelled",
+      "type": "failure",
+      "label": "Cancelled",
+      "lane": "terminal",
+      "col": 1,
+      "sublabel": "Release holds"
+    },
+    {
+      "id": "expired",
+      "type": "failure",
+      "label": "Expired",
+      "lane": "terminal",
+      "col": 2,
+      "sublabel": "Release holds"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "draft",
+      "to": "active",
+      "label": "Reserve full order"
+    },
+    {
+      "from": "active",
+      "to": "consumed",
+      "label": "Atomic fulfilment"
+    },
+    {
+      "from": "active",
+      "to": "cancelled",
+      "label": "Cancel"
+    },
+    {
+      "from": "active",
+      "to": "expired",
+      "label": "Expire"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Stock ownership",
+      "items": [
+        "The reservation owns every base-component hold for its order",
+        "Consumption reduces on-hand and reserved quantities together",
+        "Pickup and delivery dispatch share the unique fulfilment operation"
+      ]
+    }
+  ]
+}

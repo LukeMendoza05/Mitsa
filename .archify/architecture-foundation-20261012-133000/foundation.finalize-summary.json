@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "architecture",
+  "quality": "showcase",
+  "specification": {
+    "path": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\candidate.json",
+    "sha256": "5606f6baed459c53abdad61c44f57a03d0ac683febfcc3a4a6c5362750243aa3",
+    "bytes": 3121
+  },
+  "artifact": {
+    "path": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\foundation.html",
+    "sha256": "b33bc2e22f015abb628120b4ba674d7373b39b1352edc160094dc7f27ae0fabc",
+    "bytes": 754582
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\foundation.finalize.json",
+    "summaryReceipt": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\foundation.finalize-summary.json",
+    "browserCheckReceipt": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\foundation.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.0.1",
+    "availableVersion": "3.0.1",
+    "releaseNotes": null,
+    "checkedAt": "2026-10-12T05:33:08.824Z",
+    "source": "network",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 7315,
+  "layoutReviewRecommendation": {
+    "action": "inspect-leading-space",
+    "evidence": {
+      "measured": true,
+      "emptyTopPx": 160,
+      "emptyTopRatio": 0.286,
+      "occupiedTop": 160,
+      "viewBoxTop": 0,
+      "canvasHeight": 560,
+      "typicalNodeHeight": 72,
+      "reviewSuggested": true
+    },
+    "reason": "Measured content, including routes and labels, leaves a large empty area above the diagram. This is a composition suggestion, not a failed gate.",
+    "repair": "Check whether that leading space is intentional. If not, reposition the connected scene nearer the canvas origin while retaining room for its actual boundaries, labels and return routes. Preserve all meaning and user-fixed geometry, then rerun finalize. No screenshot is required."
+  }
+}

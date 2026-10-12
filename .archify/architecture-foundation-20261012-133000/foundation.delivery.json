@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "ef9908db-2f10-423a-8daf-ffd2e722f6c3",
+  "status": "current",
+  "command": "deliver",
+  "type": "architecture",
+  "input": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\candidate.json",
+  "output": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\architecture-foundation-20261012-133000\\foundation.html",
+  "specification": {
+    "sha256": "5606f6baed459c53abdad61c44f57a03d0ac683febfcc3a4a6c5362750243aa3",
+    "bytes": 3121
+  },
+  "artifact": {
+    "sha256": "b33bc2e22f015abb628120b4ba674d7373b39b1352edc160094dc7f27ae0fabc",
+    "bytes": 754582
+  }
+}

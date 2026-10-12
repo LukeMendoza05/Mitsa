@@ -1,0 +1,99 @@
+{
+  "schema_version": 2,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Transfer — historical cost follows goods through transit",
+    "output": ".archify/lifecycle-transfer-20261012-134200/transfer.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Approved business lifecycle"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal exits and corrections"
+    }
+  ],
+  "states": [
+    {
+      "id": "draft",
+      "type": "start",
+      "label": "Draft",
+      "lane": "main",
+      "col": 0,
+      "sublabel": "No goods moved"
+    },
+    {
+      "id": "dispatched",
+      "type": "active",
+      "label": "Dispatched",
+      "lane": "main",
+      "col": 1,
+      "sublabel": "Source to transit"
+    },
+    {
+      "id": "received",
+      "type": "success",
+      "label": "Received",
+      "lane": "main",
+      "col": 2,
+      "sublabel": "Transit to shop"
+    },
+    {
+      "id": "cancelled",
+      "type": "failure",
+      "label": "Cancelled",
+      "lane": "terminal",
+      "col": 0,
+      "sublabel": "Before dispatch"
+    },
+    {
+      "id": "discrepancy",
+      "type": "waiting",
+      "label": "Discrepancy",
+      "lane": "terminal",
+      "col": 1,
+      "sublabel": "Record variance"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "draft",
+      "to": "dispatched",
+      "label": "Dispatch"
+    },
+    {
+      "from": "dispatched",
+      "to": "received",
+      "label": "Full receipt"
+    },
+    {
+      "from": "draft",
+      "to": "cancelled",
+      "label": "Cancel"
+    },
+    {
+      "from": "dispatched",
+      "to": "discrepancy",
+      "label": "Mismatch"
+    },
+    {
+      "from": "discrepancy",
+      "to": "received",
+      "label": "Resolve variance"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "emerald",
+      "title": "Preserved valuation",
+      "items": [
+        "Source issue value is carried through transit",
+        "Destination moving average incorporates the received value",
+        "After dispatch, corrections use linked movements"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+{
+  "schema_version": 2,
+  "diagram_type": "lifecycle",
+  "meta": {
+    "title": "Delivery — dispatch consumes stock once",
+    "output": ".archify/lifecycle-delivery-20261012-134200/delivery.html",
+    "quality_profile": "showcase"
+  },
+  "lanes": [
+    {
+      "id": "main",
+      "label": "Approved business lifecycle"
+    },
+    {
+      "id": "terminal",
+      "label": "Terminal exits and corrections"
+    }
+  ],
+  "states": [
+    {
+      "id": "pending",
+      "type": "start",
+      "label": "Pending",
+      "lane": "main",
+      "col": 0,
+      "sublabel": "Reservation active"
+    },
+    {
+      "id": "dispatched",
+      "type": "active",
+      "label": "Dispatched",
+      "lane": "main",
+      "col": 1,
+      "sublabel": "Order fulfilled once"
+    },
+    {
+      "id": "delivered",
+      "type": "success",
+      "label": "Delivered",
+      "lane": "main",
+      "col": 2,
+      "sublabel": "Status only"
+    },
+    {
+      "id": "cancelled",
+      "type": "failure",
+      "label": "Cancelled",
+      "lane": "terminal",
+      "col": 0,
+      "sublabel": "Explicit hold policy"
+    },
+    {
+      "id": "failed",
+      "type": "waiting",
+      "label": "Failed delivery",
+      "lane": "terminal",
+      "col": 1,
+      "sublabel": "Retry without issue"
+    },
+    {
+      "id": "returned",
+      "type": "failure",
+      "label": "Returned",
+      "lane": "terminal",
+      "col": 2,
+      "sublabel": "Linked disposition"
+    }
+  ],
+  "transitions": [
+    {
+      "from": "pending",
+      "to": "dispatched",
+      "label": "Atomic fulfil"
+    },
+    {
+      "from": "dispatched",
+      "to": "delivered",
+      "label": "Confirm delivery"
+    },
+    {
+      "from": "pending",
+      "to": "cancelled",
+      "label": "Cancel"
+    },
+    {
+      "from": "dispatched",
+      "to": "failed",
+      "label": "Delivery fails"
+    },
+    {
+      "from": "failed",
+      "to": "dispatched",
+      "label": "Retry"
+    },
+    {
+      "from": "failed",
+      "to": "returned",
+      "label": "Record return"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "No duplicate deduction",
+      "items": [
+        "Dispatch alone invokes the unique order fulfilment",
+        "Delivery status changes and retries never deduct again",
+        "Returned goods require a linked stock/financial disposition"
+      ]
+    }
+  ]
+}

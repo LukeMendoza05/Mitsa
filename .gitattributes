@@ -1,0 +1,4 @@
+* text=auto eol=lf
+# Preserve Archify's exact artifact bytes so receipt hashes survive checkout.
+.archify/** -text whitespace=-blank-at-eol
+*.png binary

@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "6520312f-0982-499d-a37d-c79107be3c59",
+  "status": "current",
+  "command": "deliver",
+  "type": "lifecycle",
+  "input": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\lifecycle-delivery-20261012-134200\\candidate.json",
+  "output": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\lifecycle-delivery-20261012-134200\\delivery.html",
+  "specification": {
+    "sha256": "029eb16f9896b63d3455515566db509cc7014c89ba0130bdbb82b532f9cb7f0c",
+    "bytes": 2346
+  },
+  "artifact": {
+    "sha256": "1aa0f497e634edd847fe0f3559a2972b9357db6f12a9b5609aded3e484d7c708",
+    "bytes": 754918
+  }
+}

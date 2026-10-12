@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "receiptId": "b31712a9-40d7-4b15-afe2-7db068de5f4d",
+  "status": "current",
+  "command": "deliver",
+  "type": "sequence",
+  "input": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\sequence-checkout-recovery-20261012-135100\\candidate.json",
+  "output": "C:\\Users\\Luke\\OneDrive\\Documents\\ChatGPT\\Fireworks_Inventory\\.archify\\sequence-checkout-recovery-20261012-135100\\checkout-recovery.html",
+  "specification": {
+    "sha256": "9474627b4c7aa22b1e247153b2ab782617b9bc214f29c81f0f4dbc5d9b4e2e76",
+    "bytes": 3599
+  },
+  "artifact": {
+    "sha256": "2be23825e0f7e4739c940fc0954e6fa32f20b51dcb64ef2daafb3f9f0fb17a61",
+    "bytes": 753657
+  }
+}

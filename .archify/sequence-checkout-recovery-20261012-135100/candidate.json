@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "diagram_type": "sequence",
+  "meta": {
+    "title": "Planned checkout — atomic commit and server-owned recovery",
+    "output": ".archify/sequence-checkout-recovery-20261012-135100/checkout-recovery.html",
+    "quality_profile": "showcase",
+    "column_fit": "spread",
+    "viewBox": [
+      1080,
+      690
+    ]
+  },
+  "participants": [
+    {
+      "id": "cashier",
+      "type": "external",
+      "label": "Cashier browser",
+      "sublabel": "No persisted business state"
+    },
+    {
+      "id": "server",
+      "type": "backend",
+      "label": "Next.js server",
+      "sublabel": "Verified user identity"
+    },
+    {
+      "id": "database",
+      "type": "database",
+      "label": "PostgreSQL",
+      "sublabel": "Private atomic command"
+    }
+  ],
+  "messages": [
+    {
+      "id": "confirm",
+      "from": "cashier",
+      "to": "server",
+      "y": 160,
+      "label": "Confirm server order revision",
+      "variant": "emphasis"
+    },
+    {
+      "id": "prepare",
+      "from": "server",
+      "to": "database",
+      "y": 195,
+      "label": "Prepare sealed attempt and idempotency key"
+    },
+    {
+      "id": "prepared",
+      "from": "database",
+      "to": "server",
+      "y": 230,
+      "label": "Durable attempt identity",
+      "variant": "return"
+    },
+    {
+      "id": "execute",
+      "from": "server",
+      "to": "database",
+      "y": 265,
+      "label": "Authorize, lock, validate and post attempt",
+      "variant": "security"
+    },
+    {
+      "id": "commit",
+      "from": "database",
+      "to": "server",
+      "y": 300,
+      "label": "Sale + stock + payment + audit + outcome commit",
+      "variant": "return"
+    },
+    {
+      "id": "lost",
+      "from": "server",
+      "to": "cashier",
+      "y": 335,
+      "label": "Response may be lost; result remains unconfirmed",
+      "variant": "dashed"
+    },
+    {
+      "id": "recover",
+      "from": "cashier",
+      "to": "server",
+      "y": 385,
+      "label": "Refresh: recover authenticated server workspace",
+      "variant": "emphasis"
+    },
+    {
+      "id": "lookup",
+      "from": "server",
+      "to": "database",
+      "y": 420,
+      "label": "Read the original attempt outcome"
+    },
+    {
+      "id": "outcome",
+      "from": "database",
+      "to": "server",
+      "y": 455,
+      "label": "Committed receipt or unresolved status",
+      "variant": "return"
+    },
+    {
+      "id": "display",
+      "from": "server",
+      "to": "cashier",
+      "y": 490,
+      "label": "Show receipt only when commit is confirmed",
+      "variant": "return"
+    },
+    {
+      "id": "resume",
+      "from": "cashier",
+      "to": "server",
+      "y": 540,
+      "label": "Resume unresolved attempt using stored identity"
+    },
+    {
+      "id": "replay",
+      "from": "server",
+      "to": "database",
+      "y": 575,
+      "label": "Same command replays; never a second deduction",
+      "variant": "security"
+    }
+  ],
+  "cards": [
+    {
+      "dot": "rose",
+      "title": "Failure and cancellation",
+      "items": [
+        "A missing outcome never confirms success or failure",
+        "Cancellation races under the same stored command identity",
+        "Expected rejection has no business effects; unknown errors remain unconfirmed"
+      ]
+    },
+    {
+      "dot": "emerald",
+      "title": "Future slice; documented only",
+      "items": [
+        "Order/quote uniqueness prevents another key selling twice",
+        "Reserved pickup and dispatch share the unique fulfilment operation",
+        "Tasks 1–3 do not implement this checkout"
+      ]
+    }
+  ]
+}
