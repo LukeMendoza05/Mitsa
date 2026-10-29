@@ -7,12 +7,12 @@ Use the Next.js framework, source root `.`, Node.js 24, `npm ci --ignore-scripts
 Before creating a deployment:
 
 1. Approve a clean separate preview backend, exact preview origin, target mapping and preview-only secrets.
-2. Configure and verify Vercel Authentication before the first Preview deployment. Do not assign the requested production alias to an unapproved preview.
+2. Configure and verify Vercel Authentication for **All Deployments** (`ssoProtection.deploymentType: "all"`) before the first Preview deployment. Do not assign the requested production alias to an unapproved preview.
 3. Obtain approval for the exact reviewed source commit, project scope and any cost. Leave automatic Git deployments disabled.
 4. Deploy only a protected Preview. Confirm unauthenticated access is denied, then check landing/login/closed signup, HTTPS, security headers, assets, callbacks and server-only secret handling.
 5. Keep registration, external delivery and persistent workers inactive. Record deployment ID and rollback instructions before further changes.
 
-Standard Vercel protection covers preview/deployment URLs; it does not make the short production domain private. Protecting all production domains can require a different plan. Do not start a trial, purchase a plan, bypass protection or deploy publicly without approval.
+Standard Vercel protection covers preview/deployment URLs; it does not make the short production domain private. Use All Deployments for this preparation. Vercel [announced on September 9, 2026](https://vercel.com/changelog/protect-production-deployments-for-free-on-every-plan) that Vercel Authentication can cover production domains at no additional cost on every plan. Verify the actual project setting before any deployment. Do not start a trial, purchase a plan, add a public exception, bypass protection or deploy publicly without approval.
 
 The requested `.vercel.app` hostname is first-come, first-served and cannot be guaranteed or reserved by a read-only lookup. Recheck allocation during approved project creation. If unavailable, stop and review an alternative rather than silently changing the requested name.
 
