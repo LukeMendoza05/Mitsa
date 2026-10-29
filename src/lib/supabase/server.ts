@@ -1,3 +1,4 @@
+import {previewRuntimeEnvironment,previewRuntimeProject} from "../auth/preview-origin.mjs";
 import "server-only";
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
@@ -6,7 +7,7 @@ import approved from "../../../config/test-target.json";
 import { parseRuntimeConfig } from "../runtime-config";
 import {expectedRuntimeProject,authenticationCookieSecure} from '../auth/deployment-profile';
 
-export function runtimeConfig() { return parseRuntimeConfig(process.env, expectedRuntimeProject(process.env,approved.projectRef)); }
+export function runtimeConfig() { const runtime=previewRuntimeEnvironment(process.env,{projectId:process.env.MITSA_PREVIEW_VERCEL_PROJECT_ID,sourceSha:process.env.MITSA_PREVIEW_SOURCE_SHA,projectName:'mitsa-fireworksinventory',backendRef:process.env.MITSA_PREVIEW_SUPABASE_PROJECT_REF});return parseRuntimeConfig(runtime, expectedRuntimeProject(runtime,previewRuntimeProject(runtime,approved.projectRef))); }
 
 function cookieOptions(options: CookieOptions): CookieOptions {
   return { ...options, httpOnly: true, secure: authenticationCookieSecure(), sameSite: "lax", path: "/" };

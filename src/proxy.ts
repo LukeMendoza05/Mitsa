@@ -1,3 +1,4 @@
+import {previewRuntimeEnvironment,previewRuntimeProject} from "./lib/auth/preview-origin.mjs";
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 import approved from "../config/test-target.json";
@@ -5,7 +6,8 @@ import { parseRuntimeConfig } from "./lib/runtime-config";
 import {expectedRuntimeProject,authenticationCookieSecure} from './lib/auth/deployment-profile';
 
 export async function proxy(request: NextRequest) {
-  const env = parseRuntimeConfig(process.env,expectedRuntimeProject(process.env,approved.projectRef));
+  const runtime=previewRuntimeEnvironment(process.env,{projectId:process.env.MITSA_PREVIEW_VERCEL_PROJECT_ID,sourceSha:process.env.MITSA_PREVIEW_SOURCE_SHA,projectName:'mitsa-fireworksinventory',backendRef:process.env.MITSA_PREVIEW_SUPABASE_PROJECT_REF});
+  const env = parseRuntimeConfig(runtime,expectedRuntimeProject(runtime,previewRuntimeProject(runtime,approved.projectRef)));
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
   // React's development debugger requires eval; production keeps the strict
   // nonce policy. This follows this installed Next.js version's CSP guide.

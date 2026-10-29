@@ -1,6 +1,6 @@
 # Protected preview preparation
 
-Requested project name: `mitsa-inventory`. Requested future production hostname: `mitsa-inventory.vercel.app`. These names are requests, not proof of an allocated or deployed service.
+Requested project name: `mitsa-fireworksinventory`. Requested future production hostname: `mitsa-fireworksinventory.vercel.app`. These names are requests, not proof of an allocated or deployed service.
 
 Use the Next.js framework, source root `.`, Node.js 24, `npm ci --ignore-scripts`, `npm run build` and the platform's default Next.js output. Do not use static export: authentication requires server routes. Do not use the local acceptance-test custom server as a deployment server.
 

@@ -12,8 +12,8 @@ export function registrationPolicyMode(mode: string, policy: {
 
 // Presentation classification only. This never grants registration permission.
 export function registrationIntentionallyClosed(mode:string,policy:{status:'test'|'published';publicRegistration:boolean;pilotRegistration?:boolean}|null,origin:string) {
- if(!policy)return false;
  if(mode==='disabled')return true;
+ if(!policy)return false;
  if(mode==='public')return policy.status==='published'&&!policy.publicRegistration;
  return ['development-open','controlled-pilot'].includes(mode)&&origin==='http://127.0.0.1:3000'&&policy.status==='test'&&!policy.publicRegistration&&policy.pilotRegistration===false;
 }
