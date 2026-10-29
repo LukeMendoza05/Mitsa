@@ -1,0 +1,8 @@
+{
+  "version": 1,
+  "profiles": {
+    "isolated-development": null,
+    "consenting-pilot": null,
+    "production": null
+  }
+}

@@ -1,0 +1,15 @@
+.git/
+.env*
+.secrets/
+.tools/
+.aws/
+.codex/
+.agents/
+.superpowers/
+artifacts/
+node_modules/
+.next/
+tests/
+coverage/
+*.log
+*.tsbuildinfo

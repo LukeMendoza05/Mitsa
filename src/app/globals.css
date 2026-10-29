@@ -1,0 +1,35 @@
+:root {
+  color-scheme: light;
+  --paper: #fff; --fog: #fafafb; --mist: #f2f2f3; --ink: #17191c;
+  --muted: #626773; --hairline: #ececec; --peach: #fbe1d1; --sienna: #5d2a1a;
+  --gutter: 48px; --section-space: 80px;
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+  --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px;
+  --space-12:48px; --space-16:64px;
+  --control-height:52px; --control-radius:16px; --surface-radius:24px;
+  --control-border:#81858e; --error-ink:#a12b27; --error-surface:#fffafa;
+  --form-width:464px; --reading-width:64ch;
+  --preview-shadow: 0 0 0 1px rgb(4 23 43 / 5%), 0 20px 25px -5px rgb(0 0 0 / 8%), 0 8px 10px -6px rgb(0 0 0 / 6%);
+}
+* { box-sizing: border-box; }
+html { scroll-padding-top: 100px; }
+body { margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body), Arial, sans-serif; font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-wrap: anywhere; }
+h1, h2, h3, h4, p, figure { margin: 0; }
+h1, h2 { font-family: var(--font-display), Georgia, serif; font-weight: 400; letter-spacing: -.015em; line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(2rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(2.25rem, 4.5vw, 4rem); }
+h3, h4 { font-weight: 500; line-height: 1.3; }
+a { color: inherit; text-decoration: none; }
+button, input, summary { font: inherit; }
+button, a, summary { -webkit-tap-highlight-color: rgb(23 25 28 / 10%); touch-action: manipulation; }
+button { cursor: pointer; }
+button:disabled { cursor: wait; opacity: .65; }
+input { min-width: 0; }
+img, svg { max-width: 100%; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 5px; }
+::selection { background: var(--peach); color: var(--sienna); }
+[id] { scroll-margin-top: 100px; }
+[data-motion-word] { display: inline-block; max-width: 100%; }
+@media (max-width: 1023px) { :root { --gutter: 32px; --section-space: 64px; } }
+@media (max-width: 767px) { :root { --gutter: 20px; --section-space: 48px; } body { font-size: 16px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
