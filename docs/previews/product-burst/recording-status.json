@@ -1,0 +1,4 @@
+{
+  "supported": false,
+  "reason": "Playwright FFmpeg executable is absent; no additional tooling installed"
+}

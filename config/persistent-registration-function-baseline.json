@@ -1,0 +1,37 @@
+{
+  "project": "mjtejwafxriwntweussc",
+  "databaseMarker": "fireworks-foundation-proof-01a12e38",
+  "scope": "read-only installed function metadata before Stage A integration",
+  "functions": [
+    {
+      "name": "current_actor",
+      "sha256": "587affbee9b5b7bf9cfd3b8bf343eda75626ec0fb9b886b9f3c370995182d652",
+      "owner": "postgres",
+      "acl": "{postgres=X/postgres,authenticated=X/postgres,app_authz=X/postgres,app_command=X/postgres,app_workspace=X/postgres}"
+    },
+    {
+      "name": "mitsa_before_user_created",
+      "sha256": "3b9a3d84edaf52207da124f1a1ef2f909f1f855ac47dced61c5dd023f9200f0d",
+      "owner": "postgres",
+      "acl": "{postgres=X/postgres,supabase_auth_admin=X/postgres}"
+    },
+    {
+      "name": "mitsa_current_terms",
+      "sha256": "88f032d6b3390dbe6b739e2969beef228b91efe8d925b8434cd9621e1d4d77b3",
+      "owner": "app_workspace",
+      "acl": "{app_workspace=X/app_workspace,authenticated=X/app_workspace}"
+    },
+    {
+      "name": "mitsa_finalize_registration",
+      "sha256": "7a09f6854c00baefbdd1bdb89fb45079139406025f86e82b14d9fd275c58ab65",
+      "owner": "app_workspace",
+      "acl": "{app_workspace=X/app_workspace,authenticated=X/app_workspace}"
+    },
+    {
+      "name": "mitsa_isolated_send_email",
+      "sha256": "8c9483aff22dc2ffc10024b97894903e3c80cc53963ba2f92a48102f79ba48f9",
+      "owner": "postgres",
+      "acl": "{postgres=X/postgres,supabase_auth_admin=X/postgres}"
+    }
+  ]
+}

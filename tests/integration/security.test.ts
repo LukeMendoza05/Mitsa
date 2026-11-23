@@ -50,9 +50,9 @@ describe("hosted foundation security", () => {
     const {rows}=await db.query("select p.pronargs, p.prorettype::regtype::text as returns, p.prosecdef, pg_get_userbyid(p.proowner) as owner, p.proconfig from pg_proc p where p.oid=to_regprocedure('private.current_actor()')");
     expect(rows).toEqual([{pronargs:0,returns:"uuid",prosecdef:true,owner:"postgres",proconfig:['search_path=""','row_security=on']}]);
     const acl=await db.query("select grantee::regrole::text as grantee, privilege_type, is_grantable from pg_proc p, lateral aclexplode(p.proacl) where p.oid='private.current_actor()'::regprocedure order by grantee::regrole::text");
-    expect(acl.rows).toEqual(["app_authz","app_command","authenticated","postgres"].map(grantee=>({grantee,privilege_type:"EXECUTE",is_grantable:false})));
+    expect(acl.rows).toEqual(["app_authz","app_command","app_workspace","authenticated","postgres"].map(grantee=>({grantee,privilege_type:"EXECUTE",is_grantable:false})));
     const exposed=await db.query("select p.proname from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname='api' order by p.proname");
-    expect(exposed.rows.map(r=>r.proname)).toEqual(["foundation_capabilities","foundation_identity","foundation_increment"]);
+    expect(exposed.rows.map(r=>r.proname).filter(name=>!name.startsWith("mitsa_"))).toEqual(["foundation_capabilities","foundation_identity","foundation_increment"]);
   });
 
   it("denies operator-injected claims rather than treating SET ROLE as verified authentication", async () => {

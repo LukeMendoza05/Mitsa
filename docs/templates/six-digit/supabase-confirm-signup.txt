@@ -1,0 +1,17 @@
+Mitsa
+Account security
+
+Verify your email.
+
+Enter this code in Mitsa to confirm your email address and finish setting up your account.
+
+Verification code: {{ .Token }}
+
+This code expires in 60 minutes. If you request a new code, use the latest message.
+
+Prefer a link? {{ .SiteURL }}/auth/email?type=signup&token_hash={{ .TokenHash }}
+Opening the link alone does not confirm your account.
+
+Didn't request this? You can safely ignore this email. Do not share your code or forward this message.
+
+Mitsa — Fireworks inventory and business management.

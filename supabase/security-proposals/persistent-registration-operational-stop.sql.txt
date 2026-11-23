@@ -1,0 +1,21 @@
+-- REVIEW ONLY: full delivery stop for the exact approved generation $1.
+-- Not session revocation. Retains accounts, policy/consent, captures and history.
+-- Run in a transaction using bound parameters; require exactly one control row.
+with stopped as (
+ update private.registration_control
+ set admission_enabled=false,delivery_enabled=false,transport_ready=false,
+     session_policy_ready=false,stopped_at=statement_timestamp(),
+     approval_generation=null,worker_id=null,worker_until=null,heartbeat_at=null
+ where singleton and approval_generation=$1::uuid
+ and exists(select 1 from foundation_probe.environment_identity where singleton and marker='fireworks-foundation-proof-01a12e38')
+ returning singleton
+), dispatches as (
+update private.auth_mail_dispatch
+set state=case when state='claimed' then 'unconfirmed' else 'cancelled' end,
+ completed_at=statement_timestamp(),failure_category='shutdown'
+where generation=$1::uuid and state in ('reserved','queued','claimed') and exists(select 1 from stopped)
+returning state
+)
+select (select count(*) from stopped)::int stopped_controls,
+ (select count(*) from dispatches where state='cancelled')::int cancelled,
+ (select count(*) from dispatches where state='unconfirmed')::int unconfirmed;

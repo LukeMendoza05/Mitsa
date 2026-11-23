@@ -1,0 +1,103 @@
+{
+  "capturedAt": "2026-10-14T06:08:31.870Z",
+  "origin": "http://127.0.0.1:3000",
+  "phase": "after",
+  "results": [
+    {
+      "route": "login",
+      "width": 320,
+      "height": 568,
+      "path": "docs/previews/auth-refresh/after/login-320x568.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "login",
+      "width": 390,
+      "height": 844,
+      "path": "docs/previews/auth-refresh/after/login-390x844.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "login",
+      "width": 768,
+      "height": 1024,
+      "path": "docs/previews/auth-refresh/after/login-768x1024.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "login",
+      "width": 1024,
+      "height": 768,
+      "path": "docs/previews/auth-refresh/after/login-1024x768.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "login",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/previews/auth-refresh/after/login-1440x900.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "login",
+      "width": 1920,
+      "height": 1080,
+      "path": "docs/previews/auth-refresh/after/login-1920x1080.png",
+      "overflow": false,
+      "title": "Sign In | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 320,
+      "height": 568,
+      "path": "docs/previews/auth-refresh/after/signup-320x568.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 390,
+      "height": 844,
+      "path": "docs/previews/auth-refresh/after/signup-390x844.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 768,
+      "height": 1024,
+      "path": "docs/previews/auth-refresh/after/signup-768x1024.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 1024,
+      "height": 768,
+      "path": "docs/previews/auth-refresh/after/signup-1024x768.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 1440,
+      "height": 900,
+      "path": "docs/previews/auth-refresh/after/signup-1440x900.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    },
+    {
+      "route": "signup",
+      "width": 1920,
+      "height": 1080,
+      "path": "docs/previews/auth-refresh/after/signup-1920x1080.png",
+      "overflow": false,
+      "title": "Sign Up | Mitsa"
+    }
+  ]
+}

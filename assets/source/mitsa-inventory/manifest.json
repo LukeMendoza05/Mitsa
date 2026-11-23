@@ -1,0 +1,176 @@
+{
+  "authoring": "Blender Lab MCP execute_blender_code",
+  "blender": "5.2.2 LTS",
+  "model": "mitsa-inventory-assembly.glb",
+  "purpose": "Illustrative inventory organization, not manufacturer packaging",
+  "groups": [
+    {
+      "name": "Carton",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "intro_offset": [
+        0.0,
+        0.0,
+        -0.1
+      ],
+      "intro_rotation": [
+        0.0,
+        0.0,
+        -0.07
+      ]
+    },
+    {
+      "name": "Tray_A",
+      "position": [
+        -1.1200000047683716,
+        0.0,
+        0.20000000298023224
+      ],
+      "intro_offset": [
+        -0.6,
+        0.12,
+        0.82
+      ],
+      "intro_rotation": [
+        0.06,
+        0.0,
+        -0.06
+      ]
+    },
+    {
+      "name": "Tray_B",
+      "position": [
+        1.1200000047683716,
+        0.0,
+        0.20000000298023224
+      ],
+      "intro_offset": [
+        0.7,
+        0.1,
+        1.42
+      ],
+      "intro_rotation": [
+        -0.04,
+        0.0,
+        0.07
+      ]
+    },
+    {
+      "name": "Pack_A",
+      "position": [
+        -1.1200000047683716,
+        -0.6700000166893005,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        -0.6,
+        -0.25,
+        1.65
+      ],
+      "intro_rotation": [
+        0.12,
+        -0.07,
+        -0.09
+      ]
+    },
+    {
+      "name": "Pack_B",
+      "position": [
+        -1.1200000047683716,
+        0.6700000166893005,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        -0.3,
+        0.35,
+        2.15
+      ],
+      "intro_rotation": [
+        -0.05,
+        0.06,
+        0.08
+      ]
+    },
+    {
+      "name": "Pack_C",
+      "position": [
+        1.1200000047683716,
+        -0.6700000166893005,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        0.65,
+        -0.25,
+        2.6
+      ],
+      "intro_rotation": [
+        0.08,
+        0.04,
+        0.1
+      ]
+    },
+    {
+      "name": "Unit_1",
+      "position": [
+        0.5,
+        0.6800000071525574,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        0.47000000000000003,
+        0.12000000000000001,
+        2.88
+      ],
+      "intro_rotation": [
+        0.05,
+        -0.04,
+        -0.06
+      ]
+    },
+    {
+      "name": "Unit_2",
+      "position": [
+        1.1200000047683716,
+        0.6800000071525574,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        0.65,
+        0.2,
+        3.0
+      ],
+      "intro_rotation": [
+        0.05,
+        -0.04,
+        0.0
+      ]
+    },
+    {
+      "name": "Unit_3",
+      "position": [
+        1.7400000095367432,
+        0.6800000071525574,
+        0.25999999046325684
+      ],
+      "intro_offset": [
+        0.8300000000000001,
+        0.28,
+        3.12
+      ],
+      "intro_rotation": [
+        0.05,
+        -0.04,
+        0.06
+      ]
+    }
+  ],
+  "renders": [
+    "inventory-intro.png",
+    "inventory-assembled.png"
+  ],
+  "glb_bytes": 534988,
+  "refinement": "Existing geometry preserved; matte materials and softer studio lighting clarified. Blender MCP."
+}

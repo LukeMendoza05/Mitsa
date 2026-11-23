@@ -1,0 +1,82 @@
+// Local evidence aggregation only. Reads no credentials and makes no network calls.
+import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';
+const read=path=>JSON.parse(readFileSync(path,'utf8'));
+const write=(path,value)=>writeFileSync(path,JSON.stringify(value,null,2)+'\n');
+const checkedAt=new Date().toISOString(),project='mjtejwafxriwntweussc';
+const smtpAcceptedMessages=run=>(run.deliveryStates??[]).filter(row=>row.state==='smtp-accepted').reduce((n,row)=>n+row.n,0);
+const dashboard=read('artifacts/provider-otp-dashboard-review.json'),capture=read('artifacts/code-capture-hosted-tests.json'),preservation=read('artifacts/developer-reset-preservation.json'),schema=read('artifacts/pilot-relay-postflight.json'),gmail=read('artifacts/controlled-gmail-test-results.json'),audit=read('artifacts/email-public-audit.json');
+if(dashboard.project!==project||dashboard.emailOtpLength!==6||dashboard.emailOtpExpirySeconds!==3600||capture.capturedProviderCodeLength!==6||!preservation.existingAccountAndVerifiedMfaUnchanged||!schema.pilotWindowAndSmtpDisabled||!gmail.windowClosed)throw Error('Evidence does not match the closed, preserved six-digit phase');
+mkdirSync('artifacts/history',{recursive:true});mkdirSync('docs/history',{recursive:true});
+for(const name of ['email-next-phase-readiness','public-registration-preparation']){
+ const previous=`artifacts/${name}.json`,history=`artifacts/history/${name}-before-six-digit-activation.json`;
+ if(!existsSync(history))writeFileSync(history,readFileSync(previous));
+}
+if(!existsSync('artifacts/controlled-gmail-test-attempt-1.json'))write('artifacts/controlled-gmail-test-attempt-1.json',{...gmail,inboxReceipt:'No message sent',browserFailureCause:'Bundled Chromium executable absent',correctedBrowser:'Installed Microsoft Edge; preflight now precedes activation'});
+const six={checkedAt,project,phase:'Historical six-digit activation before external SMTP testing',providerLength:6,providerExpirySeconds:3600,providerSavedAndReloaded:true,localDefaultLength:6,hostedCaptureChecks:3,actualProviderCodeLength:6,emailBrowserChecksPassed:8,recoveryBrowserChecksPassed:2,additionalEnhancedCompatibilityChecksPassed:2,unitTestsPassedAtActivation:183,buildPassed:true,typecheckPassed:true,personalPreservation:preservation,schemaPreservation:schema,externalEmailsSentAtActivation:0,publicRegistrationEnabled:false};
+write('artifacts/six-digit-activation-results.json',six);
+const publicPreparation={checkedAt,project,userCloudflareState:'Mitsa - Development Managed widget created; keys not supplied to application',serverSideTurnstilePrepared:true,liveTurnstileVerified:false,liveSupabaseCaptchaSettingsChanged:false,publicRegistrationEnabled:false,
+ readinessFailure:{cause:'Synthetic test signing key encoded as base64url instead of required 64 lowercase hex characters',category:'Invalid test fixture',correction:'Fixture uses randomBytes(32).toString(hex)',productionGuardRelaxed:false,targetedContextTestsPassed:3},
+ verification:{unitSuitePassed:221,unitFilesPassed:35,closedWindowEvidenceTestsPassed:5,inboxGateTestsPassed:3,developmentDiagnosticRouteTestsPassed:3,localResendBrowserChecksPassed:read('artifacts/pilot-resend-browser-regression.json').checksPassed,explicitProviderRejections:read('artifacts/controlled-gmail-code-rejections.json'),buildPassedBeforeOperatorOnlyChanges:true,typecheckPassed:true,realSixDigitEnhancedBrowserChecksPassed:2,liveCaptchaBrowserTestsRun:false},
+ rejectionCoverage:['missing configuration','dummy test keys','missing/oversized proof','provider failure','network/JSON failure','wrong hostname/action','expired/future proof','provider-reported duplicate','missing email confirmation'],
+ privateSetup:{helper:'scripts/configure-turnstile.ps1',changesOnlyCaptchaFields:true,requiresIsolatedLoopbackTarget:true,keepsPublicSignupClosed:true,networkCalls:0,secretPrinted:false},
+ gmail:{replacementWindowClosed:gmail.windowClosed,durableAttempts:gmail.attempts,smtpAcceptedMessages:smtpAcceptedMessages(gmail),userConfirmedFirstInboxReceipt:gmail.inboxReceipt==='User confirmed first message',freshCodeVerified:gmail.actualProviderCodeVerified,syntheticAccountRetained:true,singleMessageCompletionApprovalPending:!gmail.actualProviderCodeVerified,timestampPrecisionBugFixed:true,sameUrlResendWaitFixed:true},
+ remaining:['Private widget-key setup and live widget/token/CSP/keyboard validation',...(!gmail.actualProviderCodeVerified?['Fresh approval for one resend message and actual fresh-code verification']:[]),'Reviewed broader-recipient and recovery delivery','Durable abuse and direct-provider regression checks','Provider capacity and final eligibility/legal/public-registration approvals'],privateValuesPrinted:false};
+write('artifacts/turnstile-preparation-results.json',publicPreparation);
+write('artifacts/email-next-phase-readiness.json',{checkedAt,project,currentApplicationOtpLength:6,currentProviderOtpLength:6,providerOtpExpirySeconds:3600,providerOtpChanged:true,providerSaveMismatchResolved:true,earlierSaveFailureCause:'Unknown; prior saved claim did not persist',localRegistrationTemporarilyHeld:false,localRegistrationMode:'isolated-test',activationStatus:gmail.actualProviderCodeVerified?'Controlled Gmail receipt, fresh six-digit verification, old-code rejection and replay denial passed; window closed':'Captured-mail regressions passed; Gmail fresh-code confirmation pending',sixDigitResults:six,publicCaptcha:publicPreparation,controlledGmail:gmail,personalPreservation:preservation,schemaPreservation:schema,publicAudit:audit,productionModified:false,personalResetExecuted:false,privateValuesPrinted:false});
+write('artifacts/public-registration-preparation.json',{checkedAt,project,currentOtp:{length:6,expirySeconds:3600,evidence:'Saved and reloaded exact-project dashboard plus actual encrypted provider capture'},otpSettingChanged:true,preparedMigrationApplied:true,preparedMigrationRepeated:false,publicRegistrationActive:false,personalResetExecuted:false,smtpAcceptedMessages:smtpAcceptedMessages(gmail),controlledGmail:gmail,captcha:publicPreparation,remainingApprovals:[...(!gmail.actualProviderCodeVerified?['One-message completion window after closed resend failure']:[]),'Broader external delivery and recovery','Final unrestricted public registration and any legal-policy publication','Any deployment or personal destructive reset'],privateValuesPrinted:false});
+const oldDoc='docs/email-next-phase-readiness.md',historyDoc='docs/history/email-next-phase-readiness-before-six-digit-activation.md';
+if(!existsSync(historyDoc))writeFileSync(historyDoc,'# Superseded preparation evidence\n\nThis document records the earlier eight-digit/candidate phase. Current state is in ../email-next-phase-readiness.md.\n\n'+readFileSync(oldDoc,'utf8'));
+writeFileSync(oldDoc,`# Mitsa — current email and registration readiness
+
+Updated 2026-10-15. Actual Supabase email OTP issuance is **six digits**, with expiry **3600 seconds**, verified after saving and reloading the exact isolated project dashboard. Local configuration and default validation match. Earlier eight-digit/candidate claims are superseded; their evidence is retained in [history](history/email-next-phase-readiness-before-six-digit-activation.md).
+
+## Completed verification
+
+- Three hosted capture checks prove actual six-digit issuance, encrypted recipient binding, successful confirmation/Terms finalization, resend cooldown, invalid/expired/replaced/replayed rejection and zero workspace grants.
+- Eight desktop/mobile email browser checks and two password-recovery journeys passed. Two further enhanced browser checks passed after inactive CAPTCHA integration.
+- The latest full unit suite passed 221 tests in 35 files. Eight local browser checks reproduced the repeated-URL timing error and verified the corrected wait, enhanced/native forms, disabled cooldown waiting and cooldown rejection. Explicit provider invalid-code responses were independently checked; network errors cannot count as OTP invalidation. Typecheck passed; the last production build preceded these operator-only changes.
+- Existing developer account, verified MFA, D Extacy Fireworks workspace, membership, location and history match the private preservation baseline. All original 4,755 application/history rows, grants and RLS policies remain preserved.
+
+See [six-digit results](six-digit-email-results.md).
+
+## Controlled Gmail run
+
+The approved one-message completion window succeeded and closed at **04:24:06 UTC (12:24 PM Manila)**. The normal Resend Code action issued a fresh six-digit provider code; Gmail accepted the new message and the user confirmed its receipt. The new code verified through Mitsa and finalized the original Terms, without any role, workspace or MFA factor assignment. The compromised previous code was rejected while still unexpired; replay of the newly consumed code was rejected. Immediate resend cooldown passed. Exactly two accepted delivery claims remain across both windows, one in the final window. No SMTP errors were recorded. The prior timing/browser/timestamp failures are retained as historical evidence. See [run results](controlled-gmail-test-results.md), [approved scope](controlled-gmail-finish-approval.md) and artifacts/controlled-gmail-completion-postflight.json. Broader recipients and recovery delivery remain unproven and unauthorized.
+
+## Cloudflare preparation
+
+The user's Cloudflare account and Managed **Mitsa - Development** widget are ready. Application keys and real widget validation are pending. Server-side Siteverify, exact hostname/action/freshness checks, one-use token reset, private key setup and fail-closed public gating are prepared locally. The readiness-test failure was an invalid synthetic signing-key encoding; only its fixture changed. See [root cause and private setup](turnstile-development-setup.md).
+
+Public registration, live Supabase CAPTCHA settings, external recovery/invitations, deployment, legal publication and personal reset remain unchanged. Local mode is isolated-test. The Gmail window is closed and its active approval manifest removed; no sending worker is running.
+
+## Next steps
+
+1. Save Turnstile keys privately and verify actual widget/server behavior in a separately scoped closed-gate diagnostic.
+2. Preserve the completed synthetic account, consent and two delivery claims. No replacement Gmail test is needed or authorized by the completed approval.
+3. Review broader-recipient/recovery transport, durable abuse limits and provider capacity. Retain automated encrypted capture.
+4. Present the public-readiness report and obtain final product/legal/security activation approval before unrestricted signup. Any account reset, production change or deployment requires its own explicit approval.
+
+## Completion audit against the resumed objective
+
+| Requirement | Evidence and present result |
+|---|---|
+| Preserve and resume the existing worktree | Existing changes retained; installed schema/hash audited without repeating migrations. No landing, account or workspace redesign/reset. |
+| Correct preview origin and enforce CSRF | Latest email-public-audit.json proves production missing-context/CSRF rejection using port 3001 with its matching process-local origin. That owned temporary preview was then stopped; the user's port-3000 development environment remains the intended runtime. |
+| Six-digit verification/resend, recovery and invitation compatibility | Captured-provider and desktop/mobile regression evidence passes. The delivered Gmail synthetic account is now independently verified as confirmed with original Terms finalized and zero memberships/factors. Recovery/invitations remain capture-tested, not externally delivered. |
+| Owner/Admin/Staff, MFA, workspace/location isolation | Existing hosted and browser synthetic journeys passed; private preservation compares the existing developer account/MFA/workspace and original database rows/grants/RLS. No new workspace privileges result from signup. |
+| Turnstile private configuration and live testing | Managed development widget reported ready by the user. Application site key and server secret are absent. Live widget/CSP/token/replay/expiry/accessibility evidence remains incomplete; mocked validator tests do not substitute for it. |
+| Controlled Gmail transport and receipt | Both scoped messages received. Fresh resend code verified; unexpired compromised code and consumed-code replay rejected; cooldown passed. Window closed, local mode restored, manifest absent, exactly two accepted claims retained. |
+| Broader real verification/recovery delivery | Not activated or proven. Dedicated self-inbox delivery does not establish arbitrary-recipient delivery, recovery transport, production capacity or reliability. A separate scope/provider decision is needed. |
+| Public signup without developer allowlisting | Local route/intent/CAPTCHA/policy preparation exists with rejection tests. Actual public flow remains unproven and disabled until live CAPTCHA, delivery, direct-provider/abuse and end-to-end evidence plus final eligibility/legal/security approval. |
+| TypeScript, build and private-output checks | Latest TypeScript and 221 unit tests pass; eight local browser checks pass. Last production build passed before operator-only changes. See the latest email-public-audit.json for the examined-file count; no private-value matches and all 14 landing files preserved. |
+| Existing accounts and database | Latest read-only target/marker/hash, 11 developer-associated rows and all original 4,755 application/history rows, function grants and RLS checks pass. No production or destructive action. |
+
+## Security concerns and approval boundaries
+
+The last isolated Supabase advisor report warns that **leaked-password protection is disabled**. No provider setting or paid upgrade has been authorized. This remains a public-readiness decision; see [Supabase remediation](https://supabase.com/docs/guides/auth/password-security#password-strength-and-leaked-password-protection). The private pilot ledger's RLS-without-policy notice is deliberate default denial: FORCE RLS and revoked ordinary grants were verified. No permissive policy should be added to silence it.
+
+The previously exposed code was rejected while unexpired, and the fresh code was consumed and rejected on replay. Neither should be reused. The completed window is closed; its approval does not authorize reopening. Both delivery claims remain. Broader delivery, live Supabase CAPTCHA changes, legal publication, deployment, production and personal reset each retain their existing separate authorization boundary.
+
+Evidence: artifacts/six-digit-activation-results.json, turnstile-preparation-results.json, controlled-gmail-test-results.json, pilot-relay-postflight.json, developer-reset-preservation.json and email-public-audit.json.
+`);
+console.log(JSON.stringify({currentOtpLength:6,currentOtpExpirySeconds:3600,oldEvidenceArchived:true,publicRegistrationEnabled:false,gmailWindowClosed:true,privateValuesRead:false}));

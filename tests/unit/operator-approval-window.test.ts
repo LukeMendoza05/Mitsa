@@ -1,0 +1,5 @@
+import {it,expect} from 'vitest';
+import {approvalWindow,shortenOverlongWindow} from '../../scripts/lib/operator-approval-window.mjs';
+it('takes one clock sample and stays within the exact approval duration',()=>{const now=Date.now(),w=approvalWindow(now);expect(Date.parse(w.notBefore)).toBe(now);expect(Date.parse(w.notAfter)-Date.parse(w.notBefore)).toBe(1800000);});
+it('a correction retains original start and scope and only shortens the end',()=>{const w=approvalWindow(1000000000000),bad={...w,notAfter:new Date(Date.parse(w.notAfter)+8).toISOString(),scope:'unchanged',limits:{connections:1}};const fixed=shortenOverlongWindow(bad);expect(fixed.notBefore).toBe(bad.notBefore);expect(Date.parse(fixed.notAfter)).toBe(Date.parse(bad.notAfter)-8);expect(fixed.scope).toBe(bad.scope);expect(fixed.limits).toEqual(bad.limits);expect(bad.notAfter).not.toBe(fixed.notAfter);});
+it('rejects invalid or expanded requested windows',()=>{expect(()=>approvalWindow(Date.now(),1800001)).toThrow();expect(()=>approvalWindow(Date.now(),-1)).toThrow();expect(()=>shortenOverlongWindow(approvalWindow())).toThrow();});

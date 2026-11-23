@@ -1,0 +1,196 @@
+{
+  "version": 2,
+  "previousReview": {
+    "path": "artifacts/history/strict-phase1-v1/config_strict-option-a-phase1-review.json.txt",
+    "sha256": "ffbfe8977789f58b98f67835a97efad429bc860eba26f700b490a84845c2567e"
+  },
+  "scope": "G-provider-readonly-v1",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "actorSha256": "587affbee9b5b7bf9cfd3b8bf343eda75626ec0fb9b886b9f3c370995182d652",
+  "limits": {
+    "databaseConnections": 1,
+    "sqlRequests": 6,
+    "selects": 4,
+    "transactions": 2,
+    "healthRequests": 1,
+    "runtimeSeconds": 120
+  },
+  "sqlSha256": "4f9a32cdf3b9a10aad52517275c7e06d3bdb106ec3a1e2d71ff38456e5108d66",
+  "sources": [
+    {
+      "path": "scripts/strict-provider-readonly.mjs",
+      "sha256": "351e1c8edb59d7879cc6a2d8124769d2e71ec882b75f562326be0a78d99c778c"
+    },
+    {
+      "path": "scripts/prepare-strict-phase1-review.mjs",
+      "sha256": "f1c8067cca70324549ffb28e9b5f3468528448cc8e1c3bdfbe7dc812549f2655"
+    },
+    {
+      "path": "scripts/lib/strict-provider-audit.mjs",
+      "sha256": "a18e52d34b8e03e73f49931519f7d906fe8c658be8a794dd133fbda9e547eac8"
+    },
+    {
+      "path": "scripts/lib/strict-revocation-regression.mjs",
+      "sha256": "42f0b839c6eb5ab01012bb76db7e53c6ae471973fe311a608bfc04903a26759f"
+    },
+    {
+      "path": "scripts/lib/preservation-private-evidence.mjs",
+      "sha256": "4b8b88a0d80ebb4f06c12617860cb0bb0569825985ecec2d68243bf2c16827ce"
+    },
+    {
+      "path": "scripts/test-target.mjs",
+      "sha256": "6fb5624daa225fbcc879bcd1bd5bd9935ef6e3eb578eb1eb4ab06beab799bf33"
+    },
+    {
+      "path": "scripts/postgres-config.mjs",
+      "sha256": "d98198eeb6b06c38567c41547c8aff20c0c08c94721d841b2d55b5aa488bea98"
+    },
+    {
+      "path": "tests/unit/strict-provider-audit.test.ts",
+      "sha256": "a46faa449ff3cacd464fba4a3161e6af9af2d2cb1bed053abe7fdaeefcc60f3a"
+    },
+    {
+      "path": "tests/unit/strict-provider-entry.test.ts",
+      "sha256": "71904a8f0880c2e4141809c093d957283eb1a58a75cfe408e2aecde0525eef08"
+    },
+    {
+      "path": "tests/unit/strict-revocation-regression.test.ts",
+      "sha256": "0eef36d510ce47230482d4d49489d6c25efa2b14cfcdc0a46d624be4eaa3996b"
+    },
+    {
+      "path": "docs/strict-option-a-phase1-20261029.md",
+      "sha256": "e131b21d6c6caafcf3b8f61fb00a5208d4ad7b8bc1f1c27cf412bc84ae7b7b52"
+    },
+    {
+      "path": "docs/strict-option-a-readonly-approval.md",
+      "sha256": "097cb8f5f5d31fec67e0fc629083471cfb19e2410f5e49e11bb0978ba0330da9"
+    },
+    {
+      "path": "config/test-target.json",
+      "sha256": "626e06d3d6e2fef3c74a2dbd4a052c818a4db609168e8f283f29cf489eedb89e"
+    },
+    {
+      "path": "package.json",
+      "sha256": "90e184aa4373b32b3817781d99c844963742cd811c1e4decd5a1f99d6bf5ba07"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7e9159c15084c03ca2585cfa5541df98e109724f399c73b47e03d3025294bb9"
+    }
+  ],
+  "publicSources": [
+    {
+      "path": "artifacts/strict-option-a-review-20261029/platform-changelog.md",
+      "url": "https://supabase.com/changelog.md",
+      "sha256": "0dac5c21d2b0041087f0af0284a414fdc37fdc79cff255f941c7967930af8d88"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/latest-release.json",
+      "url": "https://api.github.com/repos/supabase/auth/releases/latest",
+      "sha256": "dc93550569e14c21f673f6e54f8455a72488562911bdc04f3d86d92d36c63d69"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-commit.json",
+      "url": "https://api.github.com/repos/supabase/auth/commits/master",
+      "sha256": "a4617bf257f73644bb3021e3eb3d131cc46407ab1d79ec675427e015192a7e48"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/pull-2356.json",
+      "url": "https://api.github.com/repos/supabase/auth/pulls/2356",
+      "sha256": "aa7f7cf758e02536c5be4ec8a7e2222abbbcc6d82325cccde4ca135beb4ea95f"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-tokens-service.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/tokens/service.go",
+      "sha256": "03f7185ad7055dee171b03aac2076203635409fcc314dc987f880626aefcd8e9"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-models-refresh_token.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/models/refresh_token.go",
+      "sha256": "d9618f9b927c45262159a24b00f4266a950f0e32fc90ca98a100b6b301d47cf2"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-models-sessions.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/models/sessions.go",
+      "sha256": "0aa2c9c669cfaba02d036b354a0116241bee15a67ce706068845cf1f96d9018b"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-conf-configuration.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/conf/configuration.go",
+      "sha256": "1b309af54de1048e409c17baacf3bb36df5af46a1daec062bdfb75ab7bbddfc7"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-CHANGELOG.md",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/CHANGELOG.md",
+      "sha256": "b075eef48a2992ec99f201635e356616d6fc36baa5b16116019d1ae8edbf5c78"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/management-openapi.json",
+      "url": "https://api.supabase.com/api/v1-json",
+      "sha256": "258bda362e277793b13c0ec19606b8689483550d12fc3aa34f7ed50ebd102b53"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-api-auth.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/api/auth.go",
+      "sha256": "19672f8235335d723403a377ac32b76255beed8effc11f3c37d9beddc9d19926"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-api-middleware.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/api/middleware.go",
+      "sha256": "4fc5868d9a3245045ceacbbd972415c78e942fde56d9a5422f84bffb20bc1ff7"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-api-mfa.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/api/mfa.go",
+      "sha256": "f00cdf9b49077fb87c1d43580baa80c06e168b44fc87b974b58befd502ee107b"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-api-user.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/api/user.go",
+      "sha256": "bae046e8931bf9e6929f5588ad49b3007881c8e9e6d61cb77268db9491791b01"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/master-internal-api-api.go",
+      "url": "https://raw.githubusercontent.com/supabase/auth/fcc491d6d7665718b62f50598d723fde1e9b6c4a/internal/api/api.go",
+      "sha256": "806ea39c37b8ea189cffc9361073c792f80993b5849f3d50a8ea9a25f3ef92fc"
+    }
+  ],
+  "publicSummaries": [
+    {
+      "path": "artifacts/strict-option-a-review-20261029/manifest.json",
+      "sha256": "6da11a75366752bd54e3968d1d65d6b9468a00369e058a9f93db9bf5ea006092"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/auth-endpoints-manifest.json",
+      "sha256": "a03882ea01fa8cf1017724cf10e054e817e1abc791c201fe2ecc5f51d7992df7"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/route-source-manifest.json",
+      "sha256": "262077bb5618a75d02e6af6f1548bb4006bfc628d0837f40f5b4de438d62f145"
+    },
+    {
+      "path": "artifacts/strict-option-a-review-20261029/tree.json",
+      "sha256": "89d892425935b3af48ac7b894886ca5a36e1b9ad2c527e7e4201e53c03de35cf"
+    }
+  ],
+  "offlineTests": {
+    "path": "artifacts/strict-phase1-offline-v4.json",
+    "sha256": "4e03aec705862c2f0fcb609f4af17ba9852b797337414436b5c829a19add1a66",
+    "passed": 79,
+    "files": 6
+  },
+  "acceptedPreservationSha256": "05206a18393390f9849ea5c2e3b3ae8a50f2b0e25f86bcdc0056ed02ab77318e",
+  "onboardingReviewSha256": "801795d439085f2f740047d21819097594b6005bf5041ad1c2c11076c4a30141",
+  "readOnlyExecutable": true,
+  "sensitiveRegression": {
+    "status": "CORE_OFFLINE_VERIFIED_HOSTED_ASSEMBLY_NOT_FINAL",
+    "requiresSupportedProviderGuidance": true,
+    "requiresFreshFixturesAndHostedSourceBinding": true,
+    "authorized": false
+  },
+  "strictOptionA": "BLOCKED_SU-519045",
+  "approvalCreated": false,
+  "projectRequests": 0
+}

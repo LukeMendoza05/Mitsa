@@ -1,0 +1,108 @@
+{
+  "sources": "Supplied by user; concept artwork, not verified product/retailer photographs",
+  "rights": "User authorized reference, derivative texture and website use for this task; no manufacturer endorsement asserted",
+  "assets": [
+    {
+      "file": "assets/source/cinematic/references/image-1.png",
+      "name": "storefront",
+      "format": "png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "c22980deaef0715dec66de0fcdf28036194cb993d835d2d18c14fc16b4942613",
+      "classification": "user-approved flat concept image",
+      "manufacturerVerified": false,
+      "derivatives": [
+        {
+          "file": "public/marketing/approved/storefront.webp",
+          "bytes": 287466
+        },
+        {
+          "file": "public/marketing/approved/storefront-mobile.webp",
+          "bytes": 113742
+        }
+      ]
+    },
+    {
+      "file": "assets/source/cinematic/references/image-2.png",
+      "name": "inventory",
+      "format": "png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "9e55af39675055f47af223fb23650f294e3218df6ad9c350b08e7949d6ce4624",
+      "classification": "user-approved flat concept image",
+      "manufacturerVerified": false,
+      "derivatives": [
+        {
+          "file": "public/marketing/approved/inventory.webp",
+          "bytes": 310726
+        },
+        {
+          "file": "public/marketing/approved/inventory-mobile.webp",
+          "bytes": 129482
+        }
+      ]
+    },
+    {
+      "file": "assets/source/cinematic/references/image-3.png",
+      "name": "checkout",
+      "format": "png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "e04ffd5d0b5c5a9660671ae497ed6e1bc4b4e0dd461bb74c3fb4f209045be1d9",
+      "classification": "user-approved flat concept image",
+      "manufacturerVerified": false,
+      "derivatives": [
+        {
+          "file": "public/marketing/approved/checkout.webp",
+          "bytes": 238992
+        },
+        {
+          "file": "public/marketing/approved/checkout-mobile.webp",
+          "bytes": 104252
+        }
+      ]
+    },
+    {
+      "file": "assets/source/cinematic/references/image-4.png",
+      "name": "multi-shop",
+      "format": "png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "5b1e99de9dd60b3a7221ff357734fdf8ab405ada32fb3f06e3e19526bfc3a164",
+      "classification": "user-approved flat concept image",
+      "manufacturerVerified": false,
+      "derivatives": [
+        {
+          "file": "public/marketing/approved/multi-shop.webp",
+          "bytes": 335574
+        },
+        {
+          "file": "public/marketing/approved/multi-shop-mobile.webp",
+          "bytes": 126520
+        }
+      ]
+    },
+    {
+      "file": "assets/source/cinematic/references/image-5.png",
+      "name": "dragon-concept",
+      "format": "png",
+      "width": 1672,
+      "height": 941,
+      "sha256": "e46878dc938bb58ed2179147392175d10670982976e65f33e75f73e27fd54a30",
+      "classification": "user-approved flat concept image",
+      "manufacturerVerified": false,
+      "derivatives": []
+    },
+    {
+      "file": "assets/source/cinematic/references/image-6.png",
+      "name": "spectra-reference",
+      "format": "png",
+      "width": 1904,
+      "height": 1070,
+      "sha256": "245af32ca1a9f872cfe87303f4e08151a6d4cabd9501c11cdfc84496984b6842",
+      "classification": "third-party composition screenshot, reference only",
+      "manufacturerVerified": false,
+      "derivatives": []
+    }
+  ]
+}

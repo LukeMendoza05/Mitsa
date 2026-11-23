@@ -1,0 +1,44 @@
+{
+  "status": "prepared-not-approved-not-installed",
+  "projectRef": "mjtejwafxriwntweussc",
+  "databaseMarker": "fireworks-foundation-proof-01a12e38",
+  "migrationOrder": [
+    "supabase/prepared/20261016004927_mitsa_persistent_registration_inactive.sql",
+    "supabase/prepared/20261016005221_mitsa_persistent_registration_hooks_inactive.sql"
+  ],
+  "initialControls": {"admissionEnabled": false, "deliveryEnabled": false, "sessionPolicyReady": false, "approvalGeneration": null, "workerId": null, "transportReady": false, "termsId": null, "privacyId": null},
+  "privateService": {
+    "name": "mitsa-registration-service",
+    "entrypoint": "supabase/functions/mitsa-registration-service/index.ts",
+    "verifyJwt": false,
+    "enabled": false,
+    "authorization": "project-bound HMAC, 60-second envelope, atomic replay ledger, strict command schema, SQL eligibility and limits",
+    "signingSecretName": "MITSA_REGISTRATION_SERVICE_KEY",
+    "enabledVariable": "MITSA_REGISTRATION_SERVICE_ENABLED",
+    "enabledValueAtInstallation": "false",
+    "origin": "http://127.0.0.1:3000"
+  },
+  "authProvider": {
+    "beforeUserCreatedPointer": "preserve existing private.mitsa_before_user_created",
+    "sendEmailPointer": "preserve existing private.mitsa_isolated_send_email (user-confirmed read-only dashboard observation, 2026-10-16)",
+    "redirectAllowlistAdditionCandidate": null,
+    "redirectRoundTripLiveCompatibilityVerified": false,
+    "redirectCompatibilityPlan": "Test the existing same-origin Site URL first; hosted-version source accepts its query string and forwards it to email_data.redirect_to. No allowlist change is proposed. Any incompatible live result requires review before a new callback proposal.",
+    "preserveExistingRedirectEntries": true,
+    "globalCaptchaProtection": "unchanged (observed disabled)",
+    "providerSmtp": "unchanged; the enabled Send Email hook remains responsible for mail",
+    "signupEnabled": "unchanged (observed enabled; strict hook still gates creation)",
+    "emailConfirmationRequired": "unchanged (observed required)",
+    "emailOtpDigits": 6,
+    "emailOtpExpirySeconds": 3600,
+    "jwtExpirySeconds": 3600,
+    "refreshRotationEnabled": true,
+    "refreshReuseSeconds": 10,
+    "passwordSettings": "unchanged; hardening is a separate Stage B compatibility/approval decision",
+    "rateLimits": "unchanged; user confirmed Auth email quota 100/hour by read-only dashboard observation, 2026-10-16",
+    "emailQuotaPerHourObserved": 100
+  },
+  "localRuntimeAtInstallation": {"MITSA_REGISTRATION_ENGINE": "legacy", "MITSA_DEPLOYMENT_PROFILE": "isolated-development", "persistentWorkerStarted": false},
+  "deliveryBudgetsForLaterReview": {"hourly": 10, "rolling24Hour": 20, "recipientMinimumSeconds": 60},
+  "notIncluded": ["registration activation", "external mail", "new accounts", "policy publication or live policy creation", "session-policy installation", "Auth table trigger", "existing account or MFA changes", "production target", "public deployment"]
+}

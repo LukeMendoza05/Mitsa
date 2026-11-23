@@ -1,0 +1,16 @@
+{
+  "status": "within-existing-approved-hardening-limits",
+  "projectRef": "mjtejwafxriwntweussc",
+  "databaseMarker": "fireworks-foundation-proof-01a12e38",
+  "stoppedCheckpointSha256": "619c2d28ea284e6240452eec103e6aecd86ef67a221a3637d2f535692f78ce63",
+  "originalProposalSha256": "8c1a1987e7bf964877e80663609951020ef5c2aedb841335f6f924669435e7bc",
+  "priorHardeningCounts": {"create": 0, "password": 6, "recovery": 1, "signin": 3, "refresh": 0, "enroll": 0, "verifyNewFactor": 0},
+  "remainingPasswordAttempts": 4,
+  "cumulativeHardeningPasswordLimit": 10,
+  "cumulativeHardeningRecoveryLimit": 2,
+  "cumulativeHardeningSigninLimit": 8,
+  "cumulativeHardeningRefreshLimit": 8,
+  "newAccounts": 0,
+  "newFactors": 0,
+  "externalEmails": 0
+}

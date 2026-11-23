@@ -1,0 +1,32 @@
+// Pure, value-free diagnostic. Never authorizes a replacement baseline.
+import assert from 'node:assert/strict';
+import {isDeepStrictEqual} from 'node:util';
+export const preservationPrimaryKeysSql="select n.nspname||'.'||c.relname as \"table\",array_agg(a.attname::text order by k.position) as columns from pg_index i join pg_class c on c.oid=i.indrelid join pg_namespace n on n.oid=c.relnamespace cross join lateral unnest(i.indkey) with ordinality k(attnum,position) join pg_attribute a on a.attrelid=c.oid and a.attnum=k.attnum where i.indisprimary and n.nspname in ('private','foundation_probe') group by n.nspname,c.relname order by 1";
+const canonical=v=>JSON.stringify(v,(_key,value)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.fromEntries(Object.keys(value).sort().map(k=>[k,value[k]])):value);
+const label=v=>/^[a-z_][a-z0-9_.]{0,126}$/.test(v)?v:'nonstandard-name';
+function compareRows(before,after,keys){
+ if(!keys.length||[...before,...after].some(r=>keys.some(k=>!Object.hasOwn(r,k)))){
+  const b=new Map(),a=new Map();for(const r of before){const k=canonical(r);b.set(k,(b.get(k)??0)+1);}for(const r of after){const k=canonical(r);a.set(k,(a.get(k)??0)+1);}
+  let removed=0,added=0;for(const [k,n] of b)removed+=Math.max(0,n-(a.get(k)??0));for(const [k,n] of a)added+=Math.max(0,n-(b.get(k)??0));
+  return {addedRows:added,removedRows:removed,changedRows:0,changedColumns:[],matching:'row-multiset'};
+ }
+ const index=rows=>{const result=new Map();for(const r of rows){const k=canonical(keys.map(key=>r[key]));assert(!result.has(k),'duplicate primary key');result.set(k,r);}return result;};
+ const b=index(before),a=index(after),columns=new Set();let changedRows=0;
+ for(const [key,old] of b){const current=a.get(key);if(current&&!isDeepStrictEqual(old,current)){changedRows++;for(const field of new Set([...Object.keys(old),...Object.keys(current)]))if(!isDeepStrictEqual(old[field],current[field]))columns.add(label(field));}}
+ return {addedRows:[...a.keys()].filter(k=>!b.has(k)).length,removedRows:[...b.keys()].filter(k=>!a.has(k)).length,changedRows,changedColumns:[...columns].sort(),matching:'primary-key'};
+}
+export function preservationDifferences(before,after,primaryKeys){
+ const differences=[];
+ if(!isDeepStrictEqual(before.target,after.target))differences.push({category:'target-metadata'});
+ for(const table of new Set([...Object.keys(before.rows),...Object.keys(after.rows)])){
+  if(!before.rows[table]||!after.rows[table]){differences.push({category:'table-presence',table:label(table)});continue;}
+  const d=compareRows(before.rows[table],after.rows[table],primaryKeys[table]??[]);
+  if(d.addedRows||d.removedRows||d.changedRows)differences.push({category:'application-data',table:label(table),...d});
+ }
+ for(const table of ['users','mfa_factors']){
+  const d=compareRows(before.identities[table],after.identities[table],['id']);
+  if(d.addedRows||d.removedRows||d.changedRows)differences.push({category:'auth-row-digest',table,addedRows:d.addedRows,removedRows:d.removedRows,changedRows:d.changedRows});
+ }
+ for(const field of new Set([...Object.keys(before.security),...Object.keys(after.security)]))if(!isDeepStrictEqual(before.security[field],after.security[field]))differences.push({category:'security-metadata',field:label(field)});
+ return {exactSnapshotMatches:isDeepStrictEqual(before,after),differences,representationOrOrderingOnly:differences.length===0&&!isDeepStrictEqual(before,after),replacementBaselineApproved:false};
+}

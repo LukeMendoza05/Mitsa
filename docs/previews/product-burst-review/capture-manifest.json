@@ -1,0 +1,67 @@
+{
+  "capturedAt": "2026-10-13T03:09:45.346Z",
+  "url": "http://127.0.0.1:3002/experiments/product-burst",
+  "browser": "155.0.4283.45",
+  "desktop": {
+    "width": 1440,
+    "height": 900
+  },
+  "checkpointEvidence": [
+    {
+      "requested": 0,
+      "actual": 0,
+      "path": "docs/previews/product-burst-review/0.png"
+    },
+    {
+      "requested": 0.1,
+      "actual": 0.1,
+      "path": ".superpowers/burst-review/10.png"
+    },
+    {
+      "requested": 0.25,
+      "actual": 0.25,
+      "path": "docs/previews/product-burst-review/25.png"
+    },
+    {
+      "requested": 0.5,
+      "actual": 0.5,
+      "path": "docs/previews/product-burst-review/50.png"
+    },
+    {
+      "requested": 0.65,
+      "actual": 0.65,
+      "path": ".superpowers/burst-review/65.png"
+    },
+    {
+      "requested": 0.75,
+      "actual": 0.75,
+      "path": "docs/previews/product-burst-review/75.png"
+    },
+    {
+      "requested": 0.85,
+      "actual": 0.85,
+      "path": ".superpowers/burst-review/85.png"
+    },
+    {
+      "requested": 0.95,
+      "actual": 0.95,
+      "path": ".superpowers/burst-review/95.png"
+    },
+    {
+      "requested": 1,
+      "actual": 1,
+      "path": "docs/previews/product-burst-review/100.png"
+    }
+  ],
+  "mobile": {
+    "width": 390,
+    "documentWidth": 390,
+    "canvasCount": 0
+  },
+  "recording": {
+    "path": "slow-forward-pause-reverse.webm",
+    "timeline": "0→50% over 8s; pause 3s; 50→100% over 8s; pause 1.5s; 100→50% over 8s; pause 1s; 50→0% over 8s; pause 1.5s",
+    "realBrowserCapture": true
+  },
+  "performance": "Copied existing measured results; not rerun during this review"
+}

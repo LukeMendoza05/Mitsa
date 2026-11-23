@@ -1,0 +1,342 @@
+{
+  "version": 1,
+  "status": "READY_FOR_SEPARATE_P3_A_B_C_D_APPROVALS",
+  "projectName": "mitsa-fireworksinventory",
+  "requestedProductionUrl": "https://mitsa-fireworksinventory.vercel.app",
+  "teamSlug": "lukemendoza",
+  "repository": "LukeMendoza05/Mitsa",
+  "organization": "Luke Perry’s Org",
+  "organizationId": "zejvpgnesxiwavwgcsme",
+  "backendName": "mitsa-fireworksinventory-preview",
+  "backendRegion": "ap-southeast-2",
+  "quotedMonthlyCost": 0,
+  "currency": "USD",
+  "quoteMustBeRepeated": true,
+  "publication": {
+    "commit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+    "tree": "a6a84434901dd7d0cdc84e74d866ab8659d404e4",
+    "files": 172,
+    "base": "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66",
+    "inventoryPath": "artifacts/phase3-preview-review-20261029-v3/public-update-commit.json",
+    "inventorySha256": "a5dc56cb9922f37546cfbe41c91250f09f3ab0b024862ef3c261c57b17ecc117",
+    "pushed": false
+  },
+  "bootstrap": {
+    "migrationName": "mitsa_empty_preview_bootstrap",
+    "templatePath": "artifacts/phase3-backend-package-20261029-v1/supabase/migrations/20261029060326_mitsa_empty_preview_bootstrap.sql",
+    "templateSha256": "7ac369997f583fd984a38211211af0ac5e2edf913e968fdb9c48a5ad79fa18e2",
+    "transactionOwner": "SUPABASE_APPLY_MIGRATION",
+    "newEmptyProjectOnly": true,
+    "sourceSqlInputs": 21,
+    "tables": 41,
+    "functions": 124,
+    "customRoles": 4,
+    "singletonMetadataRows": 5,
+    "managedAuthChanges": false,
+    "strictPolicyReady": false
+  },
+  "environment": {
+    "target": "preview",
+    "entries": 13,
+    "privateKeys": 2,
+    "reuseExistingSecrets": false,
+    "valuesGeneratedAfterApproval": true
+  },
+  "selections": {
+    "A": {
+      "approved": false,
+      "pushes": 1,
+      "githubReadRequests": 10
+    },
+    "B": {
+      "approved": false,
+      "newProjects": 1,
+      "configResourceUpdates": 3,
+      "metadataReads": 20,
+      "migrations": 1,
+      "selectRequests": 12,
+      "accounts": 0,
+      "emails": 0,
+      "edgeFunctions": 0
+    },
+    "C": {
+      "approved": false,
+      "newProjects": 1,
+      "settingsUpdates": 1,
+      "metadataReads": 15,
+      "deployments": 0,
+      "envWrites": 0,
+      "protection": "all"
+    },
+    "D": {
+      "approved": false,
+      "prerequisites": [
+        "A",
+        "B",
+        "C"
+      ],
+      "deployments": 1,
+      "environmentBatches": 1,
+      "entries": 13,
+      "settingsUpdates": 2,
+      "privatePublishableKeyReads": 1,
+      "providerReads": 20,
+      "httpChecks": 20,
+      "selectRequests": 4,
+      "readOnlyPolicyRpcs": 10,
+      "cancellationsOnFailure": 1,
+      "productionPromotions": 0
+    }
+  },
+  "tests": {
+    "databaseModel": 24,
+    "payloads": 9,
+    "originAndBackendGuard": 15,
+    "application": 25,
+    "builtApplicationHTTP": 8,
+    "productionBuild": "PASSED",
+    "typeScript": "PASSED",
+    "hostedAcceptance": "NOT_EXECUTED"
+  },
+  "sources": [
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/api-private.toml",
+      "sha256": "08bd64fd879570ad7686c982506fed1c1a45b08f3f1be5221be791f9e6238be7"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/auth-close.json",
+      "sha256": "392ba0bd95ceb8aa654e6eaf27848a5bddab1011bbd27b8ce7db4df16033c113"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/auth-close.toml",
+      "sha256": "5347023edda431d2ffb8e428c1b973ca7fac8a33f13c4673928979327a1dd826"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/auth-hooks-closed.json",
+      "sha256": "27edfb1aefc41639b47aeca5def38df5d80ded3cc0c6d7310f44330bc2d19943"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/auth-hooks-closed.toml",
+      "sha256": "f2ebcd94ba26834fd12fc6235347f18a396cd64bdf16a0ba64f30054dc65afaa"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/auth-security-metadata.sql",
+      "sha256": "d9d72d87e70a56ea06ae81fb781e2f8195bb604282115bb87656463007bab64d"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/create-project.json",
+      "sha256": "8b38c3e6c146a1aa94beb140e71d6d77d1a8c4d8b34696fc63acfea677cff476"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/postflight.sql",
+      "sha256": "8a1212ec699304e10f576b9299572a4db6fdebb25e9366cf9ed68afe9debe9f0"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/postgrest-private.json",
+      "sha256": "285c18157f433ba3078d08b1ab1fa67788dc46f36590c836cd92d545b9838b81"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/preflight.sql",
+      "sha256": "4297a135197f0abdf408b9b12ab1bd74626acf8627f85aff34ea45f4bcbbc31e"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/source-provenance.json",
+      "sha256": "96ff2ab366d0cab42df9e62e2e27a0829a401b63b3461a80074b6ac6edf421e7"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/supabase/.temp/cli-latest",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/supabase/migrations/20261029060326_mitsa_empty_preview_bootstrap.sql",
+      "sha256": "7ac369997f583fd984a38211211af0ac5e2edf913e968fdb9c48a5ad79fa18e2"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/vercel-create.json",
+      "sha256": "612320a72ab9e7a9ea7228636218ca760c56b1ba134acad02b9b8f97b1ccbbe3"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/vercel-settings.json",
+      "sha256": "89e0e45fc7f0d3fa61858034da61486778d57c561ec899a5c3282022bce278f8"
+    },
+    {
+      "path": "artifacts/phase3-backend-review-20261029-v1/bootstrap.test.mjs",
+      "sha256": "b3dafb9e14f0f822a66ecacad5d61336da0707faef674bb1dac844d086690489"
+    },
+    {
+      "path": "artifacts/phase3-backend-review-20261029-v1/catalog-offline-bootstrap-tests.tap",
+      "sha256": "4a173af50ae464d6c0468a800e4d472f7f49d642f35f2cbf33f9a7fc2fbe73e9"
+    },
+    {
+      "path": "artifacts/phase3-backend-review-20261029-v1/expected-offline-security-catalog.json",
+      "sha256": "707167810bbf374a735ca3567f5940c61738b03b52e2a95fc3eb09843aab2960"
+    },
+    {
+      "path": "artifacts/phase3-backend-review-20261029-v1/final-offline-package-tests.tap",
+      "sha256": "57126a52a693de648ea6e0038aa9ec93d4b403942bd7d18ddc8649ab6000c142"
+    },
+    {
+      "path": "artifacts/phase3-backend-review-20261029-v1/package.test.mjs",
+      "sha256": "f02a6a68d9b0d7f0070b28ff520f7dcc3cc9d3690dab7063c1bd8ae5c76fce55"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/application-http-result-v3.json",
+      "sha256": "497778fcc939edc3eb39eaf20ccdecf1993d27d855d09cabff4eef9a38fe97c7"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/application-source-inventory-final.json",
+      "sha256": "b0233738cf52933b8769cfed886bcb4782bd62a6b72903f2c799e25e9db3565c"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/application-tests.json",
+      "sha256": "27441aeafe6282d47af6a8620ae2ee735c79e52e88b73ddd24eae0b7815e0c8b"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/http-application-check-v3.mjs",
+      "sha256": "3fac9d5f4c8d55bc173f57214d0253bfbdef9cf96870da6adddbc39ea105ff8a"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/offline-network-fence.mjs",
+      "sha256": "7665a931952a961806c1061f545c8e84abe9a08a25b7f8bc8fdf36505c33a7a5"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/origin-final-tests.tap",
+      "sha256": "bd01c4b727fdb701dc1eaa17b0f50ba6435763f73a1d2499551cdd8ce99051cf"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/preview-origin-final.test.mjs",
+      "sha256": "8b51e5777e3dcb25683bc81be3b5790f4d7ec85ff008d06e85bd22c6fc9e6314"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/public-update-commit.json",
+      "sha256": "a5dc56cb9922f37546cfbe41c91250f09f3ab0b024862ef3c261c57b17ecc117"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/public-update.patch.txt",
+      "sha256": "e2189c7c76a2ff179ab391c9c1455200b89380827841572f661b94a0bad1d920"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/readonly-findings.json",
+      "sha256": "9a932bf4737648f668bda67bb31219b4350dc3736cc052cbcc3251e48a7cbc42"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/validation.json",
+      "sha256": "7fd164ebb3a10d3a96d74a23cd4c342f23f042e4ef19a288555ab76bef08f809"
+    },
+    {
+      "path": "config/test-target.json",
+      "sha256": "626e06d3d6e2fef3c74a2dbd4a052c818a4db609168e8f283f29cf489eedb89e"
+    },
+    {
+      "path": "docs/phase3-dedicated-preview-approval-20261029.md",
+      "sha256": "39f14f0a5654ee5bd72a1a15b1de5af2f99ef30e1a733e080d1abc4dbe64b488"
+    },
+    {
+      "path": "scripts/lib/phase3-preview-package.mjs",
+      "sha256": "abcfbb46583395a1582b31b37e4b44385796c7a38e08d779217397aab4239050"
+    },
+    {
+      "path": "scripts/lib/preview-bootstrap.mjs",
+      "sha256": "15d6b48694e66c9b3bd0fc0f026998cc9458aed66898bf843c65979abc18557d"
+    },
+    {
+      "path": "scripts/prepare-phase3-backend-bindings.mjs",
+      "sha256": "27fa0370011166ba7370f07b676e1a5ca46807a03a62c6928fc0d67b30b153d5"
+    },
+    {
+      "path": "scripts/verify-phase3-dedicated-preview.mjs",
+      "sha256": "5ee440e5ebe0dbdc6279c6bb20755ee2ebb1e183e282ae6a6a2796d0ecdbce71"
+    },
+    {
+      "path": "supabase/migrations/20261012053948_foundation_security_proof.sql",
+      "sha256": "61f572386c769baf48f4f3d82e1eba9fd1fad12e9c3d4171eeffbd48422d1d17"
+    },
+    {
+      "path": "supabase/migrations/20261012054416_foundation_identity.sql",
+      "sha256": "e0004a5fee39fdc314316062ae0732adb9fb38dae55ec8aa0c8ca9285904d232"
+    },
+    {
+      "path": "supabase/migrations/20261012060403_foundation_membership_lock_policy.sql",
+      "sha256": "bfae821556993c39ac04f3dc7a4fbffc40958ec451ae9c6dc5db55bbfba107ef"
+    },
+    {
+      "path": "supabase/migrations/20261012070606_foundation_verified_actor_adapter.sql",
+      "sha256": "e4408bced96d469edd7012188650c14c60f383294fa6ce9bfc198041a870cdc3"
+    },
+    {
+      "path": "supabase/migrations/20261013181012_mitsa_workspace_foundation.sql",
+      "sha256": "6ba346c06bf0b7476456f84bf120ab65a495868a7ae651e8e0be3a7510cf4c46"
+    },
+    {
+      "path": "supabase/migrations/20261013181135_mitsa_membership_commands.sql",
+      "sha256": "69a3faae40120b5685344ad0a26fe1fc4ed7a2e041867c90dfb9c401f46cb18c"
+    },
+    {
+      "path": "supabase/migrations/20261013185440_mitsa_account_security_terms.sql",
+      "sha256": "ab767286b9872869279340f8fcc1dab9f76749333f344de5beb3a98f260b9cb1"
+    },
+    {
+      "path": "supabase/migrations/20261013223908_mitsa_registration_boundary.sql",
+      "sha256": "1e68586cb32d561b202d1b729649a36d2cbadfffef23676f6f79972346254a5e"
+    },
+    {
+      "path": "supabase/migrations/20261014001000_mitsa_reenrollment_session.sql",
+      "sha256": "2c71823db247c5a447e401943a9de0e5afaef8f40d66e95766c8025a6d9f6db2"
+    },
+    {
+      "path": "supabase/migrations/20261014014343_mitsa_account_workspace_interfaces.sql",
+      "sha256": "e4381b429d4a52a87a00b90ce51ecf13e93ff0bef5f1cbdbc8afe354dad7fb94"
+    },
+    {
+      "path": "supabase/migrations/20261014015632_mitsa_isolated_auth_mail_capture.sql",
+      "sha256": "fde4ddbb42403ae21c118dbc084c0a8eabd77018a63da4519f5cf9862ad0364d"
+    },
+    {
+      "path": "supabase/migrations/20261014021816_mitsa_capture_pkce_compatibility.sql",
+      "sha256": "5cd9eb17ad5c7ea8f4f87050f4b28b974cadaa1f060fdd9a04b09d1b3e3f65f2"
+    },
+    {
+      "path": "supabase/migrations/20261014034721_mitsa_captured_invitations.sql",
+      "sha256": "0986a044a8b27f55fd241d347294a61bdbabb603ff1efbeeb82e5b24750da6f2"
+    },
+    {
+      "path": "supabase/migrations/20261014044022_mitsa_reviewed_requests.sql",
+      "sha256": "359012f4a11c8ba8489f80ea903cf8d68099a472c853a1562ceddb0b56eea3c7"
+    },
+    {
+      "path": "supabase/migrations/20261014055453_mitsa_developer_registration.sql",
+      "sha256": "7b8e5ff08a335c1a61022a629fc93cd7cc082120f01a132905bed48f760ed11d"
+    },
+    {
+      "path": "supabase/migrations/20261014094354_mitsa_capture_verification_codes.sql",
+      "sha256": "c4be17d5156c8b6e2d73f6b1fe774a00da1638dc5b424a1cae1b516537801ee8"
+    },
+    {
+      "path": "supabase/migrations/20261015072934_mitsa_development_recovery_eligibility.sql",
+      "sha256": "b6ea3b2c922ed2f9fd88fe518839ce49e3c0d6f5b9c04bdf13f16958f9918822"
+    },
+    {
+      "path": "supabase/prepared/20261014_mitsa_controlled_pilot_relay.sql",
+      "sha256": "fb8a76b0ffbb57fe4f378c439e70028a094745c3165099a1235455c23c303dff"
+    },
+    {
+      "path": "supabase/prepared/20261016004927_mitsa_persistent_registration_inactive.sql",
+      "sha256": "94ed8deb2f9f41e694b0d45721ef7e6e086919565e9832bd73d1b9c77b393422"
+    },
+    {
+      "path": "supabase/prepared/20261016005221_mitsa_persistent_registration_hooks_inactive.sql",
+      "sha256": "9ce542c21d00dc350f43b7e72fba2083d43042f2d001361cb9940e4120290ae7"
+    },
+    {
+      "path": "supabase/prepared/20261023122336_mitsa_registration_identity_boundary.sql",
+      "sha256": "f9e47b2203b5ebf6ac5761a240e51dc1186113a1b21302ba43cfe710e4a276b0"
+    }
+  ],
+  "strictOptionA": "BLOCKED_SU-519045",
+  "riskAccepted": false,
+  "generalRegistrationEnabled": false,
+  "emailEnabled": false,
+  "hostedWrites": 0,
+  "createdProjects": 0,
+  "deployed": false
+}

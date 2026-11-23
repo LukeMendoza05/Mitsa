@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "asOfDateLocal": "2026-10-31",
+  "timezone": "Asia/Manila",
+  "P3A": {
+    "status": "PASSED",
+    "resultPath": "config/phase3-p3a-result.json",
+    "sha256": "40713306098550ad53707f71705d35a36f153917fe8207d3410af44dda4c1dfc",
+    "commit": "ec4a96bef0ea77e3553513b37931076f288cc204"
+  },
+  "P3B": {
+    "status": "PASSED_SEALED",
+    "resultPath": "config/phase3-p3b-result.json",
+    "sha256": "ea1bff61336e6bcfbe394460dc2471a6292f90d99e59926e3ac2a8580d625526",
+    "projectRef": "geuttbanjqdapcubjrnn"
+  },
+  "P3C": {
+    "status": "PASSED_SEALED",
+    "resultPath": "config/phase3-p3c-acceptance.json",
+    "sha256": "e45e031dad82c17f4e761b98ea86d5711f874ae50e04e11f5486f88eab65913f",
+    "projectId": "prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD"
+  },
+  "P3D": {
+    "status": "FAILED_ACTION_REQUIRED",
+    "resultPath": "config/phase3-p3d-result.json",
+    "sha256": "4398b326e03088d709082ec6579fa22d86886b48c4100254258940dc32911337",
+    "deploymentId": "dpl_EB7MnUUWk1VspXj8dkEjYsRKXiYJ",
+    "finalState": "CANCELED",
+    "cleanupVerified": true
+  },
+  "registrationEnabled": false,
+  "emailDeliveryEnabled": false,
+  "vercelCreated": true,
+  "vercelDeployed": true,
+  "strictOptionA": "EXTERNAL_RELEASE_DEPENDENCY_SU-519045",
+  "masterGoalComplete": false,
+  "P3D2": {
+    "status": "PASSED_SEALED",
+    "resultPath": "config/phase3-hosted-preview-acceptance.json",
+    "sha256": "aa8ade4399652e9db4904e56694d3ddd3ae95173261f363fc8aadf9b5b4055a8",
+    "url": "https://mitsa-fireworksinventory-i2bnnlp9o-lukemendoza.vercel.app",
+    "deploymentId": "dpl_2tuiTJ2uRKY1qhMgUMtiwo81JHwL"
+  },
+  "vercelDeploymentRecordCreated": true,
+  "Phase3": "PASSED_HOSTED_PROTECTED_PREVIEW",
+  "productionWebsiteAccepted": false,
+  "productionStrategy": {
+    "path": "config/production-strategy.json",
+    "sha256": "be60333bf9157ec7035d46dfe56bd18ff3d4df8376f274c10cd6958162556ea5",
+    "status": "FREE_ONLY_PENDING_APPROVALS",
+    "paidR1Withdrawn": true
+  }
+}

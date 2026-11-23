@@ -1,0 +1,20 @@
+-- REVIEW ONLY: one prepared query. Never concatenate or execute unbound text.
+-- $1 = approved generation UUID in the private fixture manifest.
+-- $2 = approved dedicated sender SHA-256, resolved privately after D approval.
+-- Only starts delivery readiness; creates no worker, job, account or message.
+-- Require rowCount=1, then verify all returned controls before worker startup.
+update private.registration_control c
+set approval_generation=$1::uuid,stopped_at=null,delivery_enabled=true,
+ admission_enabled=false,session_policy='strict',session_policy_ready=false,
+ terms_id='98b7abf1-bca4-474f-aee4-e851b4f28d84'::uuid,
+ privacy_id='40714378-eb52-46cf-a7cf-760db4100456'::uuid,
+ approved_sender_sha256=$2::text,worker_id=null,worker_until=null,
+ heartbeat_at=null,transport_ready=false,hourly_budget=10,daily_budget=20
+where c.singleton and not(c.admission_enabled or c.delivery_enabled or c.transport_ready or c.session_policy_ready)
+ and c.profile='isolated-development' and c.project_ref='mjtejwafxriwntweussc'
+ and c.origin='http://127.0.0.1:3000'
+ and c.approval_generation is null and $1::uuid is not null and $2::text ~ '^[a-f0-9]{64}$'
+ and exists(select 1 from foundation_probe.environment_identity where singleton and marker='fireworks-foundation-proof-01a12e38')
+ and (select count(*) from private.legal_versions where id in ('98b7abf1-bca4-474f-aee4-e851b4f28d84'::uuid,'40714378-eb52-46cf-a7cf-760db4100456'::uuid)
+      and version='isolated-persistent-synthetic-v1' and status='test')=2
+returning admission_enabled,delivery_enabled,transport_ready,session_policy_ready;

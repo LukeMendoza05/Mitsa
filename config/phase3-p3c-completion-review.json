@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "scope": "P3-C-environment-completion-readonly-v1",
+  "approved": false,
+  "status": "READY_FOR_EXPLICIT_APPROVAL",
+  "tool": "mcp__codex_apps__vercel_filter_project_envs",
+  "arguments": {
+    "idOrName": "prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD",
+    "teamId": "team_C7i6iroBHmpUkM99weoPGnHw",
+    "decrypt": "false"
+  },
+  "readRequests": 1,
+  "writes": 0,
+  "retries": 0,
+  "deployments": 0,
+  "obsoleteFieldDecisionRequired": true,
+  "runtimeSourceProtectionTestDeferredToSeparatelyApprovedP3D": true,
+  "providerReferences": [
+    "https://vercel.com/docs/rest-api/projects/create-a-new-project",
+    "https://vercel.com/docs/rest-api/projects/find-a-project-by-id-or-name",
+    "https://vercel.com/docs/builds/build-features#special-paths"
+  ],
+  "sources": [
+    {
+      "path": "docs/phase3-p3c-source-protection-addendum-20261031.md",
+      "sha256": "57f7e3340f07761ba4989a507407a2826417edddd7b6ac638564b323b6c1979d"
+    },
+    {
+      "path": "scripts/verify-phase3-p3c-completion-review.mjs",
+      "sha256": "239ab2d775ab7a64c8db4abf958c173fb6a89223f84e0778cbdd95a815a6f035"
+    },
+    {
+      "path": "config/phase3-p3c-review.json",
+      "sha256": "6cbdd0e83fcffcdd6d07a0851560ecc50305d4c896ae859cc3f9df71894f1da8"
+    },
+    {
+      "path": "config/phase3-p3c-final-verification-result.json",
+      "sha256": "b100c2330572913c67e96b3c4db50da9173b7a62b1fef03ef62de603769ba918"
+    },
+    {
+      "path": ".secrets/phase3-p3c-verification-20261031-v2/resume-four-reads/full-settings.json",
+      "sha256": "2af23a96edaf6770556c5af97faeb2d9ea4235c47780b5003fbe53cbc4c2b216"
+    },
+    {
+      "path": ".secrets/phase3-p3c-verification-20261031-v2/resume-four-reads/ledger.json",
+      "sha256": "f7893f6acc336b46b6ed9c5b9d5c02d4a6665ab17c882c9c45c3d83940695919"
+    },
+    {
+      "path": "config/phase3-p3a-result.json",
+      "sha256": "40713306098550ad53707f71705d35a36f153917fe8207d3410af44dda4c1dfc"
+    },
+    {
+      "path": "config/phase3-p3b-result.json",
+      "sha256": "ea1bff61336e6bcfbe394460dc2471a6292f90d99e59926e3ac2a8580d625526"
+    }
+  ]
+}

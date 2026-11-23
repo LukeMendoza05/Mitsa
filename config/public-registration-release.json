@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "status": "INACTIVE_LOCAL_PROPOSAL",
+  "target": null,
+  "acceptance": {},
+  "strict": {"status": "BLOCKED", "policy": "Strict Option A", "ticket": "SU-519045", "humanReviewed": false},
+  "operations": {},
+  "approvals": {"publicDeployment": false, "finalActivation": false},
+  "networkOperationsAuthorized": false
+}

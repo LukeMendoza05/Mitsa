@@ -1,0 +1,54 @@
+import {afterAll,beforeAll,it,expect} from 'vitest';
+import type {PGlite} from '@electric-sql/pglite';
+import {readFileSync} from 'node:fs';
+import {recoveredC1Database,correctionPath,correctionRecoveryPath} from '../support/stage-c1-correction';
+let db:PGlite;
+const operator=()=>db.exec('reset role;set session authorization postgres');
+const service=()=>db.exec('set role service_role');
+const command=async(action:string,payload:Record<string,unknown>,hash=crypto.randomUUID().replaceAll('-','').repeat(2))=>(await db.query<{v:Record<string,unknown>|null}>('select api.mitsa_registration_command($1,$2,$3,statement_timestamp()) v',[action,JSON.stringify(payload),hash])).rows[0].v;
+const hook=async(name:string,payload:unknown)=>(await db.query<{v:{error?:unknown}}>(`select private.${name}($1::jsonb) v`,[JSON.stringify(payload)])).rows[0].v;
+beforeAll(async()=>{db=await recoveredC1Database();await db.exec(readFileSync(correctionPath,'utf8'));},60000);
+afterAll(async()=>{await db?.close();});
+
+it('runs signed-claim, provider hooks, pending continuation, finalization and recovery without custom-role Auth access',async()=>{
+ const terms=(await db.query<{id:string}>("insert into private.legal_versions(kind,version,content,content_hash,status) values('terms','correction-terms','Fixture',encode(sha256(convert_to('Fixture','UTF8')),'hex'),'test') returning id")).rows[0].id;
+ const privacy=(await db.query<{id:string}>("insert into private.legal_versions(kind,version,content,content_hash,status) values('privacy','correction-privacy','Fixture',encode(sha256(convert_to('Fixture','UTF8')),'hex'),'test') returning id")).rows[0].id;
+ const generation=crypto.randomUUID(),worker=crypto.randomUUID(),nonce=crypto.randomUUID().replaceAll('-','').repeat(2),email='corrective-flow@example.invalid';
+ // In-memory fixture only. This neither accepts Strict Option B nor activates a service.
+ await db.query('update private.registration_control set stopped_at=null,admission_enabled=true,delivery_enabled=true,session_policy_ready=true,approval_generation=$1,terms_id=$2,privacy_id=$3',[generation,terms,privacy]);
+ await db.query('select private.mitsa_worker_acquire($1,$2)',[generation,worker]);await db.query('select private.mitsa_worker_heartbeat($1,$2,true)',[generation,worker]);
+ const nonceHash=(await db.query<{hash:string}>("select encode(sha256(convert_to($1,'UTF8')),'hex') hash",[nonce])).rows[0].hash;
+ const submissionId=crypto.randomUUID(),input={email,submissionId,fullName:'Synthetic',termsId:terms,privacyId:privacy,nonceHash,accepted:true,fingerprint:'a'.repeat(64)};
+ await service();const intent=await command('prepare',input);expect(intent?.intentId).toBeTruthy();
+ const uid=crypto.randomUUID(),event={user:{id:uid,email,is_anonymous:false,user_metadata:{registration_nonce:nonce,role:'owner'}}};
+ await operator();await db.exec('set role supabase_auth_admin');expect(await hook('mitsa_before_user_created',event)).toHaveProperty('error');
+ await operator();await service();const permit=await command('authorize-mail',{email,intentId:intent!.intentId,requestKey:crypto.randomUUID(),action:'signup'});expect(permit?.sendAllowed).toBe(true);
+ expect(await command('claim-signup',input)).toEqual({claimed:true});expect(await command('claim-signup',input)).toEqual({claimed:false});
+ await operator();await db.exec('set role supabase_auth_admin');expect(await hook('mitsa_before_user_created',event)).toEqual({});
+ expect(await hook('mitsa_before_user_created',{...event,user:{...event.user,id:crypto.randomUUID()}})).toHaveProperty('error');
+ await operator();await db.exec('set role c1_test_root');await db.query('insert into auth.users(id,email) values($1,$2)',[uid,email]);await operator();
+ await db.exec("update private.isolated_mail_config set enabled=true,public_key='-----BEGIN PGP PUBLIC KEY BLOCK-----offline'");
+ const message={user:{id:uid,email,email_confirmed_at:null},email_data:{email_action_type:'signup',token:'123456',token_hash:'a'.repeat(64),redirect_to:`http://127.0.0.1:3000/auth/email?request=${permit!.requestId}`}};
+ await db.exec('set role supabase_auth_admin');expect(await hook('mitsa_isolated_send_email',{...message,user:{...message.user,email:'other@example.invalid'}})).toHaveProperty('error');
+ expect(await hook('mitsa_isolated_send_email',message)).toEqual({});expect(await hook('mitsa_isolated_send_email',message)).toHaveProperty('error');
+ await operator();await db.exec('update private.registration_control set admission_enabled=false');await service();expect(await command('continue-verification',{email,passwordProven:true})).toMatchObject({intentId:intent!.intentId});
+ await operator();await db.exec('set role c1_test_root');await db.query('update auth.users set email_confirmed_at=statement_timestamp() where id=$1',[uid]);await operator();
+ const session=crypto.randomUUID();await db.query("insert into auth.sessions(id,user_id,aal) values($1,$2,'aal1')",[session,uid]);
+ await db.exec('set session authorization authenticator;set role authenticated');await db.query("select set_config('request.jwt.claims',$1,false)",[JSON.stringify({sub:uid,session_id:session,role:'authenticated',aud:'authenticated',is_anonymous:false,exp:4102444800,aal:'aal1',amr:[{method:'password',timestamp:Date.now()/1000}]})]);
+ expect((await db.query<{v:boolean}>('select api.mitsa_finalize_registration() v')).rows[0].v).toBe(true);
+ expect((await db.query<{v:boolean}>('select private.mitsa_mfa_ready() v')).rows[0].v).toBe(false);
+ await operator();expect((await db.query('select * from private.memberships where user_id=$1',[uid])).rows).toHaveLength(0);
+ expect((await db.query<{n:number}>('select count(*)::int n from private.legal_acceptances where user_id=$1',[uid])).rows[0].n).toBe(2);
+ await db.query('delete from private.registration_intents where id=$1',[intent!.intentId]);
+ await db.exec("update private.auth_mail_dispatch set created_at=created_at-interval '2 minutes',authorize_until=authorize_until-interval '2 minutes'");
+ await service();const recovery=await command('authorize-mail',{email,requestKey:crypto.randomUUID(),action:'recovery'});expect(recovery?.sendAllowed).toBe(true);
+ const unseen=await command('authorize-mail',{email:'not-an-account@example.invalid',requestKey:crypto.randomUUID(),action:'recovery'});expect(unseen).toBeNull();
+ await operator();await db.exec('set role supabase_auth_admin');const recoveryMail={user:{id:uid,email,email_confirmed_at:'2026-01-01T00:00:00Z'},email_data:{email_action_type:'recovery',token_hash:'b'.repeat(64),redirect_to:`http://127.0.0.1:3000/auth/email?request=${recovery!.requestId}`}};
+ expect(await hook('mitsa_isolated_send_email',recoveryMail)).toEqual({});expect(await hook('mitsa_isolated_send_email',recoveryMail)).toHaveProperty('error');
+ await operator();expect((await db.query<{allowed:boolean}>("select has_schema_privilege('app_registration','auth','USAGE') allowed")).rows[0].allowed).toBe(false);
+ expect((await db.query('select * from private.memberships where user_id=$1',[uid])).rows).toHaveLength(0);
+});
+it('refuses zero-cohort recovery after an account or dispatch has actually been admitted',async()=>{
+ await operator();await expect(db.exec(readFileSync(correctionRecoveryPath,'utf8'))).rejects.toMatchObject({code:'P0004'});await db.exec('rollback');
+ expect((await db.query("select to_regprocedure('private.mitsa_registration_identity(text,text,uuid,uuid)')::text fn")).rows[0]).not.toEqual({fn:null});
+});

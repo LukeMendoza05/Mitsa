@@ -11,7 +11,7 @@ describe("verified request authentication adapter",()=>{
     const client=publicClient(f.cashier.session.access_token);
     const result=await client.schema("api").rpc("foundation_identity");
     expect(result.error).toBeNull();
-    expect(result.data).toEqual({userId:f.cashier.id,memberships:[{businessId:f.business,role:"cashier"}]});
+    expect(result.data).toEqual({userId:f.cashier.id,memberships:[{businessId:f.business,role:"staff"}]});
     expect((await client.schema("api").rpc("current_actor")).error?.code).toBe("PGRST202");
     expect((await client.schema("private").rpc("current_actor")).error?.code).toBe("PGRST106");
     expect((await client.schema("auth").from("sessions").select("*")).error?.code).toBe("PGRST106");

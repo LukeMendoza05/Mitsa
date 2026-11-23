@@ -1,0 +1,84 @@
+{
+  "version": 2,
+  "status": "OFFLINE_APPLICATION_INTEGRATED_NOT_PUBLISHED_OR_DEPLOYED",
+  "previousReview": {
+    "path": "artifacts/history/phase3-origin-v1/config_phase3-preview-origin-review.json.txt",
+    "sha256": "deba3ebeda8275d5c68ddac7507cd0597765b1b40d3806129afb61d27076334a"
+  },
+  "projectName": "mitsa-fireworksinventory",
+  "productionUrl": "https://mitsa-fireworksinventory.vercel.app",
+  "phase3ReviewSha256": "bbb5fecdaaabc61552e4ad1dc1dc583e3b3664413fac03fdf7d71e564d99325a",
+  "candidateSourceDirectory": "artifacts/phase3-preview-source-20261029-v1",
+  "integrationScope": "SEPARATE_LOCAL_COPY",
+  "offlineTests": {
+    "originGuard": 13,
+    "existingApplication": 23,
+    "failed": 0
+  },
+  "offlineHTTPChecks": 7,
+  "typeScriptAndBuild": "PASSED_IN_VALIDATION_COPY",
+  "strictGuardTypeCheck": "PASSED",
+  "syntax": "PASSED",
+  "sourceFiles": 171,
+  "modified": [
+    "docs/deployment.md",
+    "docs/environment.md",
+    "src/lib/supabase/server.ts",
+    "src/proxy.ts"
+  ],
+  "added": [
+    "src/lib/auth/preview-origin.mjs"
+  ],
+  "traceManifests": 61,
+  "traceReferences": 8883,
+  "traceEscapes": 0,
+  "publishedFilesUnchanged": 170,
+  "backendConfigured": false,
+  "previewProjectCreated": false,
+  "proposedRuntimeSettingCount": 12,
+  "applicationIntegratedLocally": true,
+  "appliedToPublishedSource": false,
+  "pushed": false,
+  "deployed": false,
+  "hostedRequests": 0,
+  "scopeExpandsApprovedHostedActions": false,
+  "strictOptionA": "BLOCKED_SU-519045",
+  "sources": [
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/preview-origin.mjs",
+      "sha256": "2bb735107d29d668ab003ddb663d8142ccdafb456a36ac5569575a6258d4a100"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/preview-origin.test.mjs",
+      "sha256": "039123f1553616258964826095465ec466f70e845bedfa4b8cabbfad8d44ef52"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/final-offline-tests.tap",
+      "sha256": "2053f069483447cbae246b53ed1bcc930f0bd8cf001444f8ae6a989eed6d8b03"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/application-tests.json",
+      "sha256": "e18ec6cb16b3f7684a0a500650c00b235ff0ead89f3ffd992264a56e6132bcbc"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/application-http-result.json",
+      "sha256": "4cb0cc25f574fcc934065ac2f51bdd8ae51568bdc35b23dd59bc99442bc7dc5b"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/http-application-check.mjs",
+      "sha256": "8139c41035209e578b1c24d9cffb2d5e53aaca340c240cebb9d405092fb3b5f5"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/application-source-inventory.json",
+      "sha256": "22b793ffec96a64f77ce379a1f2445e38d6598ba0bb4fab260a231740312a246"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/origin-proposal/application-origin.patch.txt",
+      "sha256": "c7ebcf230ff3f3eae649f6a3acfd806e03c2ad1db0e52861489fe641fc6d8c95"
+    },
+    {
+      "path": "docs/phase3-preview-origin-local-integration-20261029.md",
+      "sha256": "818bb7bf84d24a7d82802772e74049907c83ff30de367884b503d95d64ed556e"
+    }
+  ]
+}

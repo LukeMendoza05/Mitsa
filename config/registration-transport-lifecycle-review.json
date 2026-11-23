@@ -1,0 +1,1249 @@
+{
+  "scope": "B-transport-lifecycle-v3",
+  "status": "READY_NOT_APPROVED_NOT_EXECUTED",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "generation": "2515785f-49d0-4f3c-b9d7-a4ce1ec006d2",
+  "origin": "http://127.0.0.1:3000",
+  "baseReview": {
+    "path": "config/registration-final-review.json",
+    "sha256": "7d354cffb5f50993167485b803de76d9f6be6cb1178dfa9407b08bfe39a13d55"
+  },
+  "acceptedCandidateManifestSha256": "05206a18393390f9849ea5c2e3b3ae8a50f2b0e25f86bcdc0056ed02ab77318e",
+  "limits": {
+    "databaseConnections": 2,
+    "sqlRequests": 180,
+    "selects": 164,
+    "writeCalls": 4,
+    "transactionStatements": 12,
+    "runtimeSeconds": 300,
+    "smtpVerifications": 1,
+    "accounts": 0,
+    "emails": 0,
+    "workerLaunches": 1,
+    "workerMinutes": 5,
+    "secretMetadataRequests": 0
+  },
+  "timing": {
+    "workSeconds": 210,
+    "hardStopSeconds": 240,
+    "overallSeconds": 300,
+    "reconcileStopSeconds": 290
+  },
+  "expectedRegistry": {
+    "applicationTables": [
+      "foundation_probe.command_results",
+      "foundation_probe.environment_identity",
+      "foundation_probe.events",
+      "foundation_probe.resources",
+      "private.abuse_windows",
+      "private.access_audit",
+      "private.access_commands",
+      "private.account_profiles",
+      "private.account_registration_policy",
+      "private.account_requests",
+      "private.account_security",
+      "private.auth_mail_dispatch",
+      "private.businesses",
+      "private.developer_registration_recipients",
+      "private.factor_bindings",
+      "private.invitation_deliveries",
+      "private.invitation_locations",
+      "private.isolated_auth_mail",
+      "private.isolated_mail_config",
+      "private.legal_acceptances",
+      "private.legal_holds",
+      "private.legal_versions",
+      "private.memberships",
+      "private.notification_outbox",
+      "private.operator_principals",
+      "private.ownership_transfers",
+      "private.pilot_mail_deliveries",
+      "private.pilot_registration_window",
+      "private.registration_control",
+      "private.registration_intents",
+      "private.registration_requests",
+      "private.registration_test_recipients",
+      "private.release_gates",
+      "private.request_events",
+      "private.request_exports",
+      "private.request_receipts",
+      "private.retention_rules",
+      "private.security_permits",
+      "private.shop_assignments",
+      "private.shops",
+      "private.workspace_invitations"
+    ],
+    "columns": {
+      "auth.identities": [
+        "provider_id",
+        "user_id",
+        "identity_data",
+        "provider",
+        "last_sign_in_at",
+        "created_at",
+        "updated_at",
+        "email",
+        "id"
+      ],
+      "auth.mfa_factors": [
+        "id",
+        "user_id",
+        "friendly_name",
+        "factor_type",
+        "status",
+        "created_at",
+        "updated_at",
+        "secret",
+        "phone",
+        "last_challenged_at",
+        "web_authn_credential",
+        "web_authn_aaguid",
+        "last_webauthn_challenge_data"
+      ],
+      "auth.users": [
+        "instance_id",
+        "id",
+        "aud",
+        "role",
+        "email",
+        "encrypted_password",
+        "email_confirmed_at",
+        "invited_at",
+        "confirmation_token",
+        "confirmation_sent_at",
+        "recovery_token",
+        "recovery_sent_at",
+        "email_change_token_new",
+        "email_change",
+        "email_change_sent_at",
+        "last_sign_in_at",
+        "raw_app_meta_data",
+        "raw_user_meta_data",
+        "is_super_admin",
+        "created_at",
+        "updated_at",
+        "phone",
+        "phone_confirmed_at",
+        "phone_change",
+        "phone_change_token",
+        "phone_change_sent_at",
+        "confirmed_at",
+        "email_change_token_current",
+        "email_change_confirm_status",
+        "banned_until",
+        "reauthentication_token",
+        "reauthentication_sent_at",
+        "is_sso_user",
+        "deleted_at",
+        "is_anonymous"
+      ],
+      "foundation_probe.command_results": [
+        "actor_id",
+        "command_key",
+        "request_hash",
+        "business_id",
+        "shop_id",
+        "resource_id",
+        "resulting_value"
+      ],
+      "foundation_probe.environment_identity": [
+        "singleton",
+        "marker"
+      ],
+      "foundation_probe.events": [
+        "actor_id",
+        "command_key",
+        "business_id",
+        "shop_id",
+        "resource_id",
+        "delta",
+        "resulting_value",
+        "created_at"
+      ],
+      "foundation_probe.resources": [
+        "business_id",
+        "shop_id",
+        "id",
+        "initial_value",
+        "value"
+      ],
+      "private.abuse_windows": [
+        "bucket_hash",
+        "action",
+        "window_start",
+        "attempts"
+      ],
+      "private.access_audit": [
+        "id",
+        "business_id",
+        "actor_id",
+        "event",
+        "target_id",
+        "detail",
+        "created_at"
+      ],
+      "private.access_commands": [
+        "actor_id",
+        "command_key",
+        "request_hash",
+        "outcome",
+        "created_at"
+      ],
+      "private.account_profiles": [
+        "user_id",
+        "full_name",
+        "created_at",
+        "deletion_requested_at"
+      ],
+      "private.account_registration_policy": [
+        "user_id",
+        "intent_id",
+        "profile",
+        "terms_id",
+        "privacy_id",
+        "accepted_at",
+        "session_policy",
+        "assigned_at",
+        "verified_at",
+        "emergency_blocked"
+      ],
+      "private.account_requests": [
+        "id",
+        "user_id",
+        "business_id",
+        "kind",
+        "status",
+        "requested_at",
+        "response_due_at",
+        "reviewer_id",
+        "decision_reason",
+        "decided_at",
+        "completed_at",
+        "details",
+        "verified_email",
+        "review_evidence"
+      ],
+      "private.account_security": [
+        "user_id",
+        "initialized",
+        "recovery_locked",
+        "generation",
+        "reset_at",
+        "reenrollment_session_id"
+      ],
+      "private.auth_mail_dispatch": [
+        "id",
+        "request_key",
+        "action",
+        "recipient_hash",
+        "intent_id",
+        "provider_user_id",
+        "generation",
+        "state",
+        "created_at",
+        "authorize_until",
+        "consumed_at",
+        "capture_id",
+        "claim_worker_id",
+        "claimed_at",
+        "completed_at",
+        "failure_category"
+      ],
+      "private.businesses": [
+        "id",
+        "name",
+        "slug",
+        "country",
+        "currency",
+        "timezone",
+        "status",
+        "primary_owner_id",
+        "admin_financial_access",
+        "created_at"
+      ],
+      "private.developer_registration_recipients": [
+        "email",
+        "singleton",
+        "enabled",
+        "approved_at",
+        "approval_reference"
+      ],
+      "private.factor_bindings": [
+        "user_id",
+        "factor_id",
+        "generation",
+        "bound_at",
+        "revoked_at"
+      ],
+      "private.invitation_deliveries": [
+        "id",
+        "business_id",
+        "invitation_id",
+        "recipient_hash",
+        "encrypted_payload",
+        "created_at"
+      ],
+      "private.invitation_locations": [
+        "invitation_id",
+        "business_id",
+        "shop_id"
+      ],
+      "private.isolated_auth_mail": [
+        "id",
+        "recipient_hash",
+        "action",
+        "encrypted_payload",
+        "created_at"
+      ],
+      "private.isolated_mail_config": [
+        "singleton",
+        "enabled",
+        "public_key"
+      ],
+      "private.legal_acceptances": [
+        "user_id",
+        "version_id",
+        "accepted_at",
+        "source"
+      ],
+      "private.legal_holds": [
+        "id",
+        "category",
+        "subject_id",
+        "reason",
+        "authority",
+        "review_at",
+        "created_at",
+        "released_at"
+      ],
+      "private.legal_versions": [
+        "id",
+        "kind",
+        "version",
+        "content",
+        "content_hash",
+        "status",
+        "approved_at",
+        "effective_at",
+        "created_at"
+      ],
+      "private.memberships": [
+        "business_id",
+        "user_id",
+        "role",
+        "active",
+        "joined_at"
+      ],
+      "private.notification_outbox": [
+        "id",
+        "business_id",
+        "recipient_id",
+        "template",
+        "event_key",
+        "data",
+        "status",
+        "attempts",
+        "available_at",
+        "lease_until",
+        "created_at",
+        "resolved_at"
+      ],
+      "private.operator_principals": [
+        "user_id",
+        "active",
+        "scopes",
+        "created_at",
+        "revoked_at"
+      ],
+      "private.ownership_transfers": [
+        "id",
+        "business_id",
+        "outgoing_id",
+        "incoming_id",
+        "remove_outgoing",
+        "status",
+        "created_at",
+        "expires_at",
+        "outgoing_confirmed_at",
+        "incoming_confirmed_at",
+        "completed_at"
+      ],
+      "private.pilot_mail_deliveries": [
+        "capture_id",
+        "recipient_hash",
+        "state",
+        "created_at"
+      ],
+      "private.pilot_registration_window": [
+        "singleton",
+        "enabled",
+        "smtp_enabled",
+        "approved_at",
+        "expires_at",
+        "origin",
+        "provider_otp_expiry_seconds",
+        "approved_sender_sha256"
+      ],
+      "private.registration_control": [
+        "singleton",
+        "profile",
+        "project_ref",
+        "origin",
+        "admission_enabled",
+        "delivery_enabled",
+        "approval_generation",
+        "stopped_at",
+        "terms_id",
+        "privacy_id",
+        "session_policy",
+        "session_policy_ready",
+        "worker_id",
+        "worker_until",
+        "heartbeat_at",
+        "transport_ready",
+        "approved_sender_sha256",
+        "hourly_budget",
+        "daily_budget",
+        "otp_digits",
+        "otp_expiry_seconds"
+      ],
+      "private.registration_intents": [
+        "id",
+        "email",
+        "full_name",
+        "nonce_hash",
+        "terms_id",
+        "accepted_at",
+        "created_at",
+        "expires_at",
+        "provider_user_id",
+        "finalized_at",
+        "submission_id",
+        "submission_fingerprint",
+        "privacy_id",
+        "creation_deadline",
+        "provider_claimed_at",
+        "renewed_at",
+        "submission_state",
+        "approval_generation",
+        "registration_profile",
+        "registration_session_policy"
+      ],
+      "private.registration_requests": [
+        "request_hash",
+        "signed_at",
+        "received_at"
+      ],
+      "private.registration_test_recipients": [
+        "email",
+        "enabled"
+      ],
+      "private.release_gates": [
+        "singleton",
+        "registration_enabled",
+        "external_mail_enabled",
+        "legal_publication_enabled",
+        "disposal_enabled",
+        "eligibility_approved",
+        "test_terms_id"
+      ],
+      "private.request_events": [
+        "id",
+        "request_id",
+        "actor_id",
+        "event",
+        "created_at"
+      ],
+      "private.request_exports": [
+        "request_id",
+        "subject_id",
+        "payload",
+        "payload_hash",
+        "access_until",
+        "created_at"
+      ],
+      "private.request_receipts": [
+        "request_id",
+        "executor_id",
+        "outcome",
+        "created_at"
+      ],
+      "private.retention_rules": [
+        "category",
+        "policy_version",
+        "rules",
+        "status",
+        "approved_at"
+      ],
+      "private.security_permits": [
+        "id",
+        "user_id",
+        "session_id",
+        "generation",
+        "trusted_factor_id",
+        "action",
+        "expires_at",
+        "consumed_at",
+        "target_factor_id",
+        "issued_at"
+      ],
+      "private.shop_assignments": [
+        "business_id",
+        "user_id",
+        "shop_id"
+      ],
+      "private.shops": [
+        "business_id",
+        "id",
+        "name",
+        "kind",
+        "active"
+      ],
+      "private.workspace_invitations": [
+        "id",
+        "business_id",
+        "email",
+        "role",
+        "invited_by",
+        "token_hash",
+        "status",
+        "issued_at",
+        "expires_at",
+        "resolved_at",
+        "accepted_by"
+      ]
+    }
+  },
+  "exactSelectSources": {
+    "guard": {
+      "sha256": "ac82bb1f50ffa1eb29efdc54fab07b3d9c1817430caa262c79728058a2aec644",
+      "sql": "select\n (select marker from foundation_probe.environment_identity where singleton) marker,\n (select jsonb_build_object('admission',admission_enabled,'delivery',delivery_enabled,'transport',transport_ready,'security',session_policy_ready,'policy',session_policy,'termsSelected',terms_id is not null,'privacySelected',privacy_id is not null) from private.registration_control where singleton) controls,\n (select not(registration_enabled or external_mail_enabled or legal_publication_enabled or eligibility_approved or disposal_enabled) from private.release_gates where singleton) release_closed,\n (select not(enabled or smtp_enabled) from private.pilot_registration_window where singleton) pilot_closed,\n has_schema_privilege('app_registration','auth','USAGE') registration_auth_usage,\n has_schema_privilege('app_registration','private','CREATE') registration_private_create,\n coalesce(has_function_privilege(to_regprocedure('extensions.hmac(bytea,bytea,text)'),'EXECUTE'),false) hmac_available,\n (select jsonb_agg(jsonb_build_object('schema',n.nspname,'table',c.relname,'columns',(select jsonb_agg(jsonb_build_object('name',a.attname,'type',format_type(a.atttypid,a.atttypmod),'position',a.attnum) order by a.attnum) from pg_attribute a where a.attrelid=c.oid and a.attnum>0 and not a.attisdropped),'keys',coalesce((select jsonb_agg(a.attname::text order by k.position) from pg_index i cross join lateral unnest(i.indkey) with ordinality k(attnum,position) join pg_attribute a on a.attrelid=c.oid and a.attnum=k.attnum where i.indrelid=c.oid and i.indisprimary),'[]'::jsonb)) order by n.nspname,c.relname) from pg_class c join pg_namespace n on n.oid=c.relnamespace where c.relkind in ('r','p') and (n.nspname in ('private','foundation_probe') or (n.nspname='auth' and c.relname in ('users','mfa_factors','identities')))) registry"
+    },
+    "security": {
+      "policies": {
+        "sha256": "42408cf1509524ddf0829f634dd3eda5b1d999d205074832c019b815455612f6",
+        "sql": "select to_jsonb(p) p from pg_policies p where schemaname in ('private','foundation_probe','auth') order by schemaname,tablename,policyname"
+      },
+      "relations": {
+        "sha256": "31409e7219e77774cf11e340137a578c472d146ca91d4f6e4266c5eff637085a",
+        "sql": "select n.nspname schema,c.relname name,pg_get_userbyid(c.relowner) owner,c.relacl::text acl,c.relrowsecurity rls,c.relforcerowsecurity forced from pg_class c join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('private','foundation_probe','auth') and c.relkind in ('r','p') order by 1,2"
+      },
+      "columnAcls": {
+        "sha256": "d9bb70548a7449bbac8d8f93df5004748e892b792c04f02fdca87ff0a5ddfb03",
+        "sql": "select n.nspname schema,c.relname name,a.attname column,a.attacl::text acl from pg_attribute a join pg_class c on c.oid=a.attrelid join pg_namespace n on n.oid=c.relnamespace where n.nspname in ('private','foundation_probe','auth') and c.relkind in ('r','p') and a.attnum>0 and not a.attisdropped order by 1,2,a.attnum"
+      },
+      "functions": {
+        "sha256": "82ec271465d1eb9b2ce3317d3c1c53317cbc4670a754e6e6543d27c2edf929f3",
+        "sql": "select n.nspname schema,p.proname name,pg_get_function_identity_arguments(p.oid) signature,pg_get_userbyid(p.proowner) owner,p.prosecdef definer,p.proconfig settings,p.proacl::text acl,encode(sha256(convert_to(pg_get_functiondef(p.oid),'UTF8')),'hex') digest from pg_proc p join pg_namespace n on n.oid=p.pronamespace where n.nspname in ('private','api','foundation_probe') and p.prokind in ('f','p') order by 1,2,3"
+      },
+      "roles": {
+        "sha256": "75c712725d56b44531623eeeec53eb988e8d1df493d55317f10fc923bed8bb6c",
+        "sql": "select r.rolname name,r.rolsuper superuser,r.rolbypassrls bypassrls,r.rolcanlogin login,r.rolcreaterole createrole,r.rolcreatedb createdb,r.rolinherit inherit,(select coalesce(jsonb_agg(pg_get_userbyid(m.roleid) order by m.roleid),'[]'::jsonb) from pg_auth_members m where m.member=r.oid) memberships from pg_roles r where r.rolname in ('app_registration','app_workspace','anon','authenticated','service_role','supabase_auth_admin','postgres') order by r.rolname"
+      },
+      "migrations": {
+        "sha256": "549fd05cd9ae3c50aa72cffd4476bcaab3d7b4900a76776087981912a60598c4",
+        "sql": "select version,name from supabase_migrations.schema_migrations order by version"
+      },
+      "schemaGrants": {
+        "sha256": "130acf3bbed5343b739cfd3e87040be1d6866d33ec3ce66ef9efc25a668715cc",
+        "sql": "select jsonb_build_object('schemas',(select jsonb_agg(jsonb_build_object('name',nspname,'owner',pg_get_userbyid(nspowner),'acl',nspacl::text) order by nspname) from pg_namespace where nspname in ('private','foundation_probe','auth','api','extensions')),'defaults',(select coalesce(jsonb_agg(jsonb_build_object('owner',pg_get_userbyid(defaclrole),'schema',coalesce(n.nspname,''),'kind',defaclobjtype,'acl',defaclacl::text) order by defaclrole,defaclnamespace,defaclobjtype),'[]'::jsonb) from pg_default_acl d left join pg_namespace n on n.oid=d.defaclnamespace)) grants"
+      }
+    },
+    "tableFingerprintSource": "scripts/lib/current-preservation.mjs#fingerprintSql",
+    "note": "Table names are fixed by expectedRegistry; PK identifiers come only from the validated registry. Every table uses the reviewed generator and bound comparison key. At most 10,000 rows per table; 10,001 stops rather than silently truncating."
+  },
+  "previousWorkers": [
+    {
+      "attempt": ".secrets/registration-completion/transport-probe/child-started.json",
+      "terminal": ".secrets/registration-completion/transport-probe/child-terminal.json"
+    },
+    {
+      "attempt": ".secrets/registration-final-v1/B/attempt.json",
+      "terminal": ".secrets/registration-final-v1/B/terminal.json"
+    }
+  ],
+  "sources": [
+    {
+      "path": ".tools/c3ba-catalog.mjs",
+      "sha256": "ce52e3ead1b540eb90551c4677a65b65d5c84862a02aefbf566a973195445701"
+    },
+    {
+      "path": ".tools/stage-c3-collect.mjs",
+      "sha256": "09e9d45ba5f3358d6bf263001f4ca30eae02a549a6acc9ae6800929cb60fa1f7"
+    },
+    {
+      "path": "artifacts/stage-c1-identity-boundary-manifest.json",
+      "sha256": "1a46a84079cf25b752783b06dea889f8aeeb1759bec066b6faad9e696170743f"
+    },
+    {
+      "path": "config/registration-deployments.json",
+      "sha256": "d3669d5f44875330a7671ea9d6ca3549b756c4ab009f0af25ec2b87fd68a1427"
+    },
+    {
+      "path": "config/stage-c1-identity-boundary-baseline.json",
+      "sha256": "dc8d1a11cfc823e9f38d588586fe94385a2b4c99daa4744c401a3ab4f4414777"
+    },
+    {
+      "path": "config/stage-c2-disabled-service-proposal.json",
+      "sha256": "1e2f924797c5c3e0c99b61add63092abbb91c2c79a3277701d0ef5ac9ac88b41"
+    },
+    {
+      "path": "config/supabase-ca.crt",
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7"
+    },
+    {
+      "path": "config/test-target.json",
+      "sha256": "626e06d3d6e2fef3c74a2dbd4a052c818a4db609168e8f283f29cf489eedb89e"
+    },
+    {
+      "path": "docs/registration-final-acceptance-and-handoff.md",
+      "sha256": "f2d9e51bbd7480557a5c754476902b1888d63bfd3cb6d2d742b1feb6fc01e6c7"
+    },
+    {
+      "path": "docs/registration-final-approval-package.md",
+      "sha256": "8e195e6d4fde12f1fc46aa858e5f980bacbf734d0ff3218f7f4d96c53487262f"
+    },
+    {
+      "path": "docs/registration-final-security-decision-20261027.md",
+      "sha256": "26e87421a4f0e40e460f2793aada53bf184b36023589b15ef60f49b0f6aaa4d7"
+    },
+    {
+      "path": "docs/registration-transport-lifecycle-retest-approval.md",
+      "sha256": "3fb6f36416edb64a77f6792d56f51c80b39e717b55ed25fdf428530d965e9595"
+    },
+    {
+      "path": "docs/registration-transport-only-approval.md",
+      "sha256": "150bae34a50f5c188f7b193a555739c1ac1c326f77cfb504b0d9929f8c722c85"
+    },
+    {
+      "path": "next.config.ts",
+      "sha256": "7633177eb6d238aeaa02990de3543f762cb79874b47a786e4c2c92ea8b595196"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7e9159c15084c03ca2585cfa5541df98e109724f399c73b47e03d3025294bb9"
+    },
+    {
+      "path": "package.json",
+      "sha256": "90e184aa4373b32b3817781d99c844963742cd811c1e4decd5a1f99d6bf5ba07"
+    },
+    {
+      "path": "scripts/accept-current-preservation.mjs",
+      "sha256": "ca36eba45420a5819326195e4cf31672a82a05e1f60a72f323b67fb2fa27c839"
+    },
+    {
+      "path": "scripts/capture-current-preservation.mjs",
+      "sha256": "d388f1f761e9ed4e4ab5877a2d4a4d2b30974fed5ea5d87ea6572f3e8203f195"
+    },
+    {
+      "path": "scripts/lib/c1-identity-preflight.mjs",
+      "sha256": "8511d7baad97e9410a2a115809df36e89275688da3d8474d9764b30052e22238"
+    },
+    {
+      "path": "scripts/lib/current-preservation-security.mjs",
+      "sha256": "af2c22adcba165ae7430051060432ce5ff271c8b4e45c0615c3625d5f2ee1911"
+    },
+    {
+      "path": "scripts/lib/current-preservation.mjs",
+      "sha256": "0c486acb48318704dd30124150cf99781399d98ba06ef774b86f21344daa4761"
+    },
+    {
+      "path": "scripts/lib/gmail-credentials.mjs",
+      "sha256": "d188009c6a0c08827d15491e30e6d429152cffded6e86184cde4fc7b135bd9cf"
+    },
+    {
+      "path": "scripts/lib/legacy-preservation-bridge.mjs",
+      "sha256": "40ef29a0a2dddef11352383f85cace98b23bc15ed06c3c7894fbdc443bebbd44"
+    },
+    {
+      "path": "scripts/lib/persistent-mail-worker.ts",
+      "sha256": "1a8801c4b6ca8809ffb544d2227a10ac2f77fea190fb5f55b3816146d347ba70"
+    },
+    {
+      "path": "scripts/lib/preservation-private-evidence.mjs",
+      "sha256": "4b8b88a0d80ebb4f06c12617860cb0bb0569825985ecec2d68243bf2c16827ce"
+    },
+    {
+      "path": "scripts/lib/registration-acceptance-protocol.mjs",
+      "sha256": "31c64e4b2c9e87478218607286f333e470fae614f6154454faff8d0c15b1900c"
+    },
+    {
+      "path": "scripts/lib/registration-final-budget.mjs",
+      "sha256": "4af1c49c5981072d1e62b7a72141ba5357893448e33dff26abced3553d241ec9"
+    },
+    {
+      "path": "scripts/lib/registration-final-controls.mjs",
+      "sha256": "1d0c7923ed22d3486ccfc0d190d36cfa4c90e7af6f7dac57a90a649a11b4ed3d"
+    },
+    {
+      "path": "scripts/lib/registration-mail-test-scope.mjs",
+      "sha256": "7288509bf3500a3d52ef840e1d1cec1a04a09dbb79bd66846a9fcbc8b2ffe4ad"
+    },
+    {
+      "path": "scripts/lib/registration-transport-lifecycle.mjs",
+      "sha256": "c6fbf692a471a2e5de83ae7b1e58bca4a388a88481c0eb0657e88dceb4919ef7"
+    },
+    {
+      "path": "scripts/lib/registration-transport-probe.mjs",
+      "sha256": "020fa7bd9bf9c5f19437bf98b6444f5c42924a85b9474e277ad17d02471353ce"
+    },
+    {
+      "path": "scripts/persistent-registration-worker-review.mjs",
+      "sha256": "f6086afc659688c5d480ab849d80995abbd958978934492b221aa68c96c9ada7"
+    },
+    {
+      "path": "scripts/persistent-registration-worker.mjs",
+      "sha256": "9ddd9602855ec3a1ee8ad6f54cf4e8f76e9a5d8a2e5be66bca6b6ebf7963053c"
+    },
+    {
+      "path": "scripts/postgres-config.mjs",
+      "sha256": "d98198eeb6b06c38567c41547c8aff20c0c08c94721d841b2d55b5aa488bea98"
+    },
+    {
+      "path": "scripts/prepare-registration-final-review.mjs",
+      "sha256": "ea81f45a3e16d6e76807244cdeedc10a6168541494aeca5b07211d28d0b8160e"
+    },
+    {
+      "path": "scripts/prepare-registration-transport-probe.mjs",
+      "sha256": "7da2bb2b3400377235684f42913704802cdea838d03d422478eab8e9005fbf69"
+    },
+    {
+      "path": "scripts/prepare-transport-lifecycle-review.mjs",
+      "sha256": "c881708a8d347390c41e632fcee15d25642f8ddcbf4f40df4853027de33730a1"
+    },
+    {
+      "path": "scripts/registration-transport-probe.mjs",
+      "sha256": "01817cb11766c08576e91868dadbc1314cfd906cb39c163d22bedece72b5af37"
+    },
+    {
+      "path": "scripts/registration-transport-retry.mjs",
+      "sha256": "27022a44e515c44963699a4ebfb54cae4fa15db31bec4deacad449ece61c59da"
+    },
+    {
+      "path": "scripts/supervise-registration-worker.ps1",
+      "sha256": "6205971f1745fe9a78b8decb9eee8ea82a0bc6e07d9133b62f0171547c3e4a5a"
+    },
+    {
+      "path": "scripts/test-target.mjs",
+      "sha256": "6fb5624daa225fbcc879bcd1bd5bd9935ef6e3eb578eb1eb4ab06beab799bf33"
+    },
+    {
+      "path": "scripts/verify-registration-transport-package.mjs",
+      "sha256": "eee538fe0b623e80839be74eec109002dac73816b8b52de6d8dd926228d2ead5"
+    },
+    {
+      "path": "src/app/auth/account/route.ts",
+      "sha256": "73980d2db8a34e9046afd667fb97405ef90582d60cfe9e541030a5c4a47797bb"
+    },
+    {
+      "path": "src/app/auth/confirm/route.ts",
+      "sha256": "2ebe9ed8aa54692ea40cf73eccaa55a7451efab5fd67162221787a089a1949b2"
+    },
+    {
+      "path": "src/app/auth/email/code/route.ts",
+      "sha256": "105e6d11852385636e1b8ecbc0e7ecb8d8a32fb951c1be4e0aee125c2b1d4c39"
+    },
+    {
+      "path": "src/app/auth/email/renew/route.ts",
+      "sha256": "5fad3b9b369fc0230c81a1880efe9874d8872e841ae15ef22815921e36b25a66"
+    },
+    {
+      "path": "src/app/auth/email/route.ts",
+      "sha256": "50cbbfe656bbfcc71da75b3e507b9518cd7de672bf095f4262def5c42129c273"
+    },
+    {
+      "path": "src/app/auth/email/status/route.ts",
+      "sha256": "be8a549844689a320671358be1d3204ec877df93346042fe9571ec8de927dc12"
+    },
+    {
+      "path": "src/app/auth/invitations/accept/route.ts",
+      "sha256": "ed7130469fe0e92544ffac36ec42df332ab8533d7006d08bc2691d3923f57cb5"
+    },
+    {
+      "path": "src/app/auth/invitations/manage/route.ts",
+      "sha256": "99c1290a1e954f96caef3fea63c9b46ab7bbb70fac7449d6b161449c9e4017dc"
+    },
+    {
+      "path": "src/app/auth/login/route.ts",
+      "sha256": "fa1e2d77195e0244d459bdc6e33748118d5956289ec120c6724548a47900b1dd"
+    },
+    {
+      "path": "src/app/auth/logout/route.ts",
+      "sha256": "8d8ee4d56051204528f4ee09f1d42b97ccbbd1f4ff7bf34243adae9721906b39"
+    },
+    {
+      "path": "src/app/auth/mfa/route.ts",
+      "sha256": "7c692c91410bb0c11bdff9d4eaf20aab981bee944bbf3b496dd1337ee423694b"
+    },
+    {
+      "path": "src/app/auth/operator/requests/route.ts",
+      "sha256": "6df1ddf0e2c36e820a4a7c7e48847d7a9b77fa855fcf295572b2cb008339a830"
+    },
+    {
+      "path": "src/app/auth/password/challenge/route.ts",
+      "sha256": "7162bf06dcef93ddac0b477dc4876ee42194a5b915eb849f61583ab07b3123de"
+    },
+    {
+      "path": "src/app/auth/password/request/route.ts",
+      "sha256": "13da9ef073a4157aefc882ce710a0bab327fd434e43a31fc14b30124df0c7d1a"
+    },
+    {
+      "path": "src/app/auth/password/reset/route.ts",
+      "sha256": "1e513caa7631daa5f051a36e61655b6f608c00e375da5e68956229cd55ef5077"
+    },
+    {
+      "path": "src/app/auth/privacy/export/[requestId]/route.ts",
+      "sha256": "72176f81c280b8f1b69cfc55ff5849e9c847b7cd3d0e9c8c67473e6a29e80b5f"
+    },
+    {
+      "path": "src/app/auth/privacy/request/route.ts",
+      "sha256": "9f891bea14b47f6434bae4e9ee56d2778de9614afce4c7775edfc658d762c71f"
+    },
+    {
+      "path": "src/app/auth/register/route.ts",
+      "sha256": "d7205606c2d1e18147895fe12e8a84ba9b2affbc6dec6affaf8b518676245289"
+    },
+    {
+      "path": "src/app/auth/registration/status/route.ts",
+      "sha256": "1b520b41588b050b2e59c9928feda923542c2f5c59cc2acba77ce446f59f9c44"
+    },
+    {
+      "path": "src/app/auth/security/route.ts",
+      "sha256": "3019eece1d06c6966404865badab52ea240fa0dba3cb3f70b4c9d7cf9b68b5b4"
+    },
+    {
+      "path": "src/app/auth/terms/route.ts",
+      "sha256": "3641b70b882c87522192e488978936621b5bab170a4c76bd81284366d893d80d"
+    },
+    {
+      "path": "src/app/auth/workspace/route.ts",
+      "sha256": "43dbc466bcbef449baabe6e178b997644cd171b778e7bedd055918c2c5cedd42"
+    },
+    {
+      "path": "src/app/auth/workspaces/route.ts",
+      "sha256": "617d91fe3df2e271fa6513f907b8041ceefcaa99d6803e82c1873a93f6a7f81c"
+    },
+    {
+      "path": "src/lib/auth/challenge-diagnostic.ts",
+      "sha256": "a1c1e790f48283219bd88a07a95f90b8a79a085c4593f7c6e06ececdd49af578"
+    },
+    {
+      "path": "src/lib/auth/deployment-profile.ts",
+      "sha256": "4b83d2469ec5477c029a5950a1a21f6200400eeee78a7a9538580806a76f6cd0"
+    },
+    {
+      "path": "src/lib/auth/developer-access.ts",
+      "sha256": "5c7f36a21e2768988801c1423b5c00ea11848a1213bb5107409d67eaf31819d6"
+    },
+    {
+      "path": "src/lib/auth/development-registration.ts",
+      "sha256": "edc139626719da84f88647de190933ea0bab29497a903d530eaa853728b995e5"
+    },
+    {
+      "path": "src/lib/auth/email-code-settings.ts",
+      "sha256": "a81a13e53ee0b0f280e9e9a126b7b8b6a3f54d82b2791d95310a735c2179dcd1"
+    },
+    {
+      "path": "src/lib/auth/email-verification.ts",
+      "sha256": "22aae6370251cf115b2212ef63f6b749c5c5dffc02d3d5ba2fd9a9466c74e183"
+    },
+    {
+      "path": "src/lib/auth/expiry-feedback.ts",
+      "sha256": "fb42e6c9c83b32831566b178bd854ceb65f778638988729e4170708ed1390a08"
+    },
+    {
+      "path": "src/lib/auth/feedback.ts",
+      "sha256": "7f6f0c4b299a38aba8a8dc77179a448db8df54d98681b8be5591aeb7e52fe142"
+    },
+    {
+      "path": "src/lib/auth/forms.ts",
+      "sha256": "16e2f85ed66a28fd047b91b0b920f561053d32983b2141c630a891ac85446306"
+    },
+    {
+      "path": "src/lib/auth/persistent-registration.ts",
+      "sha256": "bbd62568f1b1e6cea779f4efeb60fa1ac89ca35d57202523e8e5c91128341cf3"
+    },
+    {
+      "path": "src/lib/auth/persistent-signup.ts",
+      "sha256": "e96676ec08098c987d006a80ab53d162eb54edba51e29e1aa3904171adb26862"
+    },
+    {
+      "path": "src/lib/auth/registration-policy.ts",
+      "sha256": "61aca78e0690470f3c98aef91569cf38e53149a4062627c2021a2ec0ab065436"
+    },
+    {
+      "path": "src/lib/auth/registration-service.ts",
+      "sha256": "d67b4a0514f585e1972f569644721540e67333b77e7d80682cab478b83e7192e"
+    },
+    {
+      "path": "src/lib/auth/registration.ts",
+      "sha256": "dc28f87db7f25c160938a1d152c445bb3d88f84838c7ac429b2f85a5e039d989"
+    },
+    {
+      "path": "src/lib/auth/signup-challenge.ts",
+      "sha256": "46110c5730a4c5e1efba1e52f056771b98bb527eb3db94270d3f9887d6d4879a"
+    },
+    {
+      "path": "src/lib/mail/frame.ts",
+      "sha256": "b4f015d9cf5025898390dd512e30a5e1baa531e294b30d85c60b4973f19fff6c"
+    },
+    {
+      "path": "src/lib/mail/messages.ts",
+      "sha256": "f5f8f43682e9eb9a787e6027f7341280dfd019d033108733fa44349faf0bf476"
+    },
+    {
+      "path": "src/lib/mail/resend.ts",
+      "sha256": "1319cbcb6864faadf6d8e258057fcf0e584098d152eab52d6f1ac1f284624132"
+    },
+    {
+      "path": "src/lib/mail/smtp.ts",
+      "sha256": "e0f5c0f0c6128ec7217b3e37de9bbf4a65fe695dd73105b09c386d37fa529211"
+    },
+    {
+      "path": "src/lib/mail/verification-template.ts",
+      "sha256": "cd558bbcb0a3bec7a1598b67cbbb93a1861c2d83e7edba51e4385a9d071f50e5"
+    },
+    {
+      "path": "src/lib/security/auth-flow.ts",
+      "sha256": "cb8f49844024a9e3fa45b85ba112c41be0c4d3a581762e4e27a2464eaaee88d3"
+    },
+    {
+      "path": "src/lib/security/enrollment-cookie.ts",
+      "sha256": "bf8f45543e8c51bd871c1eeac30203a544543320683e7f3666c6f04a025328ca"
+    },
+    {
+      "path": "src/lib/security/mfa-state.ts",
+      "sha256": "a6024fe9e5c60dc7a78f204110abe1748049c28a138d18e54aa94e473c70c457"
+    },
+    {
+      "path": "src/lib/security/session-audit.ts",
+      "sha256": "80e6685b34069119255c3576367a645bafd5fa01ff080b2f7a7d4fb1b160280c"
+    },
+    {
+      "path": "src/lib/supabase/server.ts",
+      "sha256": "61a9ea10b84a179e4f3d0d46b75ab36129b6683f9f68a80126a7d5f228494e8e"
+    },
+    {
+      "path": "src/lib/workspace-management.ts",
+      "sha256": "0e5fb56f7919f497e220d13ad87d7d396bd37da8839de16c1fbe49503c183b8f"
+    },
+    {
+      "path": "src/lib/workspaces.ts",
+      "sha256": "6bf155b313c46613de8048ced02e53be7252d4f946c7582ff9dbea02b84b5259"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-intent-auth.ts",
+      "sha256": "969dab701f69c29f2acc33de991e47fe7c883ba50eddcc849e3aded215e1669b"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-service-auth.ts",
+      "sha256": "74fb4d841f021c5db64856fc638e2268197faee13a22edddcaeba5b8330cca3f"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-service.ts",
+      "sha256": "8dc648df54856937a6e0cce0b556297fd14b3146a4ddd96ac04abfc3592b452c"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/deno.json",
+      "sha256": "1b6167a0ee26abd3478ff5918e2de9eb6bc87d7c01f63892e1aeeea5277b6d8f"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/deno.lock",
+      "sha256": "ce70e91004a0d31208a73048996e177b3adebb246cc1a422ace2c4e247d9b825"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/index.ts",
+      "sha256": "248965336eda834de507f842487673619dec677cf13d3947c500b22d66d485f0"
+    },
+    {
+      "path": "supabase/prepared/20261023122336_mitsa_registration_identity_boundary.sql",
+      "sha256": "f9e47b2203b5ebf6ac5761a240e51dc1186113a1b21302ba43cfe710e4a276b0"
+    },
+    {
+      "path": "supabase/security-proposals/one-hour-development-session.sql.txt",
+      "sha256": "d75e725a24782ce301b8a766f1ff4e25cfe059b7a97977253746a70d5eb136dc"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-admission-controls.sql.txt",
+      "sha256": "63e454ab374f128b61d94440bee47b52d8b933f8ab5412ef7c640b15fe6ff966"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-delivery-controls.sql.txt",
+      "sha256": "1b010b2c4bcd33edae3765f4ef81b9de95f0468bc3bf53ebb5f16acdd76343c3"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-operational-stop.sql.txt",
+      "sha256": "c8229637ef6f7f3089eb20222adf8054107a2b8cf65aca9c8d826da2c43388e6"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-test-notices.sql.txt",
+      "sha256": "ced89e0a97f9b96cb25902ce6ed4ae97a2b8c15df520ab81beab9e22c6f16538"
+    },
+    {
+      "path": "tests/support/transport-cleanup-fixture.mjs",
+      "sha256": "b80eb216b7d0576a2cbc2a4482530ac4478e4578463b715539c4104364caebf2"
+    },
+    {
+      "path": "tests/support/transport-ipc-fixture.mjs",
+      "sha256": "d1d0c35ad723c952fd798186b82a598be11cb1798a3fbcf3327db037dc2f6105"
+    },
+    {
+      "path": "tests/unit/current-preservation-security.test.ts",
+      "sha256": "d7a9aa84b6ef88ffa1ea9f0006b7bbf93bb9edb5ae5d83eb530977be240f55d5"
+    },
+    {
+      "path": "tests/unit/current-preservation.test.ts",
+      "sha256": "1452a029c971bfb0e735cb5a7d0f91b23af8c0fb327cd92096afa5f126baf28a"
+    },
+    {
+      "path": "tests/unit/legacy-preservation-bridge.test.ts",
+      "sha256": "7f2a8e03df47ffcaf0b967cf5827ed03762c46f53cbab4355c4cb30e9cc17421"
+    },
+    {
+      "path": "tests/unit/registration-acceptance-protocol.test.ts",
+      "sha256": "77ec78778b10752eedd6a983e806c9b7df0b8e8c47a19b5fb05f897dee8b4bc9"
+    },
+    {
+      "path": "tests/unit/registration-final-budget.test.ts",
+      "sha256": "22b2c2bd8d2c5820aa6c720b6e54a1acece5cfd0581cc82f0eff19f61afaba9d"
+    },
+    {
+      "path": "tests/unit/registration-final-controls.test.ts",
+      "sha256": "91e22f780cfd38e9e2188a43186fba4431eec2985e2b01ef7d2777de658d3d9f"
+    },
+    {
+      "path": "tests/unit/registration-final-entrypoints.test.ts",
+      "sha256": "d888ec9aa32d3e70c894c85cdce0c2734c20183d1f050b37015e20b506867d59"
+    },
+    {
+      "path": "tests/unit/registration-transport-lifecycle.test.ts",
+      "sha256": "c7f94189404a6cbbec6e89dd27680bd3aa70bb0f55d5abc578be806a26a95aba"
+    },
+    {
+      "path": "tests/unit/registration-transport-probe.test.ts",
+      "sha256": "aed97c46858fcf52629bd44edb45028454429a4d90f7547360212bd79bfbd310"
+    }
+  ],
+  "historicalEvidence": [
+    {
+      "path": ".secrets/registration-auth-review/approval.json",
+      "sha256": "56c817a1c7d09ca3fe410414ab806619111c77b2ae8e9b7b1c713d2f3ff6ef84"
+    },
+    {
+      "path": ".secrets/registration-auth-review/attempt.json",
+      "sha256": "e01fe13c11c62bf3259e33b0fda4bce76e81a8ae55281586a6900d1eaa1de3b1"
+    },
+    {
+      "path": ".secrets/registration-auth-review/budget.json",
+      "sha256": "a7dc5eeac052daf2a9d6375b502412b9f998a569d21f7c10af89b4e711e8fa59"
+    },
+    {
+      "path": ".secrets/registration-auth-review/terminal.json",
+      "sha256": "44f980044cff8b0beb6d83af1a3109561e3814ecb74735712cb3817938e60c02"
+    },
+    {
+      "path": ".secrets/registration-completion/fixtures.json",
+      "sha256": "96a33eed03ce68e18d47374cf750159b133f5b941882de033d1278334f00262d"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/approval.json",
+      "sha256": "a4e0a75c22edce627f8eafb2ba16c45b8ce2a42af824dd873fd568b45598fd6a"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/attempt.json",
+      "sha256": "d74ae6fc7d5d40c1db669d1f23b7d7e043db791f0d426d2b2538397460d37a48"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/budget.json",
+      "sha256": "2ae2c8a6bc938271dad0261a33c273f99888cb78ff62e4edfa3831f73de5e1cc"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/child-started.json",
+      "sha256": "f3372d2d368894ddd99f744b442b0c7ba7ad7fc2285d155ad072ec7eff8ee7fd"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/child-terminal.json",
+      "sha256": "0bd456f334105a64569c98f407af77a8b868619ba70f39aaa00bbe1aac450e34"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/connections-budget.json",
+      "sha256": "9c24f48055bd024d9c889a81a158c3e5945312dbc3022972cb3032340fb898f7"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-approval.json",
+      "sha256": "0a973682f1e7a3b6c83e39e23e2bb4be3c8cf68e559fc057ab8ce05744afdfe0"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-attempt.json",
+      "sha256": "5e86d286a6795f829108798317a738d100e364d64d13b3eabb14eeba1a3d827d"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-budget.json",
+      "sha256": "35f96800186d210ff29145d0aead5a71376a13debde17fa456a1e978178c7aff"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-evidence-38a75fe0-9b3b-4062-9372-3bb494ac43c3.json",
+      "sha256": "65387473d1c7fa058216f17a4075b12eb834553ada8ffeaefe679a070a8ec841"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-evidence-38a75fe0-9b3b-4062-9372-3bb494ac43c3.pgp",
+      "sha256": "6a9b657fe864c1e5b8391bbd010b5191798d751d770cf4373b531b3ff61b653d"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/management-budget.json",
+      "sha256": "9f9e174ec0908fc494b2a7dabe98bbb946dd9fc4d5bf4c63714edcb3c25ee80a"
+    },
+    {
+      "path": ".secrets/registration-final-v1/A/accepted.json",
+      "sha256": "ce19804d67cd203d5a7aaaaff54a4a9f693a8682f59dfebeb084b1ba6ca5587f"
+    },
+    {
+      "path": ".secrets/registration-final-v1/A/capture-b6626163-6dc8-4720-ad0a-42dba767939c.json",
+      "sha256": "05206a18393390f9849ea5c2e3b3ae8a50f2b0e25f86bcdc0056ed02ab77318e"
+    },
+    {
+      "path": ".secrets/registration-final-v1/A/capture-b6626163-6dc8-4720-ad0a-42dba767939c.pgp",
+      "sha256": "a31916752dca070b7fee14a13231a3fad57d100bd98500a5dc8b0c34e8934339"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/approval.json",
+      "sha256": "ca905d155ea6e879ee48e80d66413aca2bf2865eb5e4055cb5b79c85b6381657"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/attempt.json",
+      "sha256": "00b9eefea9d2cbf7d87e6978bc1e3fac86354fa13e459fc553629ab5f2b4a28b"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/budget.json",
+      "sha256": "6a1b4f5d7b390bdc1e30fcab966c647eb0037fcfd3307c79ced702f07209be31"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/capture-9725e426-8f5b-4f52-bc5a-a17b66a8c8db.json",
+      "sha256": "c0b40bc4eec110ecb6074338b410da30a06e0fbf45bf981bc0accff1ae7c43f8"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/capture-9725e426-8f5b-4f52-bc5a-a17b66a8c8db.pgp",
+      "sha256": "bed06db93da7571ab4432e552635bbf2fdcb4d4ff030ea6b00f8255106d5aaf1"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/capture-db1f3ef5-cfb4-4d03-9871-47f9fa586f49.json",
+      "sha256": "22fc1d3a54a43d9633633006ccfadb4360d9642f0f461c61f2558ec8e629efeb"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/capture-db1f3ef5-cfb4-4d03-9871-47f9fa586f49.pgp",
+      "sha256": "3937134625879f8eff9e0a1a1914d36b5050ee833e1e520aa3d0dbab3aa50b6b"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/local-preflight.json",
+      "sha256": "db1315561ec6da928eb88ad5c6995f6d0f04bd6773a25644e2c947219295fcab"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/preflight.json",
+      "sha256": "43c5e04c5a83edb0ad8c0ea7de9a5badb4e9cc5b647d80518026153327301323"
+    },
+    {
+      "path": ".secrets/registration-final-v1/B/terminal.json",
+      "sha256": "a91167713b8195be60655db70ddf7ff0dab31d981b0b2fcae01de87f72173ffc"
+    },
+    {
+      "path": ".secrets/stage-c3ba-notices-retry-01/preservation-342ae160-a906-4a28-9ad0-837ad83a2e02.json",
+      "sha256": "d30f8699237c4861934a86d8a192748306edbe6a9a39ec38a14095cad626368a"
+    },
+    {
+      "path": ".secrets/stage-c3ba-notices-retry-01/preservation-342ae160-a906-4a28-9ad0-837ad83a2e02.pgp",
+      "sha256": "737c6ddc429e746c27a7e383016f41a80d40cac00f4ab00531ffe4aeaad3e5b9"
+    },
+    {
+      "path": "artifacts/registration-auth-metadata-inspection-assessment.json",
+      "sha256": "89ce58528bd938b0afc363f6cdb3cff00ddb7f1cd567a8a75b933845307cd334"
+    },
+    {
+      "path": "artifacts/registration-auth-metadata-inspection-result.json",
+      "sha256": "08b9a535427a8b911de3c85edacd377a2d63fc1f6d871f3b8f4ef37e485fa3a9"
+    },
+    {
+      "path": "artifacts/registration-final-historical-source-archive.json",
+      "sha256": "4700ebd2474f0027b4bb2193411749f116f9bd3e22eb65393b6e08b5a60be135"
+    },
+    {
+      "path": "artifacts/registration-preservation-drift-result.json",
+      "sha256": "9da539cbb4a10e3a4e32713192542f7f01ddeb9d17f8316275b24d49be325fc6"
+    },
+    {
+      "path": "artifacts/registration-transport-lifecycle-candidate.json",
+      "sha256": "0b2557175aa32aa2223560fb50bbfa9ae29629d892fe7aa3f2411c05249279d6"
+    },
+    {
+      "path": "artifacts/registration-transport-retry-result.json",
+      "sha256": "1cfef6aa2423b143528e4e8a3266373b77cf8095b5dfabbe82bad069262fe087"
+    },
+    {
+      "path": "artifacts/registration-transport-retry-supervision-result.json",
+      "sha256": "20d4a72b5f79afe6084c31dc8f5bee1787655c715d106b5befbcfe08f5d59133"
+    },
+    {
+      "path": "config/registration-auth-metadata-review.json",
+      "sha256": "180d2c49f722a1543e68d5c83216338f43bf3a383bb623a3dfe8c8adc8f4ea63"
+    },
+    {
+      "path": "config/registration-completion-review.json",
+      "sha256": "4d95fe61174d0854f60cda37321ea789a4d6cb57f723aca895410a1367f7bb86"
+    },
+    {
+      "path": "config/registration-final-review.json",
+      "sha256": "7d354cffb5f50993167485b803de76d9f6be6cb1178dfa9407b08bfe39a13d55"
+    },
+    {
+      "path": "config/registration-transport-probe-review.json",
+      "sha256": "00290c2e2713d8d94ab1fac20cfc4791b57eb4e55595440094e0ce41eae3a841"
+    },
+    {
+      "path": "docs/history/b-lifecycle-local-v2/scripts_lib_registration-transport-lifecycle.mjs.txt",
+      "sha256": "4ca875dbc7c21dc11557f16b9773cbb766497b3f52d3232edd03c3734f9e486f"
+    },
+    {
+      "path": "docs/history/b-lifecycle-local-v2/scripts_registration-transport-retry.mjs.txt",
+      "sha256": "547fdb02f983cd9171211dffae4190a0900fe592760dc34ff41f5284a162ffbf"
+    },
+    {
+      "path": "docs/history/b-lifecycle-local-v2/tests_support_transport-ipc-fixture.mjs.txt",
+      "sha256": "d1d0c35ad723c952fd798186b82a598be11cb1798a3fbcf3327db037dc2f6105"
+    },
+    {
+      "path": "docs/history/b-lifecycle-local-v2/tests_unit_registration-final-entrypoints.test.ts.txt",
+      "sha256": "8b5c8181fb6062b7cf9952e11501f162e0720c63f3b0584876d4784d04e07f4d"
+    },
+    {
+      "path": "docs/history/b-lifecycle-local-v2/tests_unit_registration-transport-lifecycle.test.ts.txt",
+      "sha256": "941e982d3ebc82fdc111f9e7d526df8d63e09c2ab9f0b7668ad5b580318f6be3"
+    },
+    {
+      "path": "docs/history/b-transport-retry-v2/registration-transport-retry.mjs.txt",
+      "sha256": "547fdb02f983cd9171211dffae4190a0900fe592760dc34ff41f5284a162ffbf"
+    },
+    {
+      "path": "docs/history/stage-d-00290c2e-source/registration-transport-probe.test.ts.txt",
+      "sha256": "6b85a7a36083f4a90dca9fb34b16d56bc0e80b7068fe40023b6f7c1dcb60df1e"
+    },
+    {
+      "path": "docs/proposals/registration-transport-retry-lifecycle.mjs.txt",
+      "sha256": "ec182a0d30c475428031c99afb0d4aeecd63cf6c319918cab9e40a1634e72a3f"
+    }
+  ],
+  "historicalSourceReplacements": [
+    {
+      "originalPath": "scripts/registration-transport-retry.mjs",
+      "archivePath": "docs/history/b-transport-retry-v2/registration-transport-retry.mjs.txt",
+      "sha256": "547fdb02f983cd9171211dffae4190a0900fe592760dc34ff41f5284a162ffbf"
+    },
+    {
+      "originalPath": "tests/unit/registration-final-entrypoints.test.ts",
+      "archivePath": "docs/history/b-lifecycle-local-v2/tests_unit_registration-final-entrypoints.test.ts.txt",
+      "sha256": "8b5c8181fb6062b7cf9952e11501f162e0720c63f3b0584876d4784d04e07f4d"
+    }
+  ],
+  "strictOptionA": "BLOCKED_SU-519045",
+  "residualRiskAccepted": false,
+  "hostedRequests": 0
+}

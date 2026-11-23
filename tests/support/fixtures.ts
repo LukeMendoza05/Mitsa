@@ -1,10 +1,11 @@
-import { database, createSyntheticUser } from "./hosted";
+import { database, createSyntheticUser, enrollSyntheticMfa, acceptSyntheticTerms } from "./hosted";
 
 export async function securityFixture() {
-  const owner = await createSyntheticUser("owner");
-  const manager = await createSyntheticUser("manager");
+  const owner = await enrollSyntheticMfa(await createSyntheticUser("owner"));
+  const manager = await enrollSyntheticMfa(await createSyntheticUser("manager"));
   const cashier = await createSyntheticUser("cashier");
-  const outsider = await createSyntheticUser("outsider");
+  const outsider = await enrollSyntheticMfa(await createSyntheticUser("outsider"));
+  await Promise.all([owner,manager,cashier,outsider].map(acceptSyntheticTerms));
   const business = crypto.randomUUID(), otherBusiness = crypto.randomUUID();
   const shop = crypto.randomUUID(), secondShop = crypto.randomUUID(), otherShop = crypto.randomUUID();
   const db = await database();
@@ -12,10 +13,10 @@ export async function securityFixture() {
     await db.query("begin");
     await db.query("insert into private.businesses(id,name) values ($1,'Synthetic proof'),($2,'Synthetic other')",[business,otherBusiness]);
     await db.query("insert into private.shops(business_id,id,name) values ($1,$2,'A'),($1,$3,'B'),($4,$5,'Other')",[business,shop,secondShop,otherBusiness,otherShop]);
-    for (const [user,role,biz] of [[owner,"owner",business],[manager,"manager",business],[cashier,"cashier",business],[outsider,"owner",otherBusiness]] as const) {
+    for (const [user,role,biz] of [[owner,"owner",business],[manager,"admin",business],[cashier,"staff",business],[outsider,"owner",otherBusiness]] as const) {
       await db.query("insert into private.memberships(business_id,user_id,role) values ($1,$2,$3)",[biz,user.id,role]);
     }
-    for (const user of [manager,cashier]) await db.query("insert into private.shop_assignments values ($1,$2,$3)",[business,user.id,shop]);
+    for (const user of [manager,cashier]) await db.query("insert into private.shop_assignments(business_id,user_id,shop_id) values ($1,$2,$3)",[business,user.id,shop]);
     await db.query("commit");
   } catch (error) { await db.query("rollback"); throw error; }
   finally { await db.end(); }

@@ -1,0 +1,11 @@
+{
+  "subject": "Verify your Mitsa email address",
+  "observedProviderCodeLength": 6,
+  "requiredOtpLength": 6,
+  "previewIllustrativeCodeLength": 6,
+  "providerOtpValiditySeconds": 3600,
+  "configurationEvidence": "Persisted dashboard review and encrypted hosted capture",
+  "proposedOtpLength": 6,
+  "providerChangeApproved": true,
+  "published": false
+}

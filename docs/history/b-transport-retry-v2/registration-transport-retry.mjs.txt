@@ -1,0 +1,68 @@
+// New independently budgeted B scope. Never edits/reuses original D attempts.
+import {readFileSync,writeFileSync,existsSync,mkdirSync} from 'node:fs';
+import {fork} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
+import assert from 'node:assert/strict';
+import {parse} from 'dotenv';
+import pg from 'pg';
+import nodemailer from 'nodemailer';
+import {collectCurrentPreservation,compareCurrentPreservation} from './lib/current-preservation.mjs';
+import {evidenceKeys,loadPrivateEvidence,savePrivateEvidence,readJson,sha256} from './lib/preservation-private-evidence.mjs';
+import {assertFinalApproval,finalLimits,reserveFinalOperation,assertTransportPreservation} from './lib/registration-final-controls.mjs';
+import {transportProbe,probeSql,protectedTransportCredentials,assertProbeChildStopped} from './lib/registration-transport-probe.mjs';
+import {PersistentMailWorker} from './lib/persistent-mail-worker.ts';
+import {gmailCredentialFilePresent,readProtectedGmailCredentials} from './lib/gmail-credentials.mjs';
+import {assertTestTarget} from './test-target.mjs';
+import {testDatabaseConfig} from './postgres-config.mjs';
+import {assertCurrentSecurity} from './lib/current-preservation-security.mjs';
+const root='.secrets/registration-final-v1/B',reviewPath='config/registration-final-review.json',artifact='artifacts/registration-transport-retry-result.json';
+const persist=(p,v,exclusive=false)=>writeFileSync(p,JSON.stringify(v,null,2)+'\n',{mode:0o600,flush:true,flag:exclusive?'wx':'w'});
+let db,transport,reconciliationTimer,stage='local',budget,rolledBack=false;
+function frozen(){const bytes=readFileSync(reviewPath),r=JSON.parse(bytes);for(const f of [...r.sources,...r.historicalEvidence])assert.equal(sha256(readFileSync(f.path)),f.sha256);assert.equal(r.project,'mjtejwafxriwntweussc');assert.equal(r.marker,'fireworks-foundation-proof-01a12e38');return {bytes,r};}
+function approval(bytes){const a=readJson(root+'/approval.json');assertFinalApproval(a,{stage:'B',reviewSha256:sha256(bytes)});return a;}
+async function accepted(keys){const a=readJson('.secrets/registration-final-v1/A/accepted.json');assert.equal(a.acceptedByHuman,true);assert(a.evidence?.trim());assert.equal(sha256(readFileSync(a.manifest)),a.manifestSha256);const payload=await loadPrivateEvidence(a.manifest,keys);assert.equal(payload.reviewSha256,sha256(readFileSync(reviewPath)));return {a,payload};}
+async function child(){
+ const {bytes,r}=frozen(),a=approval(bytes);assert(process.send);const attempt=readJson(root+'/attempt.json');assert.equal(attempt.parentPid,process.ppid);assert.equal(attempt.reviewSha256,sha256(bytes));assert(!existsSync(root+'/budget.json'));
+ const keys=await evidenceKeys(),reference=await accepted(keys),comparisonKey=Buffer.from(reference.payload.comparisonKey,'base64');assert.equal(comparisonKey.length,32);
+ const oldRoot='.secrets/registration-completion/transport-probe';assertProbeChildStopped(readJson(oldRoot+'/child-started.json'),readJson(oldRoot+'/child-terminal.json'),{reviewSha256:sha256(readFileSync('config/registration-transport-probe-review.json')),isRunning:pid=>{try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw Error('Unknown prior worker state');}}});
+ const op=parse(readFileSync('.secrets/operator.env')),local=parse(readFileSync('.env.local')),target=readJson('config/test-target.json');assertTestTarget({projectRef:op.TEST_PROJECT_REF,url:op.TEST_SUPABASE_URL,databaseUrl:op.TEST_DATABASE_URL},target);assert(!local.MITSA_REGISTRATION_ENGINE||local.MITSA_REGISTRATION_ENGINE==='legacy');assert.equal(local.MITSA_REGISTRATION_SERVICE_ENABLED,'false');
+ budget={sqlRequests:0,selects:0,writeCalls:0,transactionStatements:0,databaseConnections:1,smtpVerifications:0};persist(root+'/budget.json',budget,true);
+ const started=performance.now();db=new pg.Client({...testDatabaseConfig(op.TEST_DATABASE_URL,target),statement_timeout:15000,lock_timeout:2000,idle_in_transaction_session_timeout:30000});db.on('error',()=>{});process.once('disconnect',()=>{transport?.close();db?.connection?.stream?.destroy();process.exit(1);});
+ const delivery=readFileSync('supabase/security-proposals/persistent-registration-delivery-controls.sql.txt','utf8'),writes=new Set([delivery,probeSql.acquire,probeSql.heartbeat,probeSql.shutdown]);
+ const query=async(sql,args)=>{assert(Date.now()<Math.min(Date.parse(a.notAfter),Date.parse(attempt.claimedAt)+300000)&&performance.now()-started<295000);const kind=writes.has(sql)?'writeCalls':/^select\b/i.test(sql)?'selects':'transactionStatements';assert(kind!=='transactionStatements'||[probeSql.begin,probeSql.lock,'begin isolation level repeatable read read only','commit','rollback'].includes(sql));budget=reserveFinalOperation(budget,kind,finalLimits.B);persist(root+'/budget.json',budget);return db.query(sql,args);};
+ const observe=async()=>{
+  let began=false,terminal=false;await query('begin isolation level repeatable read read only');began=true;
+  try{const payload=await collectCurrentPreservation({query},{expected:r.expectedRegistry,comparisonKey});terminal=true;await query('commit');began=false;
+   const manifest=await savePrivateEvidence(root,{payload,comparisonKey:reference.payload.comparisonKey},keys);persist(root+'/last-observation.json',{manifest});assertCurrentSecurity(payload,readJson('config/stage-c1-identity-boundary-baseline.json'),readJson('artifacts/stage-c1-identity-boundary-manifest.json'));return {payload,manifest};
+  }catch(e){if(began&&!terminal){try{await query('rollback');}catch{}}throw e;}
+ };
+ stage='connect';await db.connect();stage='preservation-preflight';const observation=await observe(),before=observation.payload,preManifest=observation.manifest;const delta=compareCurrentPreservation(reference.payload.payload,before);assertTransportPreservation(delta,a.preservationPolicy);persist(root+'/preflight.json',{manifest:preManifest,preservationDifference:delta},true);
+ stage='control-read';const current=(await query(probeSql.inspect)).rows[0];assert.equal(current.marker,r.marker);const credentials=protectedTransportCredentials({present:gmailCredentialFilePresent,read:readProtectedGmailCredentials});
+ stage='rollback-only-transport';const result=await transportProbe({db:{query},generation:r.generation,senderHash:sha256(credentials.sender.trim().toLowerCase()),deliverySql:delivery,expectedControl:current.control,WorkerClass:PersistentMailWorker,onRollback:()=>{rolledBack=true;},verifyTransport:async()=>{
+  assert(budget.smtpVerifications<1);budget.smtpVerifications++;persist(root+'/budget.json',budget);transport=nodemailer.createTransport({host:'smtp.gmail.com',port:465,secure:true,pool:false,auth:{user:credentials.sender,pass:credentials.appPassword},tls:{servername:'smtp.gmail.com',rejectUnauthorized:true},connectionTimeout:10000,greetingTimeout:10000,socketTimeout:15000});try{return await transport.verify();}finally{transport.close();}
+ }});
+ stage='preservation-postflight';const postObservation=await observe(),after=postObservation.payload,postDelta=compareCurrentPreservation(before,after);assertTransportPreservation(postDelta,a.preservationPolicy);const postManifest=postObservation.manifest;
+ persist(artifact,{status:'PASSED_TRANSPORT_ONLY',budget,rolledBack,result,preservationPreflight:delta,preservationPostflight:postDelta,preManifest,postManifest,runtimeSeconds:Number(((performance.now()-started)/1000).toFixed(3)),messagesSent:0,accountsCreated:0,strictOptionA:'BLOCKED_SU-519045',privateValuesPrinted:false});
+}
+async function reconcile(){
+ const {bytes,r}=frozen(),a=approval(bytes);const terminal=readJson(root+'/terminal.json'),attempt=readJson(root+'/attempt.json');const deadline=Math.min(Date.parse(a.notAfter),Date.parse(attempt.claimedAt)+300000);assert(Date.now()<deadline);assertProbeChildStopped({pid:attempt.childPid,reviewSha256:sha256(bytes)},{pid:terminal.pid,reviewSha256:sha256(bytes)},{reviewSha256:sha256(bytes),isRunning:pid=>{try{process.kill(pid,0);return true;}catch(e){if(e.code==='ESRCH')return false;throw Error('Unknown child state');}}});assert(!existsSync(root+'/reconciliation-attempt.json'));
+ budget=readJson(root+'/budget.json');assert.equal(budget.databaseConnections,1);persist(root+'/reconciliation-attempt.json',{claimedAt:new Date().toISOString()},true);budget.databaseConnections=2;persist(root+'/budget.json',budget);
+ const keys=await evidenceKeys(),reference=await accepted(keys),key=Buffer.from(reference.payload.comparisonKey,'base64'),op=parse(readFileSync('.secrets/operator.env'));db=new pg.Client({...testDatabaseConfig(op.TEST_DATABASE_URL,readJson('config/test-target.json')),statement_timeout:15000,idle_in_transaction_session_timeout:30000});db.on('error',()=>{});
+ reconciliationTimer=setTimeout(()=>db?.connection?.stream?.destroy(),Math.min(120000,deadline-Date.now()));
+ const query=async(sql,args)=>{assert(Date.now()<deadline);const kind=/^select\b/i.test(sql)?'selects':'transactionStatements';assert(kind==='selects'||['begin isolation level repeatable read read only','commit','rollback'].includes(sql));budget=reserveFinalOperation(budget,kind,finalLimits.B);persist(root+'/budget.json',budget);return db.query(sql,args);};
+ await db.connect();await query('begin isolation level repeatable read read only');const payload=await collectCurrentPreservation({query},{expected:r.expectedRegistry,comparisonKey:key});await query('commit');const manifest=await savePrivateEvidence(root,{payload,comparisonKey:reference.payload.comparisonKey},keys),difference=compareCurrentPreservation(reference.payload.payload,payload);persist(root+'/reconciliation.json',{manifest,difference,budget,readOnly:true,doesNotAuthorizeRetry:true});console.log(JSON.stringify({status:'READ_ONLY_RECONCILIATION_COMPLETE',difference,budget,privateValuesPrinted:false}));
+}
+try{
+ const mode=process.argv[2];assert.equal(process.argv.length,3);assert(['--check','--run','--child','--reconcile'].includes(mode));const {bytes}=frozen();
+ if(mode==='--check'){console.log(JSON.stringify({status:'LOCAL_PREPARATION_READY_CONDITIONAL_ON_A',acceptedReferencePresent:existsSync('.secrets/registration-final-v1/A/accepted.json'),approvalPresent:existsSync(root+'/approval.json'),attemptPresent:existsSync(root+'/attempt.json'),limits:finalLimits.B,hostedRequests:0,credentialsDecrypted:false}));}
+ else if(mode==='--child')await child();
+ else if(mode==='--reconcile')await reconcile();
+ else{
+  const a=approval(bytes);assert(!existsSync(root+'/attempt.json'));const keys=await evidenceKeys();await accepted(keys);mkdirSync(root,{recursive:true});persist(root+'/attempt.json',{parentPid:process.pid,reviewSha256:sha256(bytes),claimedAt:new Date().toISOString(),workerLaunches:1,reservedMinutes:5},true);
+  const worker=fork(fileURLToPath(import.meta.url),['--child'],{windowsHide:true,silent:true});const attempt=readJson(root+'/attempt.json');attempt.childPid=worker.pid;persist(root+'/attempt.json',attempt);let expired=false;
+  const timer=setTimeout(()=>{expired=true;worker.kill('SIGKILL');},Math.max(0,Math.min(300000,Date.parse(a.notAfter)-Date.now())));
+  // Child stdout/stderr are deliberately not forwarded: reports are sanitized.
+  worker.stdout.resume();worker.stderr.resume();const outcome=await new Promise(resolve=>{worker.once('error',()=>resolve({error:true}));worker.once('exit',(code,signal)=>resolve({code,signal}));});clearTimeout(timer);persist(root+'/terminal.json',{pid:worker.pid,expired,...outcome,finishedAt:new Date().toISOString()});assert(!expired&&outcome.code===0);console.log(JSON.stringify({status:readJson(artifact).status,detailsArtifact:artifact,privateValuesPrinted:false}));
+ }
+}catch(error){if(stage!=='local'){persist(artifact,{status:'STOPPED_NO_AUTOMATIC_RETRY',stage,category:error.name,budget,rolledBack,privateValuesPrinted:false});}console.error(JSON.stringify({status:'STOPPED_NO_AUTOMATIC_RETRY',stage,category:error.name,privateValuesPrinted:false}));process.exitCode=1;}
+finally{transport?.close();try{await db?.end();}catch{db?.connection?.stream?.destroy();}if(reconciliationTimer)clearTimeout(reconciliationTimer);}

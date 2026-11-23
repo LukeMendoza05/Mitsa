@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "status": "PASSED",
+  "milestone": "P3-B",
+  "acceptedDateLocal": "2026-10-31",
+  "timezone": "Asia/Manila",
+  "projectName": "mitsa-fireworksinventory-preview",
+  "projectRef": "geuttbanjqdapcubjrnn",
+  "projectUrl": "https://geuttbanjqdapcubjrnn.supabase.co",
+  "organization": "Luke Perry's Org",
+  "organizationId": "zejvpgnesxiwavwgcsme",
+  "region": "ap-southeast-2",
+  "confirmedCreationQuoteMonthlyUsd": 0,
+  "reviewSha256": "0870b94a5d0c305b51ad74f2cfc5b68fa1a2a741d5045c5f17fb2cec839b7bdf",
+  "migration": {
+    "version": "20261029072255",
+    "name": "mitsa_empty_preview_bootstrap",
+    "recorded_statements": 1
+  },
+  "installedSqlSha256": "55943c9e22146e40545420fe075617a9e2978e3ae6dd3852c5470cf53eb8bea5",
+  "tables": 41,
+  "functions": 124,
+  "restrictedRoles": 4,
+  "singletonRows": 5,
+  "providerSignupDisabled": true,
+  "emailConfirmationRequired": true,
+  "inactiveSiteUrl": "https://inactive.invalid",
+  "redirectAllowlist": [],
+  "closedHookSelectors": [
+    "private.mitsa_before_user_created",
+    "private.mitsa_isolated_send_email"
+  ],
+  "exposedSchemas": [
+    "api"
+  ],
+  "registrationEnabled": false,
+  "emailDeliveryEnabled": false,
+  "managedAuthSecurityBeforeAndAfterSha256": "0a1e85360c3db0f4d0131194e3bcdd0239b279ca879907fb17c51b78b1ff7d35",
+  "zeroData": true,
+  "consumed": {
+    "metadataRead": 20,
+    "configUpdate": 3,
+    "projectCreate": 1,
+    "migration": 1,
+    "select": 9
+  },
+  "retainedProjectTargetedOperations": 0,
+  "accountsOrEmailsCreated": 0,
+  "recoveryActions": [],
+  "evidence": {
+    "acceptancePath": ".secrets/phase3-p3b-20261029-v1/acceptance-20261031.json",
+    "acceptanceSha256": "c7f914c02291e3961e8000cccc87cb882c96156fdaad523e9189f47256f29b9c",
+    "ledgerPath": ".secrets/phase3-p3b-20261029-v1/ledger.json",
+    "ledgerSha256": "156360a3374f3cfb65451dea17eef17b6ede388b77787cb60ae539b599b7847f",
+    "indexPath": ".secrets/phase3-p3b-20261029-v1/evidence-index-20261031.json",
+    "indexSha256": "559646d1b0a58482e74ffea2698bde3ee9daf0ee65b1c43c69aec1a2eaf4df08",
+    "reportPath": "docs/phase3-p3b-result-20261031.md",
+    "reportSha256": "908b7d3705d1fa724566c1055d9917570a737cfc84253adc8f30a513d9a5de73"
+  },
+  "evidenceLimitations": [
+    "Original final tool summaries recovered explicitly from conversation evidence; no missing raw catalog was invented.",
+    "The full final catalog was reconciled with one authorized SELECT on October 31.",
+    "Configuration and complete zero-data/Auth-catalog comparisons retain their completed October 29 observation date; no fresh configuration polling was performed."
+  ],
+  "next": {
+    "P3A": "AWAITING_EXPLICIT_APPROVAL",
+    "P3C": "AWAITING_EXPLICIT_APPROVAL",
+    "P3D": "AWAITING_A_B_C_AND_EXPLICIT_APPROVAL"
+  },
+  "publication": {
+    "commit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+    "files": 172,
+    "pushed": false
+  },
+  "vercelCreated": false,
+  "vercelDeployed": false,
+  "strictOptionA": "BLOCKED_SU-519045",
+  "masterGoalComplete": false,
+  "completedScopeSealed": true,
+  "verificationSources": [
+    {
+      "path": "scripts/verify-phase3-p3b-result.mjs",
+      "sha256": "47efb3d6258b3a6973795172887c79581733ff90897f315a924f76254cb61ec5"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/p3b-execution-ledger.mjs",
+      "sha256": "f43e4ebb5c43eb9df75756ce04ef6834ee2a44098895487ba61325ec874f2f65"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/p3b-cli-config.mjs",
+      "sha256": "b48d92b0eb464c1dba933ee289894e4648e4bd7c1e29f66917310dabaab5804c"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/accept-p3b-result-20261031.mjs",
+      "sha256": "edb567a778113b4c4c211cbe7d4ac23f80acf8056868b9ea69aaf44d503f01d7"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "status": "SUPERSEDED_BY_FREE_ONLY_STRATEGY",
+  "authorized": false,
+  "canonicalUrl": "https://mitsa-fireworksinventory.vercel.app",
+  "existingProjectId": "prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD",
+  "teamSlug": "lukemendoza",
+  "domainAttachedAndVerified": true,
+  "backendChoice": "existing-free-candidate-not-adopted",
+  "organizationChoice": "existing-free-unchanged",
+  "proposedBaseCeilingUsdPerMonth": 0,
+  "finalCheckoutCostConfirmed": false,
+  "costAcceptance": false,
+  "currentFreeOrganizationUnchanged": true,
+  "ProductionProjectRef": null,
+  "ProductionSourceCommit": null,
+  "ProductionEnvironmentEntries": 10,
+  "ProductionDeploymentApproved": false,
+  "sourceAndBackendBindingMustBeReviewed": true,
+  "registrationActivationApproved": false,
+  "sources": [
+    {
+      "path": "docs/production-clean-address-next-approval-20261031.md",
+      "sha256": "181d0e65346e9cff219690d3b36f20984e2bcef566004dd98aaff3c672c08c47"
+    },
+    {
+      "path": "scripts/lib/protected-production-plan.mjs",
+      "sha256": "b7f30c6f7ce82fa6424b97d4b3d289006635e0cc15336f626bb4e062dc2f28eb"
+    },
+    {
+      "path": "scripts/verify-protected-production-plan.mjs",
+      "sha256": "15da570cd297609b16e7bf36f589d6746cb1f283b3c0355712db0700b61c86ad"
+    },
+    {
+      "path": "config/phase3-hosted-preview-acceptance.json",
+      "sha256": "aa8ade4399652e9db4904e56694d3ddd3ae95173261f363fc8aadf9b5b4055a8"
+    },
+    {
+      "path": ".secrets/phase3-production-address-review-20261031-v1/domain-observation.json",
+      "sha256": "9035349f0c5425676708c65065e1bf4d2bce76ed56894bf12caefa6ab089c8bb"
+    },
+    {
+      "path": ".secrets/production-backend-quote-20261031-v1/quote-and-selection.json",
+      "sha256": "9c6c7b6c284ebbb2b86ca7bc646033807224e460af580d34152a671ea56108e8"
+    }
+  ],
+  "paidR1Withdrawn": true,
+  "supersededArchiveIndex": "artifacts/superseded-paid-r1-20261031/index.json",
+  "activeReplacement": "config/production-strategy.json",
+  "paidProposalArchived": true
+}

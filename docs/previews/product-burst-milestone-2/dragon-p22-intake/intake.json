@@ -1,0 +1,17 @@
+{
+  "status": "blocked-missing-source-materials",
+  "requestedIdentity": "Dragon’s Family Fireworks Package 2",
+  "userSuppliedAliases": ["P22", "DFAMILY2"],
+  "identityVerified": false,
+  "identityEvidence": null,
+  "packagingEdition": null,
+  "physicalPackagingFormVerified": false,
+  "dimensions": { "unit": "mm", "width": null, "depth": null, "height": null, "uncertaintyMm": null, "measuredBy": null, "measuredOn": null, "measurementEvidence": null },
+  "faces": { "front": null, "back": null, "left": null, "right": null, "top": null, "bottom": null },
+  "imageUseRights": { "verified": false, "evidenceReference": null, "scope": null },
+  "closeUps": [],
+  "reviewedBy": null,
+  "reviewedOn": null,
+  "modelingApproved": false,
+  "proxy": { "neutral": true, "dimensionallyAccurate": false, "units": "arbitrary-scene-units", "artworkApplied": false }
+}

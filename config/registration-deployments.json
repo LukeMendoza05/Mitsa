@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "profiles": {
+    "isolated-development": {
+      "projectRef": "mjtejwafxriwntweussc",
+      "databaseMarker": "fireworks-foundation-proof-01a12e38",
+      "origins": ["http://127.0.0.1:3000"]
+    },
+    "consenting-pilot": null,
+    "production": null
+  }
+}

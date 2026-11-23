@@ -1,0 +1,22 @@
+{
+  "status": "prepared-unapproved-not-executed",
+  "projectRef": "mjtejwafxriwntweussc",
+  "databaseMarker": "fireworks-foundation-proof-01a12e38",
+  "maxNewSyntheticUsers": 0,
+  "maxAdditionalVerifiedTotpFactors": 1,
+  "maxAdditionalPasswordUpdates": 3,
+  "cumulativeMaxPasswordUpdates": 5,
+  "maxAdditionalAdminRecoveryLinks": 2,
+  "cumulativeMaxPasswordSignins": 12,
+  "cumulativeMaxRefreshRequests": 12,
+  "maxExternalEmails": 0,
+  "priorCheckpointSha256": "c7cbcfe556b923994d850c1f2df1599f11d1808f395f2b4a6aa02662492d0952",
+  "priorCounts": {"create": 2, "password": 2, "recovery": 0, "signin": 4, "refresh": 1, "enroll": 1, "verifyNewFactor": 1},
+  "providerSettingsChanged": false,
+  "migrationsAllowed": false,
+  "hookChangesAllowed": false,
+  "workspaceOrMembershipCreationAllowed": false,
+  "registrationActivationAllowed": false,
+  "smtpOrWorkerActivationAllowed": false,
+  "riskAcceptanceIncluded": false
+}

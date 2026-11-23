@@ -1,0 +1,17 @@
+-- REVIEW CANDIDATE ONLY. Not a migration, not installed, not policy publication.
+-- Adds two immutable test records. Does not select them or open any control.
+begin;
+do $$ begin
+ assert (select marker='fireworks-foundation-proof-01a12e38' from foundation_probe.environment_identity where singleton),'unapproved target';
+ assert (select not(admission_enabled or delivery_enabled or transport_ready or session_policy_ready) and session_policy='strict' from private.registration_control where singleton),'controls not closed';
+ assert not exists(select 1 from private.legal_versions where version='isolated-persistent-synthetic-v1'),'notice collision';
+end $$;
+insert into private.legal_versions(id,kind,version,content,content_hash,status)
+select id::uuid,kind,'isolated-persistent-synthetic-v1',content,encode(sha256(convert_to(content,'UTF8')),'hex'),'test'
+from (values
+ ('98b7abf1-bca4-474f-aee4-e851b4f28d84','terms',
+ 'Mitsa isolated development test agreement. This version applies only to explicitly authorized controlled testing with fictional profiles, businesses and operational records. Use only the dedicated test inbox and your authorized test account. Do not enter real customer or business records, share credentials, bypass security or access another workspace. Email verification and privileged-access MFA remain required. Inventory, POS and analytics are planned capabilities. This agreement is not a published production contract and does not establish any fireworks licence or regulatory compliance. Acceptance records the exact agreement and privacy-notice versions. Existing accepted versions and historical records are preserved.'),
+ ('40714378-eb52-46cf-a7cf-760db4100456','privacy',
+ 'Mitsa isolated development test privacy notice. Controlled testing handles the dedicated test email, fictional profile and workspace details, agreement acceptance and authentication, authorization and audit events. Supabase Auth manages passwords and MFA; the isolated database is in Sydney, Australia. Cloudflare Turnstile validates human-verification proofs. Approved low-volume authentication messages use the dedicated Gmail sender and inbox. Provider-generated verification and recovery material is encrypted in private test-mail capture and must not be shared in screenshots or logs. Authorized development operators may inspect approved test evidence; private files are excluded from Git and deployment artifacts. Retention proposals are not adopted production policy, and no automatic account or business-data disposal is authorized. Account settings provide the implemented request workflows. Operator identity, formal privacy contact, legal bases, transfer safeguards and production retention require separate review before real-user release. This version is an unpublished synthetic-testing notice, not permission to process real customer or business records.')
+) as notices(id,kind,content);
+commit;

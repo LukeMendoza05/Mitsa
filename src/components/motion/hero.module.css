@@ -1,0 +1,82 @@
+.track { width: min(1200px,calc(100% - var(--gutter)*2)); margin-inline: auto; }
+.stage { position: relative; }
+.sceneViewport { position: relative; width: 75%; aspect-ratio: 16/11; margin-inline: auto; pointer-events: none; }
+.sceneViewport canvas { display: block; }
+.sceneViewport > div:last-child:not(.posters) { position: absolute !important; inset: 0; }
+.posters { position: absolute; inset: 0; transition: opacity 180ms; }
+.posters[data-posters-hidden="true"] { opacity: 0; }
+.posters picture { display: block; position: absolute; inset: 0; }
+.posters img { display: block; width: 100%; height: 100%; object-fit: contain; }
+.posters picture:last-child { display: none; }
+.floatingCards { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 32px; margin: -24px 40px 40px; }
+.floatingCards > div { min-width: 0; }
+.floatingCards > div > div { box-shadow: var(--preview-shadow); }
+.sceneLegend { display: flex; justify-content: space-between; gap: 20px; padding-block: 24px; border-top: 1px solid var(--hairline); font-size: 12px; color: var(--muted); }
+.workspace { padding: 80px 0; }
+.workspaceHeading { text-align: center; margin: 0 auto 40px; max-width: 700px; }
+.workspaceHeading > p { font-size: 14px; color: var(--muted); margin-bottom: 20px; }
+.workspaceHeading h2 { font-size: clamp(2.25rem,4.5vw,4rem); }
+.disclosure { text-align: center; font-size: 12px; color: var(--muted); margin-top: 20px; }
+.inventoryDock { width: 100%; height: 180px; position: relative; }
+.inventoryDock img { width: 100%; height: 100%; object-fit: contain; }
+@media (min-width: 1024px) and (min-height: 720px) {
+  .track[data-enhanced="true"] { height: calc(250svh - 76px); }
+  .track[data-enhanced="true"] .stage { height: calc(100svh - 76px); max-height: none; perspective: 1400px; isolation: isolate; }
+  .track[data-enhanced="true"] .sceneViewport { position: absolute; width: 76%; height: 90%; aspect-ratio: auto; margin: 0; left: 12%; top: 2%; z-index: 4; transform-origin: center; }
+  .track[data-enhanced="true"] .posters picture:last-child { display: block; opacity: 0; }
+  .track[data-enhanced="true"] .floatingCards { position: absolute; inset: 0; margin: 0; display: block; pointer-events: none; z-index: 5; }
+  .track[data-enhanced="true"] [data-floating-preview] { position: absolute; width: 265px; transform-style: preserve-3d; }
+  .track[data-enhanced="true"] .stock { top: 8%; left: 0; }
+  .track[data-enhanced="true"] .sales { bottom: 10%; left: 3%; }
+  .track[data-enhanced="true"] .orders { top: 19%; right: 0; }
+  .track[data-enhanced="true"] .sceneLegend { position: absolute; bottom: 0; left: 0; right: 0; z-index: 6; }
+  .track[data-enhanced="true"] .workspace { position: absolute; top: 0; left: 0; width: 100%; padding: 0; z-index: 2; }
+  .track[data-enhanced="true"] .workspaceHeading { margin-bottom: 16px; }
+  .track[data-enhanced="true"] .workspaceHeading > p { display: none; }
+  .track[data-enhanced="true"] .workspaceHeading h2 { font-size: 36px; }
+  .track[data-enhanced="true"] .inventoryDock { height: 140px; }
+  .track[data-enhanced="true"] .disclosure { margin-top: 12px; }
+  .track[data-enhanced="true"] .inventoryDock img { visibility: hidden; }
+}
+@media (max-width: 1023px) { .floatingCards { gap: 20px; margin-inline: 0; } .sceneViewport { width: 90%; } }
+@media (max-width: 767px) {
+  .floatingCards { grid-template-columns: 1fr; margin: 0 auto 24px; max-width: 420px; }
+  .floatingCards > div:nth-child(2) { margin-left: 20px; }
+  .floatingCards > div:not(:nth-child(2)) { margin-right: 20px; }
+  .sceneViewport { width: 100%; }
+  .sceneLegend { flex-direction: column; gap: 8px; }
+  .workspace { padding-block: 48px; }
+  .inventoryDock { height: 210px; }
+}
+
+
+
+
+
+.introSurface { position: relative; }
+.sceneLegend { font-size: 13px; align-items: center; }
+.sceneLegend [data-preview-disclosure] { margin: 0; text-align: left; }
+.workspace > [data-preview-disclosure] { margin-top: 12px; }
+@media (min-width: 1024px) and (min-height: 720px) {
+  .track[data-enhanced="true"] .introSurface { position: absolute; inset: 0; }
+  .track[data-story="compact"] { height: auto; }
+  .track[data-story="compact"] .stage { height: auto; perspective: none; }
+  .track[data-story="compact"] .introSurface { position: relative; height: calc(100svh - 76px); inset: auto; perspective: 1400px; }
+  .track[data-story="compact"] .workspace { position: relative; top: auto; padding-top: 48px; }
+  .track[data-story="compact"] .inventoryDock img { visibility: visible; }
+  .track[data-story="compact"] [data-floating-preview] { width: 248px; }
+  .track[data-story="compact"] .stock { top: 4%; }
+  .track[data-story="compact"] .sales { bottom: 8%; }
+  .track[data-story="compact"] .orders { top: 12%; }
+  .track[data-story="compact"] .sceneLegend > span { max-width: 180px; text-align: right; }
+}
+@media (max-width: 767px) {
+  .floatingCards { display: none; }
+  .sceneLegend { display: none; }
+  .sceneViewport { max-width: 440px; }
+  .sceneLegend { border-top: 0; padding-block: 12px 0; }
+  .sceneLegend [data-preview-disclosure] { margin-inline: auto; text-align: center; }
+  .workspace { padding-top: 32px; }
+  .workspaceHeading { margin-bottom: 24px; }
+  .workspaceHeading > p { margin-bottom: 12px; }
+}

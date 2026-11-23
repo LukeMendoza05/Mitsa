@@ -1,0 +1,37 @@
+# Inactive onboarding probes and mail-worker integration
+
+Managed Supabase with its supported session-terminating refresh path remains the selected direction. **Strict Option A is BLOCKED under SU-519045.** Nothing in this checkpoint fixes the provider or authorizes hosted onboarding. C-B, D/E, stability and public activation remain unexecuted.
+
+## Implemented locally
+
+`scripts/lib/onboarding-hosted-observers.mjs` supplies the real bounded query/ordinary API adapters for the existing browser driver. All identities come from immutable e-a/e-b fixtures and private observed state. A decoded JWT only chooses the session probe: ordinary authenticated RPC must independently confirm the actor. The probe verifies the exact session is live and the bearer still has more than 30 seconds to expiry before using it as a revocation witness.
+
+The adapters check signed-intent/generation/notice binding, verified email, absence of operator privileges, trusted verified TOTP, AAL2, workspace ownership and initial location. Before recovery the driver now takes a protected factor/binding/account-security and business/membership reference. The SQL returns HMACs, never stored factor secrets or password fields. It detects coherent binding-generation changes as well as changed secrets, roles and ownership. The whole-project preservation reference remains a separate mandatory controller responsibility; these fixture probes do not replace it.
+
+Logout evidence requires the exact session row to be absent, an otherwise-unexpired former bearer to be denied by ordinary Mitsa RPC and its captured refresh token to be rejected by Auth. A repeated inspection of the same witness does not consume another refresh call. A new session gets a new witness. Unexpected successful refresh/recovery replay responses must be encrypted privately, and the result fails. This is a proposed future hosted test, **not a new hosted revocation result**.
+
+AAL1 denial requires an actual known synthetic workspace. The cross-tenant adapter first proves each fixture's valid AAL2 identity and access to its own workspace/member/location routes, then checks six opposite-tenant requests for the expected authorization rejection. Blanket API failure or denial cannot be reported as successful tenant isolation. Only the new fixtures' workspaces are targeted; no retained business is used as a disposable test object.
+
+`scripts/lib/onboarding-probe-sql.mjs` contains ten explicit SELECT sources. Fixture identities and comparison keys are bound parameters. Aggregate queue/quota probes preserve terminal C-B history and refuse foreign pending jobs, rather than requiring the entire historical dispatch table to be empty. No hosted query approval has been issued for this new source set.
+
+`scripts/lib/onboarding-mail-bridge.mjs` connects the unchanged `PersistentMailWorker` to explicit decryption, encryption, Gmail sender and cleanup ports. It creates no database connection, transport, timer or process on import/construction. Every actual worker query is matched against the seven unchanged source call sites and counted through the reviewed-scope port. Acquisition must have an independent owned-health witness; `waiting` alone is insufficient.
+
+Before sending, the bridge binds the claimed dispatch, capture, recipient hash, approved address, observed new provider user, signed intent, generation, action and exact one-hour lifetime. Fresh database time prevents the previous local-clock skew defect. Quotas include historical diagnostic usage; the current durable claim is counted once. Private material must be persisted through the encryption port before reserving the irreversible email attempt. SMTP acceptance and durable completion are required before a message is available to the browser driver. Human inbox receipt is separate and bound to the current dispatch; SMTP alone cannot satisfy it.
+
+Any paused, uncertain, fenced or failed outcome stops this bounded bridge. It does not exercise the general worker's automatic later reacquisition or SMTP verification. Job claims and email allowances remain spent; no blind retry occurs. Shutdown must acknowledge the worker heartbeat and close its transport port. The enclosing controller must still prove actual process termination, close the shared database, close controls and perform preservation postflight. The bridge alone cannot claim these controller actions happened.
+
+## Verification
+
+**118 OFFLINE tests across 13 files passed; zero skipped**, including the existing disposable Next/IPC/Edge fixtures. The real worker runs against fake database/SMTP ports. In-memory PostgreSQL executes all ten SELECTs using real pgcrypto HMAC and sensitive sentinels, checks foreign pending work, durable claim quotas and independent binding/membership changes. These are syntax/behavior tests, not hosted privilege/RLS acceptance. TypeScript and production build are checked separately.
+
+Tests also cover missing authority, wrong fixture, expired credentials, untrusted AAL2, wrong recipient/action/origin/code/lifetime, changed ownership, database permission failures, exhausted quotas, uncertain send, completion failure, failed evidence storage and unacknowledged shutdown. No actual provider, SMTP or retained-account request is used. The first sandbox run passed the available 24 assertions but failed loading a Vitest temporary cache for another suite; it remains preserved. The same selected tests subsequently passed in the normal Windows context.
+
+The source/privacy audit verifies the frozen 128 Stage C sources and 64 historical hashes, immutable private fixture definitions, and absence of their private addresses/passwords from the new sources/reports and browser/public artifacts. It neither re-captures nor accepts a preservation baseline. Prior A/B/C-A evidence and consumed budgets remain intact.
+
+## Remaining executable work
+
+1. Add producer-level fixture credential/request/response binding inside the isolated Next process. Count actual creation attempts, including hidden provider attempts, without double-charging the driver's current declarations. Encrypt private observations using a public-only writer; keep decryption authority outside Next. An accidental retained bearer/refresh/recovery credential must fail before forwarding.
+2. Complete the enclosing controller: real encrypted evidence/inbox ports, serialized shared DB operations, test controls, worker/process supervision, current C-B-to-D preservation transition and emergency closure. Connect these tested adapters only after those guards exist. The whole D/E runner remains **INCOMPLETE**, and no final D/E execution manifest or approval is created here.
+3. Integrate the full fake-provider/SMTP/browser journey and calibrate its finite budgets. Complete F's explicit restart/failure runner, then freeze the source-bound execution package for separate review.
+
+No repeat architecture choice or security-risk decision is needed: managed Supabase is selected and no exception is accepted. The external requirement is provider-supported rollout/correction guidance followed by separately approved synthetic proof of immediate terminal reuse denial, no renewal, direct Auth/factor protection, ordinary RPC/RLS denial and legitimate-session/MFA/recovery compatibility. Public hosting, clean production target, transactional mail, real legal documents and final activation retain separate approvals.

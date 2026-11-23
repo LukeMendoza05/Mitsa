@@ -1,0 +1,25 @@
+import {it,expect} from 'vitest';
+import {PGlite} from '@electric-sql/pglite';
+import {existsSync,mkdirSync,mkdtempSync,writeFileSync,readFileSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
+import {createHash} from 'node:crypto';
+import pg from 'pg';
+import {spawnSync} from 'node:child_process';
+import {preservationDifferences,preservationPrimaryKeysSql} from '../../scripts/lib/registration-preservation-diff.mjs';
+const before=()=>({target:{projectRef:'fixture'},rows:{'private.example':[{business_id:'private-business-id',id:'private-record-id',name:'private-person-name',updated_at:'old'}]},identities:{users:[{id:'private-user-id',digest:'old-digest'}],mfa_factors:[]},security:{policies:[{name:'fixture'}],relations:[]}});
+const keys={'private.example':['business_id','id']};
+it('identical snapshots need no further interpretation and do not approve a baseline',()=>{const b=before();expect(preservationDifferences(b,structuredClone(b),keys)).toMatchObject({exactSnapshotMatches:true,differences:[],replacementBaselineApproved:false});});
+it('reports changed columns and counts without identities or values',()=>{const b=before(),a=structuredClone(b);a.rows['private.example'][0].updated_at='new-private-time';a.identities.users[0].digest='new-private-digest';const r=preservationDifferences(b,a,keys);expect(r.differences).toEqual([{category:'application-data',table:'private.example',addedRows:0,removedRows:0,changedRows:1,changedColumns:['updated_at'],matching:'primary-key'},{category:'auth-row-digest',table:'users',addedRows:0,removedRows:0,changedRows:1}]);for(const secret of ['private-person-name','private-business-id','private-user-id','private-record-id','new-private-time','new-private-digest'])expect(JSON.stringify(r)).not.toContain(secret);});
+it('distinguishes row order from a logical row change',()=>{const b=before();b.identities.users.push({id:'second-private-id',digest:'second'});const a=structuredClone(b);a.identities.users.reverse();expect(preservationDifferences(b,a,keys)).toMatchObject({exactSnapshotMatches:false,differences:[],representationOrOrderingOnly:true});});
+it('reports extra and missing records with composite keys',()=>{const b=before(),a=structuredClone(b);a.rows['private.example'][0].business_id='other-private-business';expect(preservationDifferences(b,a,keys).differences[0]).toMatchObject({addedRows:1,removedRows:1,changedRows:0});});
+it('reports security changes separately without printing policy bodies',()=>{const b=before(),a=structuredClone(b);a.security.policies[0].name='private-policy-details';expect(preservationDifferences(b,a,keys).differences).toEqual([{category:'security-metadata',field:'policies'}]);});
+it('uses conservative multiset matching when a historical primary key is absent',()=>{const b=before(),a=structuredClone(b);a.rows['private.example'][0].name='changed-private-name';expect(preservationDifferences(b,a,{}).differences[0]).toMatchObject({matching:'row-multiset',addedRows:1,removedRows:1,changedRows:0,changedColumns:[]});});
+it('reads ordered composite keys as text[] using the exact corrected SQL',async()=>{const db=new PGlite();try{await db.exec('create schema private;create table private.example(business_id uuid,id uuid,primary key(business_id,id))');const result=await db.query(preservationPrimaryKeysSql);expect(result.rows).toEqual([{table:'private.example',columns:['business_id','id']}]);expect(result.fields.find(f=>f.name==='columns')?.dataTypeID).toBe(1009);expect(pg.types.getTypeParser(1009 as Parameters<typeof pg.types.getTypeParser>[0])('{business_id,id}')).toEqual(['business_id','id']);}finally{await db.close();}},30000);
+it('missing diagnostic approval fails in a hermetic workspace without touching retained approval state',()=>{
+ const cwd=mkdtempSync(join(tmpdir(),'mitsa-drift-denial-')),root=join(cwd,'.secrets/registration-completion/transport-probe');mkdirSync(root,{recursive:true});mkdirSync(join(cwd,'config'));
+ writeFileSync(join(cwd,'dummy.txt'),'inert');writeFileSync(join(cwd,'config/registration-transport-probe-review.json'),readFileSync('config/registration-transport-probe-review.json'));
+ writeFileSync(join(cwd,'config/registration-preservation-drift-review.json'),JSON.stringify({project:'mjtejwafxriwntweussc',scope:'D-preservation-drift-readonly-v1',sources:[{path:'dummy.txt',sha256:createHash('sha256').update('inert').digest('hex')}]}));
+ const entry=resolve('scripts/registration-preservation-drift.mjs'),check=spawnSync(process.execPath,[entry,'--check'],{cwd,encoding:'utf8',windowsHide:true,timeout:15000});expect(check.status).toBe(0);
+ const result=spawnSync(process.execPath,[entry,'--run'],{cwd,encoding:'utf8',windowsHide:true,timeout:15000});expect(result.status).toBe(1);expect(result.stderr).toContain('Read-only drift operation stopped');expect(result.stderr).toContain('"requests":0');expect(existsSync(join(root,'drift-diagnostic-attempt.json'))).toBe(false);
+});

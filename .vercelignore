@@ -1,0 +1,27 @@
+# Prepared deployment exclusions only. No deployment is authorized by this file.
+.secrets/
+.env*
+.tools/
+.codex/
+.agents/
+.aws/
+.superpowers/
+.git/
+node_modules/
+.next/
+test-results/
+playwright-report/
+coverage/
+artifacts/
+docs/
+tests/
+scripts/
+assets/
+supabase/migrations/
+supabase/prepared/
+supabase/security-proposals/
+supabase/.temp/
+supabase/functions/mitsa-registration-intent/
+supabase/functions/mitsa-registration-service/
+*.tsbuildinfo
+*.log

@@ -1,0 +1,113 @@
+{
+  "preparedAt": "2026-10-27T00:07:46.564Z",
+  "scope": "D-transport-only-rollback-v1",
+  "status": "PREPARED_NOT_APPROVED_NOT_EXECUTED",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "generation": "2515785f-49d0-4f3c-b9d7-a4ce1ec006d2",
+  "limits": {
+    "databaseRequests": 192,
+    "databaseConnections": 3,
+    "readQueries": 180,
+    "writeQueries": 4,
+    "transactionQueries": 8,
+    "smtpVerifications": 1,
+    "workerLaunches": 1,
+    "workerMinutes": 5,
+    "authRequests": 0,
+    "edgeRequests": 0,
+    "emails": 0,
+    "secretMetadataRequests": 2
+  },
+  "commonReviewSha256": "4d95fe61174d0854f60cda37321ea789a4d6cb57f723aca895410a1367f7bb86",
+  "preservationCheckpoint": "artifacts/stage-c3ba-notices-retry-01-result.json",
+  "preservationCheckpointSha256": "071a8a873a003f71ab89478dd7bedd98f45872df9820678e4ab7b2834522527d",
+  "preservationManifest": ".secrets/stage-c3ba-notices-retry-01/preservation-342ae160-a906-4a28-9ad0-837ad83a2e02.json",
+  "preservationManifestSha256": "d30f8699237c4861934a86d8a192748306edbe6a9a39ec38a14095cad626368a",
+  "sources": [
+    {
+      "path": "scripts/registration-transport-probe.mjs",
+      "sha256": "01817cb11766c08576e91868dadbc1314cfd906cb39c163d22bedece72b5af37"
+    },
+    {
+      "path": "scripts/lib/registration-transport-probe.mjs",
+      "sha256": "020fa7bd9bf9c5f19437bf98b6444f5c42924a85b9474e277ad17d02471353ce"
+    },
+    {
+      "path": "scripts/prepare-registration-transport-probe.mjs",
+      "sha256": "7da2bb2b3400377235684f42913704802cdea838d03d422478eab8e9005fbf69"
+    },
+    {
+      "path": "scripts/verify-registration-transport-package.mjs",
+      "sha256": "eee538fe0b623e80839be74eec109002dac73816b8b52de6d8dd926228d2ead5"
+    },
+    {
+      "path": "tests/unit/registration-transport-probe.test.ts",
+      "sha256": "6b85a7a36083f4a90dca9fb34b16d56bc0e80b7068fe40023b6f7c1dcb60df1e"
+    },
+    {
+      "path": "scripts/lib/persistent-mail-worker.ts",
+      "sha256": "1a8801c4b6ca8809ffb544d2227a10ac2f77fea190fb5f55b3816146d347ba70"
+    },
+    {
+      "path": "scripts/lib/registration-mail-test-scope.mjs",
+      "sha256": "7288509bf3500a3d52ef840e1d1cec1a04a09dbb79bd66846a9fcbc8b2ffe4ad"
+    },
+    {
+      "path": "scripts/lib/gmail-credentials.mjs",
+      "sha256": "d188009c6a0c08827d15491e30e6d429152cffded6e86184cde4fc7b135bd9cf"
+    },
+    {
+      "path": "scripts/postgres-config.mjs",
+      "sha256": "d98198eeb6b06c38567c41547c8aff20c0c08c94721d841b2d55b5aa488bea98"
+    },
+    {
+      "path": "scripts/test-target.mjs",
+      "sha256": "6fb5624daa225fbcc879bcd1bd5bd9935ef6e3eb578eb1eb4ab06beab799bf33"
+    },
+    {
+      "path": "scripts/lib/c1-identity-preflight.mjs",
+      "sha256": "8511d7baad97e9410a2a115809df36e89275688da3d8474d9764b30052e22238"
+    },
+    {
+      "path": ".tools/stage-c3-collect.mjs",
+      "sha256": "09e9d45ba5f3358d6bf263001f4ca30eae02a549a6acc9ae6800929cb60fa1f7"
+    },
+    {
+      "path": ".tools/c3ba-catalog.mjs",
+      "sha256": "ce52e3ead1b540eb90551c4677a65b65d5c84862a02aefbf566a973195445701"
+    },
+    {
+      "path": "config/test-target.json",
+      "sha256": "626e06d3d6e2fef3c74a2dbd4a052c818a4db609168e8f283f29cf489eedb89e"
+    },
+    {
+      "path": "config/supabase-ca.crt",
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7"
+    },
+    {
+      "path": "config/stage-c1-identity-boundary-baseline.json",
+      "sha256": "dc8d1a11cfc823e9f38d588586fe94385a2b4c99daa4744c401a3ab4f4414777"
+    },
+    {
+      "path": "artifacts/stage-c1-identity-boundary-manifest.json",
+      "sha256": "1a46a84079cf25b752783b06dea889f8aeeb1759bec066b6faad9e696170743f"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-delivery-controls.sql.txt",
+      "sha256": "1b010b2c4bcd33edae3765f4ef81b9de95f0468bc3bf53ebb5f16acdd76343c3"
+    },
+    {
+      "path": "package.json",
+      "sha256": "90e184aa4373b32b3817781d99c844963742cd811c1e4decd5a1f99d6bf5ba07"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7e9159c15084c03ca2585cfa5541df98e109724f399c73b47e03d3025294bb9"
+    },
+    {
+      "path": "docs/registration-transport-only-approval.md",
+      "sha256": "150bae34a50f5c188f7b193a555739c1ac1c326f77cfb504b0d9929f8c722c85"
+    }
+  ]
+}

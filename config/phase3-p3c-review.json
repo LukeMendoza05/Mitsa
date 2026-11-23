@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "status": "READY_FOR_EXPLICIT_APPROVAL",
+  "scope": "P3-C-protected-empty-project",
+  "authorized": false,
+  "teamSlug": "lukemendoza",
+  "teamId": "team_C7i6iroBHmpUkM99weoPGnHw",
+  "projectName": "mitsa-fireworksinventory",
+  "requestedProductionUrl": "https://mitsa-fireworksinventory.vercel.app",
+  "sourceRepository": "LukeMendoza05/Mitsa",
+  "publishedSourceCommit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+  "sourceFiles": 172,
+  "prerequisites": {
+    "P3A": "PASSED",
+    "P3B": "PASSED_SEALED"
+  },
+  "createBodyPath": "artifacts/phase3-backend-package-20261029-v1/vercel-create.json",
+  "createBodySha256": "612320a72ab9e7a9ea7228636218ca760c56b1ba134acad02b9b8f97b1ccbbe3",
+  "settingsBodyPath": "artifacts/phase3-backend-package-20261029-v1/vercel-settings.json",
+  "settingsBodySha256": "89e0e45fc7f0d3fa61858034da61486778d57c561ec899a5c3282022bce278f8",
+  "limits": {
+    "projectCreations": 1,
+    "settingsUpdates": 1,
+    "readOnlyChecks": 15,
+    "deployments": 0,
+    "environmentEntries": 0,
+    "gitConnections": 0,
+    "domainOrAliasWriteCalls": 0,
+    "supabaseOperations": 0,
+    "emails": 0,
+    "paidChanges": 0
+  },
+  "currentPreparation": {
+    "teamOwnerVerified": true,
+    "projectAbsent": true,
+    "aliasAbsent": true,
+    "hostnameStatus": 404,
+    "hostnameError": "DEPLOYMENT_NOT_FOUND",
+    "assignmentGuaranteed": false
+  },
+  "sources": [
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/vercel-create.json",
+      "sha256": "612320a72ab9e7a9ea7228636218ca760c56b1ba134acad02b9b8f97b1ccbbe3"
+    },
+    {
+      "path": "artifacts/phase3-backend-package-20261029-v1/vercel-settings.json",
+      "sha256": "89e0e45fc7f0d3fa61858034da61486778d57c561ec899a5c3282022bce278f8"
+    },
+    {
+      "path": "docs/phase3-p3c-protected-project-approval-20261031.md",
+      "sha256": "a139044b2f7152efddc6d1a8cca53a0899c4a6d26bd80b98bc4234b45c6e2156"
+    },
+    {
+      "path": ".secrets/phase3-p3a-20261031-v1/p3c-readonly-preparation.json",
+      "sha256": "37349162e09cc56ff6cf761638ddebb1c8d09c13699a6d447013725aa9e06ab8"
+    },
+    {
+      "path": ".secrets/phase3-p3a-20261031-v1/github-main.json",
+      "sha256": "37705baf5e30039776e5eca852af12aabef6014ab440ef6be33c71d9b6b0b2aa"
+    }
+  ],
+  "created": false,
+  "deployed": false,
+  "registrationEnabled": false,
+  "emailDeliveryEnabled": false,
+  "strictOptionA": "BLOCKED_SU-519045"
+}

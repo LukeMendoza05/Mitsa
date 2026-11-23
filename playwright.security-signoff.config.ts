@@ -1,0 +1,2 @@
+import { defineConfig, devices } from '@playwright/test';
+export default defineConfig({ testDir: './tests/e2e', testMatch: 'authentication-signoff.spec.ts', workers: 1, retries: 0, reporter: 'list', timeout: 180000, expect: { timeout: 15000 }, use: { baseURL: 'http://127.0.0.1:3000', trace: 'off', screenshot: 'off', video: 'off' }, projects: [{ name: 'desktop', use: { ...devices['Desktop Chrome'], channel: 'msedge' } }, { name: 'mobile', use: { ...devices['Pixel 7'], channel: 'msedge' } }] });

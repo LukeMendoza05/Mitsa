@@ -1,0 +1,26 @@
+import {z} from 'zod';
+export const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
+const query=new URLSearchParams(location.search),state=query.get('state'),role=(query.get('role')??'owner') as 'owner'|'admin'|'staff';
+const setup=state==='setup'||state==='enrollment',challenge=state==='challenge';
+const factor={id:id(4),factor_type:'totp',status:setup?'unverified':'verified',friendly_name:'Test authenticator'};
+export const roleLabels={owner:'Business Owner',admin:'Admin',staff:'Staff'};
+const locations=[{id:id(5),name:'Main shop',kind:'shop' as const,active:true},{id:id(6),name:'Test warehouse',kind:'warehouse' as const,active:true}];
+export const workspace={id:id(2),slug:'visual-workspace',name:'Visual test business',role,locations:role==='staff'?locations.slice(0,1):locations,requiresMfa:false,canViewFinancial:role==='owner',adminFinancialAccess:false,country:'PH',currency:'PHP',timezone:'Asia/Manila'};
+const identity={userId:id(1),email:'ui-fixture@example.invalid',verified:true,mfaReady:!setup&&!challenge,workspaces:state==='empty'?[]:[workspace]};
+const member={userId:id(1),name:'Synthetic Owner',role:'owner',active:true,locations:[]};
+const admin={...member,userId:id(7),name:'Synthetic Admin',role:'admin'};
+const staff={...member,userId:id(8),name:'Synthetic Staff',role:'staff',locations:[id(5)]};
+const terms={id:id(9),content:'Isolated visual testing agreement. This is synthetic interface content, not published legal policy.',version:'test-v1',status:'test',accepted:state!=='unaccepted'};
+const results:Record<string,unknown>={mitsa_current_terms:terms,mitsa_account_profile:{fullName:'Synthetic Owner'},mitsa_operator_context:{scopes:['privacy-review'],recent:true},mitsa_locations:locations,mitsa_members:[member,admin,staff],mitsa_invites:state==='empty'?[]:[{id:id(10),email:'invited-fixture@example.invalid',role:'staff',status:'pending',expiresAt:'2026-10-22T00:00:00Z'}],mitsa_transfers:[],mitsa_audit_history:[{id:id(11),actor_id:id(1),event:'workspace.created',created_at:'2026-10-15T00:00:00Z'},{id:id(12),actor_id:id(1),event:'membership.created',created_at:'2026-10-15T00:01:00Z'}],mitsa_account_requests:[],mitsa_operator_requests:[{id:id(13),user_id:id(8),business_id:null,kind:'correction',status:'pending',details:{reason:'Synthetic profile correction for visual review.'},decision_reason:null}],mitsa_invite_context:{businessName:workspace.name,role:'staff',expiresAt:'2026-10-22T00:00:00Z'},mitsa_security_status:{ready:identity.mfaReady,recent:state==='confirmed'||state==='enrollment',initialized:!setup,factors:setup?[]:[{id:factor.id,active:true}],pendingRemovals:[]}};
+const client={auth:{getUser:async()=>({data:{user:['/signup','/verify-email'].includes(location.pathname)?null:{id:id(1)}}}),getClaims:async()=>({data:{claims:{session_id:id(3),amr:[{method:'password',timestamp:Math.floor(Date.now()/1000)-(state==='confirmed'||state==='enrollment'?0:600)}]}}}),mfa:{listFactors:async()=>({data:{all:state==='setup'?[]:[factor],totp:state==='setup'?[]:[factor]}})}},schema:()=>({rpc:async(name:string)=>({data:results[name],error:null})})};
+export async function componentClient(){return client;}
+export async function accountContext(){return {client,identity,user:{id:id(1)}};}
+export async function managementContext(){return {...await accountContext(),workspace,userLabel:'Synthetic Owner'};}
+export function usesPersistentRegistration(){return query.get('persistent')==='1';}
+const bundle={termsId:terms.id,privacyId:id(14),termsVersion:terms.version,privacyVersion:'privacy-test-v1',termsContent:terms.content,privacyContent:'Synthetic visual Privacy Notice. No real personal information is collected by this renderer.',termsHash:'a'.repeat(64),privacyHash:'b'.repeat(64),status:'test'};
+export async function persistentRegistrationReadiness(){return {version:1,admission:state==='registration-closed'?'closed':state==='delivery-paused'?'paused':state==='registration-unavailable'?'unavailable':'available',delivery:state==='closed'?'closed':state==='delivery-paused'?'paused':'available',policy:bundle};}
+export function signupChallengeConfig(){return {siteKey:'visual-fixture-only',secret:'visual-fixture-not-a-provider-secret'};}
+export async function registrationContext(){return {persistent:usesPersistentRegistration()?await persistentRegistrationReadiness():null,emailDeliveryEnabled:!['closed','delivery-paused','registration-unavailable'].includes(state??''),enabled:!['registration-closed','delivery-paused','registration-unavailable'].includes(state??''),availability:state==='registration-closed'?'closed':state==='delivery-paused'?'paused':state==='registration-unavailable'?'unavailable':'available',isTest:!usesPersistentRegistration(),isPilot:false,isDevelopmentOpen:false,policy:terms,captchaSiteKey:'visual-fixture-only'};}
+export async function readDevelopmentDeliveryState(){return state==='closed'?'closed':'available';}
+export const memberSchema=z.object({userId:z.uuid(),name:z.string().nullable(),role:z.enum(['owner','admin','staff']),active:z.boolean(),locations:z.array(z.uuid())});
+export const locationSchema=z.object({id:z.uuid(),name:z.string(),kind:z.enum(['shop','warehouse']),active:z.boolean()});

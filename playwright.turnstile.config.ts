@@ -1,0 +1,2 @@
+import {defineConfig,devices} from '@playwright/test';
+export default defineConfig({testDir:'./tests/e2e',testMatch:'turnstile-diagnostic.spec.ts',workers:1,retries:0,reporter:'list',timeout:60000,expect:{timeout:10000},use:{baseURL:'http://127.0.0.1:3000',trace:'off',screenshot:'off',navigationTimeout:30000},projects:[{name:'desktop',use:{...devices['Desktop Chrome'],channel:'msedge'}},{name:'mobile',use:{...devices['Pixel 7'],channel:'msedge'}}]});

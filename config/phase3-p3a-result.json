@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "status": "PASSED",
+  "milestone": "P3-A",
+  "repository": "LukeMendoza05/Mitsa",
+  "branch": "main",
+  "commit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+  "tree": "a6a84434901dd7d0cdc84e74d866ab8659d404e4",
+  "commitUrl": "https://github.com/LukeMendoza05/Mitsa/commit/ec4a96bef0ea77e3553513b37931076f288cc204",
+  "files": 172,
+  "allRemotePathsModesSizesBlobHashesMatch": true,
+  "localSha256AuditPassed": true,
+  "unexpectedRefs": 0,
+  "newBranches": 0,
+  "newTags": 0,
+  "additionalPrivateAncestors": 0,
+  "vercelProjectsLinked": 0,
+  "vercelDeploymentsForCommit": 0,
+  "supabaseOperations": 0,
+  "registrationActivated": false,
+  "verifiedAtUtc": "2026-10-31T01:09:30.591Z",
+  "acceptedDateLocal": "2026-10-31",
+  "timezone": "Asia/Manila",
+  "pushed": true,
+  "nonForce": true,
+  "pushesConsumed": 1,
+  "scopeSealed": true,
+  "inventorySha256": "a5dc56cb9922f37546cfbe41c91250f09f3ab0b024862ef3c261c57b17ecc117",
+  "reviewSha256": "0870b94a5d0c305b51ad74f2cfc5b68fa1a2a741d5045c5f17fb2cec839b7bdf",
+  "consumed": {
+    "githubRead": 8,
+    "vercelRead": 10,
+    "push": 1
+  },
+  "evidence": {
+    "ledgerPath": ".secrets/phase3-p3a-20261031-v1/ledger.json",
+    "ledgerSha256": "ef1ab0e3a1712e5dc3322c933b06c64cb7af0386ab3c8f1de14d0844f760bd9a",
+    "indexPath": ".secrets/phase3-p3a-20261031-v1/evidence-index.json",
+    "indexSha256": "9a7b3f347a38f21f998d65e318919fca651f884e58623fce4c74d83e5acebd86",
+    "reportPath": "docs/phase3-p3a-publication-result-20261031.md",
+    "reportSha256": "6bb8ae52549ebcb61df2132ab9eb60a96408432a2c9940de334abbc6fb90b1c3"
+  },
+  "p3b": {
+    "status": "PASSED_SEALED",
+    "resultSha256": "ea1bff61336e6bcfbe394460dc2471a6292f90d99e59926e3ac2a8580d625526"
+  },
+  "p3c": {
+    "status": "READY_AWAITING_EXPLICIT_APPROVAL",
+    "reviewPath": "config/phase3-p3c-review.json",
+    "reviewSha256": "6cbdd0e83fcffcdd6d07a0851560ecc50305d4c896ae859cc3f9df71894f1da8",
+    "approvalDocument": "docs/phase3-p3c-protected-project-approval-20261031.md"
+  },
+  "vercelCreated": false,
+  "vercelDeployed": false,
+  "registrationEnabled": false,
+  "emailDeliveryEnabled": false,
+  "strictOptionA": "BLOCKED_SU-519045",
+  "masterGoalComplete": false
+}

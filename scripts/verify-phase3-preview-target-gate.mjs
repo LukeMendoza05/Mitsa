@@ -1,0 +1,17 @@
+import assert from'node:assert/strict';import{readFileSync}from'node:fs';import{classifyPreviewReceipt,nonProductionBranchCandidate}from'./lib/phase3-preview-receipt.mjs';
+const base={id:'dpl_offlineFixture',project:{id:'prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD'},meta:{githubCommitSha:'ec4a96bef0ea77e3553513b37931076f288cc204'},url:'mitsa-fireworksinventory-offline123-lukemendoza.vercel.app',target:null,readyState:'READY'};let tests=0;const check=f=>{f();tests++;};
+check(()=>assert.equal(classifyPreviewReceipt(base).accepted,true));
+check(()=>assert.equal(classifyPreviewReceipt({...base,target:'preview'}).accepted,true));
+check(()=>assert.equal(classifyPreviewReceipt({...base,target:'production',readyState:'BUILDING'}).action,'CANCEL_IF_SEPARATELY_APPROVED'));
+check(()=>assert.equal(classifyPreviewReceipt({...base,target:'production'}).accepted,false));
+check(()=>assert.equal(classifyPreviewReceipt({...base,target:'staging'}).accepted,false));
+check(()=>{const d={...base};delete d.target;assert.equal(classifyPreviewReceipt(d).reason,'MISSING_TARGET_EVIDENCE');});
+check(()=>assert.equal(classifyPreviewReceipt({...base,project:{id:'prj_wrong'},readyState:'BUILDING'}).action,'STOP_RECONCILE_READONLY'));
+check(()=>assert.equal(classifyPreviewReceipt({...base,meta:{githubCommitSha:'0'.repeat(40)}}).reason,'WRONG_OR_MISSING_SOURCE_SHA'));
+check(()=>assert.equal(classifyPreviewReceipt({...base,readyState:'CANCELED'}).accepted,false));
+check(()=>assert.equal(classifyPreviewReceipt({...base,readyState:'BUILDING'}).action,'OBSERVE_EXISTING_HANDLE_ONLY'));
+check(()=>assert.equal(classifyPreviewReceipt({...base,url:'example.com'}).accepted,false));
+check(()=>assert.equal(classifyPreviewReceipt(null).accepted,false));
+const request=JSON.parse(readFileSync('.secrets/phase3-p3d-20261031-v1/deployment-request.json'));check(()=>{const c=nonProductionBranchCandidate(request);assert.equal(c.approved,false);assert.equal(c.hostedSelectionProven,false);assert.equal(c.deployment.requestBody.gitSource.sha,request.requestBody.gitSource.sha);assert.equal(c.deployment.requestBody.gitSource.ref,'codex/protected-preview-ec4a96b');assert(!Object.hasOwn(c.deployment.requestBody,'target'));assert.equal(request.requestBody.gitSource.ref,'main');});
+const actual=JSON.parse(readFileSync('.secrets/phase3-p3d-20261031-v1/deployment-create-receipt.json'));check(()=>assert.equal(classifyPreviewReceipt(actual).reason,'NOT_PREVIEW'));
+console.log(JSON.stringify({OFFLINE:'PASSED',tests,actualWrongTargetRejected:true,hostedRequests:0,candidateApproved:false,candidateHostedSelectionProven:false}));

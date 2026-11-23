@@ -1,0 +1,3 @@
+@font-face {font-family:FixtureInter;src:url('../../src/app/fonts/inter-latin.woff2') format('woff2');font-weight:100 900;font-display:swap;}
+@font-face {font-family:FixtureSerif;src:url('../../src/app/fonts/source-serif-regular.woff2') format('woff2');font-weight:400;font-display:swap;}
+:root {--font-body:FixtureInter;--font-display:FixtureSerif;}

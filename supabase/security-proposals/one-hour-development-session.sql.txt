@@ -1,0 +1,53 @@
+-- REVIEW ONLY. NOT PART OF THE STAGE C INSTALLATION BUNDLE.
+-- Stage B risk acceptance is NOT granted. Never execute during Stage A.
+-- No managed Auth writes, hooks, triggers, session resets or existing-user backfill.
+BEGIN;
+DO $$ BEGIN
+ ASSERT (select marker='fireworks-foundation-proof-01a12e38' from foundation_probe.environment_identity where singleton),'unapproved target';
+ ASSERT encode(sha256(convert_to(pg_get_functiondef('private.current_actor()'::regprocedure),'UTF8')),'hex')='587affbee9b5b7bf9cfd3b8bf343eda75626ec0fb9b886b9f3c370995182d652','actor baseline changed';
+END $$;
+CREATE OR REPLACE FUNCTION private.current_actor()
+ RETURNS uuid
+ LANGUAGE plpgsql
+ STABLE SECURITY DEFINER
+ SET search_path TO ''
+ SET row_security TO 'on'
+AS $function$ declare claims jsonb; actor uuid; session_id uuid;
+begin
+  -- Reject direct SQL claim injection, even from an operator SET ROLE harness.
+  if session_user <> 'authenticator'
+    or pg_catalog.current_setting('role',true) is distinct from 'authenticated' then return null; end if;
+  claims := nullif(pg_catalog.current_setting('request.jwt.claims',true),'')::jsonb;
+  if pg_catalog.jsonb_typeof(claims) is distinct from 'object'
+    or claims->>'role' is distinct from 'authenticated'
+    or pg_catalog.jsonb_typeof(claims->'sub') is distinct from 'string'
+    or pg_catalog.jsonb_typeof(claims->'session_id') is distinct from 'string'
+    or pg_catalog.jsonb_typeof(claims->'exp') is distinct from 'number'
+    or not coalesce(claims->'aud' = '"authenticated"'::jsonb or claims->'aud' @> '["authenticated"]'::jsonb,false)
+    or claims->'is_anonymous' is distinct from 'false'::jsonb
+    or (claims->>'exp')::numeric <= pg_catalog.date_part('epoch',pg_catalog.statement_timestamp()) then
+    return null;
+  end if;
+  if claims ? 'nbf' then
+    if pg_catalog.jsonb_typeof(claims->'nbf') is distinct from 'number'
+      or (claims->>'nbf')::numeric > pg_catalog.date_part('epoch',pg_catalog.statement_timestamp()) then return null; end if;
+  end if;
+  actor := (claims->>'sub')::uuid;
+  session_id := (claims->>'session_id')::uuid;
+  return (
+    select u.id from auth.users u join auth.sessions s on s.user_id=u.id
+    where u.id=actor and s.id=session_id and not u.is_anonymous
+      and u.deleted_at is null
+      and (u.banned_until is null or u.banned_until <= pg_catalog.statement_timestamp())
+      and (s.not_after is null or s.not_after > pg_catalog.statement_timestamp())
+      and not exists(select 1 from private.account_registration_policy p where p.user_id=u.id
+        and (p.emergency_blocked or (p.session_policy='bounded-development-1h'
+          and (p.profile not in ('isolated-development','consenting-pilot') or s.created_at is null
+            or s.created_at<=pg_catalog.statement_timestamp()-interval '1 hour'))))
+  );
+exception when invalid_text_representation or numeric_value_out_of_range then return null;
+end $function$;
+-- CREATE OR REPLACE retains the existing owner and execute ACL.
+NOTIFY pgrst,'reload schema';
+COMMIT;
+

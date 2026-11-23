@@ -1,0 +1,19 @@
+{
+  "status": "concept-reconstruction-created-authentic-intake-incomplete",
+  "requestedIdentity": "Dragon’s Family Fireworks Package 2",
+  "userSuppliedAliases": ["P22", "DFAMILY2"],
+  "identityVerified": false,
+  "identityEvidence": null,
+  "publishedProductIdentity": { "verified": true, "source": "https://www.dragonfireworks.com/index.php/consumer-fireworks/p-professional-line/p22-dragons-family-fireworks-package-2-detail", "packagingMatchVerified": false },
+  "packagingEdition": null,
+  "physicalPackagingFormVerified": false,
+  "dimensions": { "unit": "mm", "width": null, "depth": null, "height": null, "uncertaintyMm": null, "measuredBy": null, "measuredOn": null, "measurementEvidence": null },
+  "faces": { "front": null, "back": null, "left": null, "right": null, "top": null, "bottom": null },
+  "imageUseRights": { "verified": false, "evidenceReference": null, "scope": null },
+  "closeUps": [],
+  "reviewedBy": null,
+  "reviewedOn": null,
+  "modelingApproved": false,
+  "proxy": { "neutral": false, "kind": "user-approved-concept-reconstruction", "dimensionallyAccurate": false, "units": "arbitrary-scene-units", "artworkApplied": true },
+  "conceptModel": { "authorizedBy": "User cinematic implementation request, 2026-10-13", "sourceImage": "assets/source/cinematic/references/image-5.png", "blend": "assets/source/dragon-concept/dragon-family-package-2.blend", "glb": "public/marketing/dragon/dragon-family-package-2.glb", "manufacturerVerified": false }
+}

@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "status": "PASSED",
+  "repository": "LukeMendoza05/Mitsa",
+  "visibility": "public",
+  "branch": "main",
+  "commit": "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66",
+  "commitUrl": "https://github.com/LukeMendoza05/Mitsa/commit/4b7fdd29ac3c232ffae96dba6bef74ba1b046f66",
+  "tree": "7d90ab7a0eaf96e0eee040eb173ff7c5c1a3e49c",
+  "files": 170,
+  "commits": [
+    "149ffb9cfc8c1bda908550419fdceb9d689892fe",
+    "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66"
+  ],
+  "inventorySha256": "4b99ee6ca629b2a2168f51ad9e95e7816cb706dcd1bf6f68ab8bfc7067a7e0e3",
+  "originalPreparationManifestSha256": "4a787eb7b2efceb6b3444b091056035bd632f1a32b680fc22c9984274830e950",
+  "sourceOnlyHistory": true,
+  "originalHistoryPublished": false,
+  "unexpectedFiles": 0,
+  "githubVerifiedFileBlobHashes": 170,
+  "pushesConsumed": 1,
+  "automaticRetry": false,
+  "existingOriginalFilesVerifiedUnchanged": 1112,
+  "hostedAuthDatabaseSmtpOperations": 0,
+  "vercelProjectsCreated": 0,
+  "vercelDeploymentsExecuted": 0,
+  "registrationActivated": false,
+  "strictOptionA": "BLOCKED_SU-519045",
+  "sources": [
+    {
+      "path": "artifacts/publication-review-20261029-v3/human-publication-approval.json",
+      "sha256": "81b249d5cdbc1e7692393eb54b03fd66f1a6c873e46b789a3df025c529a3ac24"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/git-prepush-preflight.json",
+      "sha256": "947e5d41a1dae9650afc003672d2c1ab69cbdd42013c902130797b1a8392ac0a"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/public-push-attempt.json",
+      "sha256": "8e90c9bc754e07da56f527b41e48f8784df5dcff761829a6cfabb670f75387cd"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/public-push-result.json",
+      "sha256": "2337b5be61edd1e67056c416872f8a3866dee3d37cc6370bd50f3ea63881ed06"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/github-publication-postflight.json",
+      "sha256": "fcfea5e8f91ef634673a4f338b70c264183d7a73644515f0b3267578d7117687"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/github-published-tree.json",
+      "sha256": "368479721d55439032d9e3b90a2fd3f55377cd2014d1709a182ace26b863a9b0"
+    },
+    {
+      "path": "docs/phase2-github-publication-result-20261029.md",
+      "sha256": "28162dcc87b65229d92617b5d279c6f34142a2cd0cb6deaf8dd927c1815631d0"
+    }
+  ]
+}

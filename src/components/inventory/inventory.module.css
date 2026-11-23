@@ -1,0 +1,256 @@
+/* Inventory Management System Styles */
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4);
+  margin-block: var(--space-6);
+}
+
+.metricCard {
+  background: var(--fog);
+  border: 1px solid var(--hairline);
+  border-radius: var(--surface-radius);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 120px;
+}
+
+.metricTitle {
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.metricValue {
+  font-size: clamp(24px, 3.5vw, 32px);
+  font-weight: 600;
+  color: var(--ink);
+  margin-top: var(--space-2);
+}
+
+.metricSub {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: var(--space-1);
+}
+
+.metricAlert {
+  border-color: #e0928b;
+  background: rgba(224, 146, 139, 0.08);
+}
+
+.metricAlert .metricValue {
+  color: #b5382e;
+}
+
+.actionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: var(--space-3);
+  margin-block: var(--space-4);
+}
+
+.actionBtn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: var(--space-4);
+  background: var(--paper);
+  border: 1px solid var(--control-border);
+  border-radius: var(--control-radius);
+  color: var(--ink);
+  text-decoration: none;
+  transition: all 150ms ease;
+}
+
+.actionBtn:hover {
+  background: var(--mist);
+  border-color: var(--ink);
+  transform: translateY(-1px);
+}
+
+.actionBtn strong {
+  font-size: 15px;
+  margin-bottom: var(--space-1);
+}
+
+.actionBtn span {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* POS-Lite / Quick Sale Form */
+.posLayout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@media (min-width: 900px) {
+  .posLayout {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+}
+
+.posCart {
+  background: var(--fog);
+  border: 1px solid var(--hairline);
+  border-radius: var(--surface-radius);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.cartItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-block: var(--space-3);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.cartItem:last-child {
+  border-bottom: none;
+}
+
+.cartItemDetails {
+  display: flex;
+  flex-direction: column;
+}
+
+.cartItemName {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.cartItemMeta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.cartItemControls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.qtyBtn {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--control-border);
+  background: var(--paper);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.qtyBtn:hover {
+  background: var(--mist);
+}
+
+.cartTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-top: var(--space-3);
+  border-top: 2px solid var(--hairline);
+}
+
+.cartTotalLabel {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.cartTotalAmount {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+/* Status pills */
+.pill {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.pillSuccess {
+  background: #e2f5ea;
+  color: #1a7f45;
+}
+
+.pillWarning {
+  background: #fef3d6;
+  color: #8c6100;
+}
+
+.pillDanger {
+  background: #fde8e7;
+  color: #b5382e;
+}
+
+.pillMuted {
+  background: var(--mist);
+  color: var(--muted);
+}
+
+/* Code badges */
+.codeBadge {
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  background: var(--mist);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+/* Table Toolbar */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  align-items: center;
+  justify-content: space-between;
+  margin-block: var(--space-4);
+}
+
+.searchBox {
+  flex: 1;
+  min-width: 220px;
+  max-width: 400px;
+}
+
+.toolbarActions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+/* Print specific for BIR / receipts */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  .printable, .printable * {
+    visibility: visible;
+  }
+  .printable {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+}

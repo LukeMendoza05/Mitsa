@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "status": "CONDITIONAL_NOT_AUTHORIZED",
+  "projectId": "prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD",
+  "backendRef": "geuttbanjqdapcubjrnn",
+  "commit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+  "P3CMustPass": true,
+  "approved": false,
+  "sources": [
+    {
+      "path": "scripts/lib/phase3-preview-package.mjs",
+      "sha256": "abcfbb46583395a1582b31b37e4b44385796c7a38e08d779217397aab4239050"
+    },
+    {
+      "path": "config/phase3-dedicated-preview-review.json",
+      "sha256": "0870b94a5d0c305b51ad74f2cfc5b68fa1a2a741d5045c5f17fb2cec839b7bdf"
+    },
+    {
+      "path": "docs/phase3-p3d-protected-preview-approval-20261031.md",
+      "sha256": "bbe9064261a7f8dcb3b3fa82dc1b709ac9ea9922642ef27d0d661e828a781471"
+    },
+    {
+      "path": "docs/phase3-p3c-verification-only-approval-20261031.md",
+      "sha256": "d8340e276729201a278f1c7c982eed1e21b8d6e944ed35f2a1be4796346c8abd"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+import {expect,it} from 'vitest';
+import {fork,type ForkOptions} from 'node:child_process';
+import {once,EventEmitter} from 'node:events';
+import {fileURLToPath} from 'node:url';
+import {disconnectCompletedTransportChild,remainingTransportRuntime} from '../../scripts/lib/registration-transport-lifecycle.mjs';
+
+async function fixture(mode:string, examine:(child:ReturnType<typeof fork>, exited:Promise<[number|null,NodeJS.Signals|null]>)=>Promise<void>) {
+  const options:ForkOptions & {windowsHide:boolean}={silent:true,windowsHide:true};
+  const child=fork(fileURLToPath(new URL('../support/transport-ipc-fixture.mjs',import.meta.url)),[mode],options);
+  child.stdout!.resume();child.stderr!.resume();
+  const exited=new Promise<[number|null,NodeJS.Signals|null]>(resolve=>child.once('exit',(code,signal)=>resolve([code,signal])));
+  try {expect((await once(child,'message'))[0]).toEqual({bodyComplete:true});await examine(child,exited);}
+  finally {if(child.exitCode===null&&child.signalCode===null)child.kill();await exited;}
+}
+
+it('OFFLINE reproduces a completed child staying alive with its disconnect listener',async()=>{
+  await fixture('legacy',async(child)=>{
+    await new Promise(resolve=>setTimeout(resolve,100));
+    expect(child.exitCode).toBeNull();expect(child.signalCode).toBeNull();expect(child.connected).toBe(true);
+  });
+});
+it('OFFLINE candidate closes IPC and exits normally after completed cleanup',async()=>{
+  await fixture('corrected',async(_child,exited)=>{expect(await exited).toEqual([0,null]);});
+});
+it('OFFLINE candidate preserves an existing failure exit code',async()=>{
+  await fixture('failed',async(_child,exited)=>{expect(await exited).toEqual([7,null]);});
+});
+it('removes only the owned emergency handler and disconnects once',()=>{
+  const ipc=Object.assign(new EventEmitter(),{connected:true,disconnect(){ipc.connected=false;ipc.emit('disconnect');}});
+  let emergency=0,other=0;const handler=()=>emergency++;
+  ipc.once('disconnect',handler);ipc.once('disconnect',()=>other++);
+  disconnectCompletedTransportChild(ipc,handler);disconnectCompletedTransportChild(ipc,handler);
+  expect(emergency).toBe(0);expect(other).toBe(1);
+});
+it('counts fork startup time and respects an earlier approval deadline',()=>{
+  const claimedAt='2026-10-27T00:00:00Z';
+  expect(remainingTransportRuntime({claimedAt,notAfter:'2026-10-27T00:30:00Z',now:Date.parse(claimedAt)+5610})).toBe(294390);
+  expect(remainingTransportRuntime({claimedAt,notAfter:'2026-10-27T00:02:00Z',now:Date.parse(claimedAt)+5610})).toBe(114390);
+  expect(remainingTransportRuntime({claimedAt,notAfter:'2026-10-27T00:30:00Z',now:Date.parse(claimedAt)+300001})).toBe(0);
+});
+it('rejects malformed or backward lifecycle clocks',()=>{
+  expect(()=>remainingTransportRuntime({claimedAt:'bad',notAfter:'bad'})).toThrow();
+  expect(()=>remainingTransportRuntime({claimedAt:'2026-10-27T00:00:00Z',notAfter:'2026-10-27T00:30:00Z',now:0})).toThrow();
+});

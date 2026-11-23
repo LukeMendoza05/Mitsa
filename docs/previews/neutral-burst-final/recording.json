@@ -1,0 +1,9 @@
+{
+  "actualBrowserViewport": true,
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "sequence": "0→50% (6s), hold 2s, 50→100% (6s), hold 1s, reverse to 50% (6s), hold 1s, reverse to 0% (6s), hold 1s",
+  "initialLoadingIncluded": true
+}

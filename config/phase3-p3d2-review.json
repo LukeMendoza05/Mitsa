@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "status": "READY_FOR_REVIEW_NOT_EXECUTION",
+  "approved": false,
+  "hostedSelectionProven": false,
+  "scope": "P3-D2-nonproduction-branch-trial",
+  "projectId": "prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD",
+  "teamId": "team_C7i6iroBHmpUkM99weoPGnHw",
+  "commit": "ec4a96bef0ea77e3553513b37931076f288cc204",
+  "backendRef": "geuttbanjqdapcubjrnn",
+  "newGitHubRefs": 1,
+  "newDeployments": 1,
+  "environmentWrites": 0,
+  "publishableKeyReads": 0,
+  "privateKeyGeneration": 0,
+  "settingsUpdates": 2,
+  "providerReads": 20,
+  "httpBrowserChecks": 20,
+  "backendSelectQueries": 4,
+  "pagePolicyRpcReads": 10,
+  "conditionalCancellations": 1,
+  "paidChanges": 0,
+  "sourceLogChecksRequired": true,
+  "productionResultMustBeRejected": true,
+  "sources": [
+    {
+      "path": "docs/phase3-p3d-branch-candidate-approval-20261031.md",
+      "sha256": "8046b1525d501457be9e3fbd716c64e9d0fdb35616d48b4908edf678753da255"
+    },
+    {
+      "path": "scripts/lib/phase3-preview-receipt.mjs",
+      "sha256": "d98736c67f3e6f71e1a980eaa215c3bae909351263937e8d0ca7035ec067e638"
+    },
+    {
+      "path": "scripts/verify-phase3-preview-target-gate.mjs",
+      "sha256": "b06115aa8cdc3417a305107fc95cfd43b7359d2269e44ce8b6595c4667d51c4f"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v3/p3d2-branch-candidate.json",
+      "sha256": "d965cccdfe888bb71f4957968133ae57255da7851bbba342441184e16dc5c15f"
+    },
+    {
+      "path": "config/phase3-p3d-result.json",
+      "sha256": "4398b326e03088d709082ec6579fa22d86886b48c4100254258940dc32911337"
+    },
+    {
+      "path": "config/phase3-p3d-final-review.json",
+      "sha256": "9944db89dc97ab60cba6b1bcfa2c807e47dc0086132adb77a065278d273ef85c"
+    }
+  ]
+}

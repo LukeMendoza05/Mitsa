@@ -1,0 +1,69 @@
+{
+  "status": "READY_FOR_SOURCE_PUBLICATION_APPROVAL_ONLY",
+  "authorized": false,
+  "freeSupabaseOnly": true,
+  "hostedReads": 4,
+  "hostedWrites": 0,
+  "offlineTests": 63,
+  "applicationTests": 25,
+  "freePolicyGuardTests": 36,
+  "paidPlannerRejectionTests": 2,
+  "productionBuild": "PASSED_OFFLINE",
+  "typeScript": "PASSED_OFFLINE",
+  "productionDeploymentApproved": false,
+  "backendAdopted": false,
+  "sources": [
+    {
+      "path": "docs/free-only-production-strategy-20261031.md",
+      "sha256": "39490f4233f7b54446aeb670793e5120020124d336501e46272daa1fad29df7d"
+    },
+    {
+      "path": "config/production-strategy.json",
+      "sha256": "be60333bf9157ec7035d46dfe56bd18ff3d4df8376f274c10cd6958162556ea5"
+    },
+    {
+      "path": "scripts/lib/free-only-production-plan.mjs",
+      "sha256": "2b804c82c499fada788d6fe7d89b76712db25671f6d724d29c2af44579263da8"
+    },
+    {
+      "path": "scripts/lib/protected-production-plan.mjs",
+      "sha256": "057e01762c2e84e027a551c9f2e14a217d975b70ee2d595898025085561417c7"
+    },
+    {
+      "path": "scripts/verify-free-only-production-plan.mjs",
+      "sha256": "bf10231ed50028b7c12025933b4083f9e064d5d65f7e5cc17a564ef194a4d79c"
+    },
+    {
+      "path": "scripts/verify-protected-production-plan.mjs",
+      "sha256": "f5072b83485e47ff255852450d160b817ace43829d1c6ccc7959df76b56b989b"
+    },
+    {
+      "path": "scripts/verify-free-only-strategy.mjs",
+      "sha256": "bb340ad412d8a974d9d7986f7f8cd0f0f8c176e55f407619aaaa10c45934cc45"
+    },
+    {
+      "path": "scripts/prepare-free-only-site-candidate.mjs",
+      "sha256": "807f8a9394b38b6ce360318801fff380b25d3594d920943d11d0579d2c7079dc"
+    },
+    {
+      "path": "artifacts/superseded-paid-r1-20261031/index.json",
+      "sha256": "0d7eca312b99d36216c6549be81d3d36a2e24001b6d135091b8f2f5a615db65b"
+    },
+    {
+      "path": "artifacts/free-only-site-review-20261031-v1/inventory.json",
+      "sha256": "c0c0f60e4fadb31719038589d4df75aba128facee6cb7438a3e789e00417877a"
+    },
+    {
+      "path": "artifacts/free-only-site-review-20261031-v1/verification-v2/validation.json",
+      "sha256": "3d6cbc15ab53d97a89f1d23a00183093f8544e41eacc44821c11325b557c0790"
+    },
+    {
+      "path": ".secrets/free-only-strategy-review-20261031-v1/ledger.json",
+      "sha256": "c2dba021e4e074d1db800cbdcdd73143a564cc1a896045953bd1cffeb316163e"
+    },
+    {
+      "path": ".secrets/free-only-strategy-review-20261031-v1/evidence-index.json",
+      "sha256": "ac0e264d1d874bb781f84bbe535a4e7fcdeab140cd12b59a36ece431c0e7c345"
+    }
+  ]
+}

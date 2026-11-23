@@ -1,0 +1,29 @@
+// New versioned LOCAL review. Does not create a hosted execution manifest/grant.
+import assert from 'node:assert/strict';
+import {readFileSync,readdirSync,writeFileSync,existsSync} from 'node:fs';
+import {createHash} from 'node:crypto';
+import {spawnSync} from 'node:child_process';
+const hash=v=>createHash('sha256').update(v).digest('hex'),read=p=>JSON.parse(readFileSync(p));
+const output='artifacts/onboarding-controller-local-v2-review.json';
+const files=['.gitignore','scripts/lib/onboarding-counted-fetch.mjs','scripts/lib/onboarding-fixture-transport.mjs','scripts/lib/onboarding-public-evidence.mjs','scripts/lib/onboarding-observation-receiver.mjs','scripts/lib/onboarding-next-private-channel.mjs','scripts/lib/onboarding-next-runtime.mjs','scripts/lib/onboarding-next-process.mjs','scripts/onboarding-next-child.mjs','scripts/lib/onboarding-browser-process.mjs','scripts/lib/onboarding-browser-driver.mjs','scripts/lib/onboarding-controller.mjs','scripts/review-onboarding-controller-local.mjs',
+ 'tests/support/onboarding-next-offline-fixture.mjs','tests/support/onboarding-next-process-fixture.mjs','tests/unit/onboarding-fixture-transport.test.ts','tests/unit/onboarding-public-evidence.test.ts','tests/unit/onboarding-observation-receiver.test.ts','tests/unit/onboarding-next-private-channel.test.ts','tests/unit/onboarding-browser-process.test.ts','tests/unit/onboarding-browser-real-offline.test.ts','tests/unit/onboarding-controller.test.ts','tests/unit/onboarding-next-process.test.ts','tests/unit/onboarding-next-runtime.test.ts','tests/unit/onboarding-next-framework.test.ts','tests/unit/onboarding-browser-driver.test.ts','docs/registration-onboarding-controller-v2.md','docs/github-vercel-release-preparation.md'];
+try{
+ const check=process.argv.length===3&&process.argv[2]==='--check';assert(check||process.argv.length===2);
+ const c=read('config/registration-stage-c-review.json');assert.equal(hash(readFileSync('config/registration-stage-c-review.json')),'407651a10d92e13118a5b12ccb48c9a1d75b34b3aa8acb35716ac4038e6e9424');
+ for(const f of [...c.sources,...c.historicalEvidence])assert.equal(hash(readFileSync(f.path)),f.sha256,'Previously reviewed source/evidence changed');
+ const reportPath='artifacts/onboarding-controller-components-offline-v3.json',r=read(reportPath);assert(r.success&&r.numTotalTests===181&&r.numPassedTests===181&&r.numFailedTests===0&&r.numPendingTests===0&&r.testResults.length===20,'Current offline result is incomplete');
+ const fixtureRefs=[c.privateFixtures,read('config/registration-completion-review.json').privateFixtures],privateValues=[];
+ for(const ref of fixtureRefs){const raw=readFileSync(ref.path);assert.equal(hash(raw),ref.sha256);for(const f of JSON.parse(raw).fixtures)for(const k of ['email','password'])if(typeof f[k]==='string'&&f[k])privateValues.push(f[k]);}
+ const walk=p=>readdirSync(p,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(p+'/'+e.name):[p+'/'+e.name]),scanned=[...files,reportPath,...walk('.next/static'),...walk('public')];
+ for(const path of scanned){const bytes=readFileSync(path);for(const value of privateValues)assert(!bytes.includes(Buffer.from(value))&&!bytes.includes(Buffer.from(encodeURIComponent(value))),'Private fixture exposed');}
+ for(const file of files.filter(f=>f.endsWith('.mjs')))assert.equal(spawnSync(process.execPath,['--check',file],{stdio:'ignore',windowsHide:true}).status,0,'Source syntax failed');
+ const privatePaths=['.secrets/registration-onboarding/DE-v1/approval.json','artifacts/onboarding-controller-local-v2-review.json','docs/support/supabase-refresh-reuse-request.txt','docs/registration-final-approval-package.md','.aws/credentials','.codex/auth.json'];
+ for(const path of privatePaths)assert.equal(spawnSync('git',['check-ignore','--quiet','--',path],{stdio:'ignore',windowsHide:true}).status,0,'Private path is not ignored');
+ const tracked=spawnSync('git',['ls-files','--','.secrets','.env.local','artifacts','docs/support'],{encoding:'utf8',windowsHide:true});assert.equal(tracked.status,0);assert.equal(tracked.stdout.trim(),'','Private material is tracked');
+ const result={status:'PASSED_OFFLINE_COMPONENTS_HOSTED_ASSEMBLY_INCOMPLETE',architecture:'MANAGED_SUPABASE_SUPPORTED_SESSION_TERMINATION',offlineTests:181,testFiles:20,skipped:0,report:{path:reportPath,sha256:hash(readFileSync(reportPath))},nextBuildIdSha256:hash(readFileSync('.next/BUILD_ID')),syntax:'PASSED',privateValuesNotExposed:true,privacyFilesScanned:scanned.length,reviewedStageCSourcesVerified:c.sources.length,historicalHashesVerified:c.historicalEvidence.length,
+  credentialBinding:'PASSED_OFFLINE',supervision:'PASSED_OFFLINE_REAL_PROCESSES',controllerCore:'PASSED_OFFLINE',fullHostedRunner:'INCOMPLETE_ADAPTER_ASSEMBLY',strictOptionA:'BLOCKED_SU-519045',securityExceptionAccepted:false,registrationEnabled:false,deliveryEnabled:false,newSupabaseRequests:0,newSmtpRequests:0,newAccounts:0,hostedAcceptanceCompleted:false,previousGoalTurn:'PROGRESS',
+  githubRepository:'https://github.com/LukeMendoza05/Mitsa',localGitRemoteConfigured:false,verifiedVercelProject:false,publicDeploymentPerformed:false,privatePathsIgnored:true,files:files.map(path=>({path,sha256:hash(readFileSync(path))}))};
+ if(check){const old=read(output);assert.deepEqual(old,result,'Versioned local review changed; prepare another version instead of overwriting');}
+ else{assert(!existsSync(output),'Versioned local review already exists; use --check or a new version');writeFileSync(output,JSON.stringify(result,null,2)+'\n',{flag:'wx'});}
+ console.log(JSON.stringify({status:result.status,offlineTests:181,files:files.length,reviewedSources:result.reviewedStageCSourcesVerified,historicalHashes:result.historicalHashesVerified,privacyPassed:true,hostedRequests:0}));
+}catch{console.error('Versioned local controller review failed; private details suppressed. No hosted operation occurred.');process.exitCode=1;}

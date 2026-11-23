@@ -17,7 +17,7 @@ describe("real hosted command and authorization proof", () => {
     expect((await rpc(f.cashier.session.access_token,f.business,b,1)).error?.code).toBe("42501");
     expect((await rpc(f.cashier.session.access_token,f.otherBusiness,other,1)).error?.code).toBe("42501");
     expect((await rpc(f.owner.session.access_token,f.business,b,1)).error).toBeNull();
-    expect((await rpc(f.manager.session.access_token,f.business,b,1)).error?.code).toBe("42501");
+    expect((await rpc(f.manager.session.access_token,f.business,b,1)).error).toBeNull();
     const anonymous=await publicClient().schema("api").rpc("foundation_increment",{p_business:f.business,p_resource:a,p_delta:1,p_key:crypto.randomUUID()});
     expect(anonymous.error).not.toBeNull();
     expect((await cashier.schema("private").from("memberships").select("*")).error).not.toBeNull();

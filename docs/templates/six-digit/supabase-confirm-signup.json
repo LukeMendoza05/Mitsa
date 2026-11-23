@@ -1,0 +1,11 @@
+{
+  "subject": "Verify your Mitsa email address",
+  "observedProviderCodeLength": 8,
+  "requiredOtpLength": 6,
+  "previewIllustrativeCodeLength": 6,
+  "providerOtpValiditySeconds": 3600,
+  "configurationEvidence": "Owner dashboard confirmation 2026-10-14; six-digit candidate remains local only",
+  "proposedOtpLength": 6,
+  "providerChangeApproved": false,
+  "published": false
+}

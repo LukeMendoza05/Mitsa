@@ -1,0 +1,20 @@
+import {it,expect} from 'vitest';
+import {mkdtempSync,mkdirSync,writeFileSync,existsSync} from 'node:fs';
+import {tmpdir} from 'node:os';
+import {join,resolve} from 'node:path';
+import {spawnSync} from 'node:child_process';
+import {finalLimits} from '../../scripts/lib/registration-final-controls.mjs';
+function fixture(){const cwd=mkdtempSync(join(tmpdir(),'mitsa-final-denial-'));mkdirSync(join(cwd,'config'));mkdirSync(join(cwd,'artifacts'));writeFileSync(join(cwd,'config/registration-final-review.json'),JSON.stringify({sources:[],historicalEvidence:[],project:'mjtejwafxriwntweussc',marker:'fireworks-foundation-proof-01a12e38',stages:{A:{scope:'A-current-preservation-v2'}}}));return cwd;}
+it('A cannot create an attempt/key/capture without its specific human approval',()=>{
+ const cwd=fixture(),result=spawnSync(process.execPath,[resolve('scripts/capture-current-preservation.mjs'),'--capture'],{cwd,encoding:'utf8',windowsHide:true,timeout:15000});expect(result.status).toBe(1);expect(result.stderr).toContain('STOPPED_NO_RETRY');expect(result.stderr).toContain('"connections":0');expect(existsSync(join(cwd,'.secrets/registration-final-v1/A/attempt.json'))).toBe(false);
+});
+it('B local check has no credentials/network dependency and run cannot launch without approval',()=>{
+ const cwd=fixture(),entry=resolve('scripts/registration-transport-retry.mjs');
+ writeFileSync(join(cwd,'config/registration-transport-lifecycle-review.json'),JSON.stringify({sources:[],historicalEvidence:[],project:'mjtejwafxriwntweussc',marker:'fireworks-foundation-proof-01a12e38',scope:'B-transport-lifecycle-v3',limits:finalLimits.B,timing:{workSeconds:210,hardStopSeconds:240,overallSeconds:300,reconcileStopSeconds:290}}));
+ const check=spawnSync(process.execPath,[entry,'--check'],{cwd,encoding:'utf8',windowsHide:true,timeout:15000});expect(check.status).toBe(0);expect(check.stdout).toContain('"hostedRequests":0');
+ for(const mode of ['--run','--child','--reconcile']){
+  const run=spawnSync(process.execPath,[entry,mode],{cwd,encoding:'utf8',windowsHide:true,timeout:15000});expect(run.status).toBe(1);expect(run.stderr).toContain('STOPPED_NO_AUTOMATIC_RETRY');
+ }
+ expect(existsSync(join(cwd,'.secrets/registration-final-v1/B-lifecycle-v3/attempt.json'))).toBe(false);
+ expect(existsSync(join(cwd,'.secrets/registration-final-v1/B-lifecycle-v3/budget.json'))).toBe(false);
+},60000);

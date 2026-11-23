@@ -1,0 +1,23 @@
+// Read-only returning-session proof. No token, password, secret, code or QR is
+// queried. Never creates a session, signs out, sends mail or changes a record.
+import {readFileSync,writeFileSync} from 'node:fs';import {createHash} from 'node:crypto';import assert from 'node:assert/strict';import {parse} from 'dotenv';import pg from 'pg';
+import {assertTestTarget} from './test-target.mjs';import {testDatabaseConfig} from './postgres-config.mjs';
+let db;
+try {
+ const cfg=JSON.parse(readFileSync('config/test-target.json')),e=parse(readFileSync('.secrets/operator.env')),checkpoint=JSON.parse(readFileSync('.secrets/isolated-registration/returning-signin-checkpoint.json'));
+ const target=assertTestTarget({projectRef:e.TEST_PROJECT_REF,url:e.TEST_SUPABASE_URL,databaseUrl:e.TEST_DATABASE_URL},cfg);assert.equal(target.projectRef,'mjtejwafxriwntweussc');assert.equal(checkpoint.project,target.projectRef);assert(checkpoint.aal2SessionHashes?.length>0&&checkpoint.locationIds?.length===1);
+ const email=JSON.parse(readFileSync('.secrets/onboarding-recipient.json')).email.trim().toLowerCase();
+ db=new pg.Client(testDatabaseConfig(e.TEST_DATABASE_URL,cfg));await db.connect();await db.query('begin isolation level repeatable read read only');assert.equal((await db.query('select marker from foundation_probe.environment_identity where singleton')).rows[0].marker,target.databaseMarker);
+ const user=(await db.query('select id,email_confirmed_at,deleted_at from auth.users where email=$1',[email])).rows[0];assert(user?.id===checkpoint.userId&&user.email_confirmed_at&&user.deleted_at===null);
+ const trusted=(await db.query("select f.id from auth.mfa_factors f join private.factor_bindings b on b.factor_id=f.id and b.user_id=f.user_id join private.account_security s on s.user_id=b.user_id and s.generation=b.generation where f.user_id=$1 and f.status='verified' and b.revoked_at is null and s.initialized and not s.recovery_locked",[user.id])).rows;assert.equal(trusted.length,1);assert.equal(trusted[0].id,checkpoint.factorId);
+ const workspace=(await db.query("select b.id,b.slug,b.primary_owner_id,m.role,(select count(*)::int from private.memberships o where o.business_id=b.id and o.active and o.role='owner') owners from private.businesses b join private.memberships m on m.business_id=b.id where m.user_id=$1 and m.active and b.status='active'",[user.id])).rows;assert.equal(workspace.length,1);assert(workspace[0].id===checkpoint.businessId&&workspace[0].slug===checkpoint.workspaceSlug&&workspace[0].primary_owner_id===user.id&&workspace[0].role==='owner'&&workspace[0].owners===1);
+ const locations=(await db.query('select id from private.shops where business_id=$1 and active',[checkpoint.businessId])).rows.map(l=>l.id).sort();assert.deepEqual(locations,[...checkpoint.locationIds].sort());
+ const sessions=(await db.query("select s.id,s.created_at,s.aal::text aal,s.factor_id,exists(select 1 from auth.mfa_amr_claims a where a.session_id=s.id and a.authentication_method='password') has_password,exists(select 1 from auth.mfa_amr_claims a where a.session_id=s.id and a.authentication_method='totp') has_totp from auth.sessions s where s.user_id=$1 and (s.not_after is null or s.not_after>statement_timestamp())",[user.id])).rows;
+ const digest=value=>createHash('sha256').update(value).digest('hex'),currentHashes=sessions.map(s=>digest(s.id));
+ const fresh=sessions.filter(s=>!checkpoint.sessionHashes.includes(digest(s.id))&&s.created_at>new Date(checkpoint.checkedAt));
+ const returned=fresh.some(s=>s.aal==='aal2'&&s.factor_id===checkpoint.factorId&&s.has_password&&s.has_totp);
+ const revokedPrior=checkpoint.aal2SessionHashes.filter(hash=>!currentHashes.includes(hash)).length;
+ const closed=(await db.query('select not(enabled or smtp_enabled or private.mitsa_pilot_registration_open()) closed from private.pilot_registration_window')).rows[0].closed;
+ await db.query('commit');const report={checkedAt:new Date().toISOString(),project:target.projectRef,sameVerifiedTestAccount:true,sameTrustedFactor:true,sameWorkspaceAndSoleOwner:true,sameInitialLocation:true,newPasswordSessionObserved:fresh.some(s=>s.has_password),newTrustedAal2SessionObserved:returned,atLeastOnePriorAal2SessionRevoked:revokedPrior>0,providerReturningChecksPassed:returned&&revokedPrior>0,logoutAndWorkspaceReopenNeedUserConfirmation:true,deliveryWindowClosed:closed,emailsSent:0,remoteChanges:0,privateValuesPrinted:false};
+ writeFileSync('artifacts/controlled-returning-signin.json',JSON.stringify(report,null,2)+'\n');console.log(JSON.stringify(report));
+}catch{try{await db?.query('rollback');}catch{}console.error('Returning sign-in audit stopped; private details suppressed. No remote changes.');process.exitCode=1;}finally{await db?.end();}

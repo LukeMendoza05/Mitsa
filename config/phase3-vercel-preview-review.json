@@ -1,0 +1,117 @@
+{
+  "version": 2,
+  "status": "PREPARED_NOT_AUTHORIZED",
+  "previousReview": {
+    "path": "artifacts/history/phase3-preview-v1/config_phase3-vercel-preview-review.json.txt",
+    "sha256": "54a2edb878325d11ae519917dbdc9253df119de0958fd53e573e752693aedb03"
+  },
+  "previousApprovalDocument": {
+    "path": "artifacts/history/phase3-preview-v1/docs_phase3-protected-preview-approval-20261029.md.txt",
+    "sha256": "68bb33b8572072fd748c7bfa6e11a846873fc426fc8e187ce73e512e3586c995"
+  },
+  "scope": "P3-A-inactive-protected-project",
+  "requiredProjectName": "mitsa-fireworksinventory",
+  "requestedProductionUrl": "https://mitsa-fireworksinventory.vercel.app",
+  "supersedesPreviousProjectNames": [
+    "mitsa",
+    "mitsa-inventory"
+  ],
+  "sourceRepository": "https://github.com/LukeMendoza05/Mitsa",
+  "sourceCommit": "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66",
+  "sourceInventorySha256": "4b99ee6ca629b2a2168f51ad9e95e7816cb706dcd1bf6f68ab8bfc7067a7e0e3",
+  "targetScopeSlug": "lukemendoza",
+  "teamAccess": "VERIFIED_CURRENT",
+  "actorRole": "OWNER",
+  "teamAccessGrantedByTask": false,
+  "projectAbsenceInIntendedTeam": "VERIFIED_404",
+  "aliasAbsenceInIntendedTeam": "VERIFIED_404",
+  "productionHostnameHeadStatus": 404,
+  "productionHostnameVercelError": "DEPLOYMENT_NOT_FOUND",
+  "hostnameAllocationGuaranteed": false,
+  "alternateProductionHostnameAllowed": false,
+  "projectSetupReadyForApproval": true,
+  "limits": {
+    "readOnlyChecks": 20,
+    "projectCreateCalls": 1,
+    "projectSettingsUpdates": 1,
+    "deployments": 0,
+    "environmentWrites": 0,
+    "gitAttachments": 0,
+    "domainOrAliasWrites": 0,
+    "supabaseOperations": 0,
+    "emails": 0,
+    "workerLaunches": 0,
+    "paidChanges": 0
+  },
+  "createRequestBody": {
+    "name": "mitsa-fireworksinventory",
+    "framework": "nextjs",
+    "rootDirectory": null,
+    "installCommand": "npm ci --ignore-scripts",
+    "buildCommand": "npm run build",
+    "outputDirectory": null,
+    "publicSource": false,
+    "previewDeploymentsDisabled": true,
+    "ssoProtection": {
+      "deploymentType": "all"
+    }
+  },
+  "settingsRequestBody": {
+    "nodeVersion": "24.x",
+    "sourceFilesOutsideRootDirectory": false,
+    "autoAssignCustomDomains": false,
+    "previewDeploymentsDisabled": true,
+    "ssoProtection": {
+      "deploymentType": "all"
+    }
+  },
+  "environmentStage": {
+    "status": "AWAITING_CLEAN_BACKEND_AND_EXACT_PREVIEW_ORIGIN",
+    "settingNames": [
+      "SUPABASE_URL",
+      "SUPABASE_PUBLISHABLE_KEY",
+      "APP_ORIGIN",
+      "AUTH_FLOW_KEY",
+      "MFA_ENROLLMENT_KEY",
+      "MITSA_REGISTRATION_ENGINE",
+      "MITSA_REGISTRATION_MODE",
+      "MITSA_AUTH_MAIL_MODE",
+      "MITSA_REGISTRATION_SERVICE_ENABLED",
+      "MITSA_EMAIL_OTP_LENGTH"
+    ],
+    "actualValuesIncluded": false,
+    "proposedMaximumBatches": 1,
+    "proposedMaximumSettings": 10,
+    "target": "Preview only",
+    "sourceMappingAndAdditionalPushRequireSeparateReview": true
+  },
+  "deploymentStage": {
+    "status": "NOT_EXECUTION_READY_MISSING_TARGET_BINDINGS",
+    "proposedMaximumPreviewDeployments": 1,
+    "proposedHttpChecks": 20,
+    "proposedBuildLogReads": 1,
+    "proposedStatusReads": 5,
+    "productionPromotionAllowed": false
+  },
+  "cleanPreviewBackend": "NONE_IDENTIFIED_IN_CONNECTED_ACCOUNT_USER_SELECTION_PENDING",
+  "preconditions": [
+    "Explicit P3-A approval",
+    "Fresh team/actor/project/hostname/source checks",
+    "No substitute production hostname or unapproved costs",
+    "All Deployments authentication verified before any later deployment"
+  ],
+  "sources": [
+    {
+      "path": "docs/phase3-protected-preview-approval-20261029.md",
+      "sha256": "0e12251237791f387ea5c51a3d0c5b750a97f49b7c1a1b79b63a2c95f16f6489"
+    },
+    {
+      "path": "artifacts/phase3-preview-review-20261029-v2/readonly-findings.json",
+      "sha256": "7f30b2c94c51245262f325619ec2dd20f0793e0ae1c3bd1e1a5907b52f590981"
+    }
+  ],
+  "strictOptionA": "BLOCKED_SU-519045",
+  "registrationEnabled": false,
+  "created": false,
+  "deployed": false
+}

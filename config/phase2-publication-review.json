@@ -1,0 +1,130 @@
+{
+  "version": 1,
+  "status": "READY_FOR_SOURCE_PUBLICATION_APPROVAL_NOT_PUSHED",
+  "scope": "P2-sanitized-source-publication-20261029",
+  "repository": "https://github.com/LukeMendoza05/Mitsa",
+  "remote": "https://github.com/LukeMendoza05/Mitsa.git",
+  "localBranch": "codex/publication-review",
+  "destinationBranch": "main",
+  "exportDirectory": "artifacts/publication/mitsa-source-20261029-v3",
+  "commit": "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66",
+  "tree": "7d90ab7a0eaf96e0eee040eb173ff7c5c1a3e49c",
+  "newSourceOnlyCommits": [
+    "149ffb9cfc8c1bda908550419fdceb9d689892fe",
+    "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66"
+  ],
+  "inventoryPath": "artifacts/publication-review-20261029-v3/public-source-inventory-v2.json",
+  "inventorySha256": "4b99ee6ca629b2a2168f51ad9e95e7816cb706dcd1bf6f68ab8bfc7067a7e0e3",
+  "commitReviewPath": "artifacts/publication-review-20261029-v3/local-commit-review-v2.json",
+  "sourceReviewPath": "artifacts/publication-review-20261029-v3/final-source-review.json",
+  "originalBaselinePath": "artifacts/publication-review-20261029-v3/source-baseline.json",
+  "browserResultPath": "artifacts/publication-review-20261029-v3/offline-browser-result-v2.json",
+  "testResultPath": "artifacts/publication/mitsa-export-tests-v3.json",
+  "auditResultPath": "artifacts/publication-review-20261029-v3/npm-audit-final.json",
+  "sources": [
+    {
+      "path": "scripts/prepare-phase2-export.mjs",
+      "sha256": "7059ae90e868f032a9a4c6f8fb47479a38f46b08c93f3cb234393007b490e07a"
+    },
+    {
+      "path": "scripts/verify-phase2-publication.mjs",
+      "sha256": "310d470dc6a7169ac54e71626303489e317257bfeab56b96d3728748d26fcb7f"
+    },
+    {
+      "path": "docs/phase2-source-publication-approval-20261029.md",
+      "sha256": "10dd113168c47fce43c6ad7ca8a24d8131ac6b1804095f0ce84b38196165b527"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/source-baseline.json",
+      "sha256": "3f0e90e40e81fdbf7cbf08dea7cb59f5bd1924c8a2a7bc74a8544e341f35edd1"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/private-audit.json",
+      "sha256": "c21605a6936e6713eed808e99f6d840800c83003b8ea6f16d5e703122460e66b"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/export-initial-inventory.json",
+      "sha256": "9140a108e80950c790f7f365075993965db82f94bdff31289aace466cee0a3ff"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/final-review.mjs",
+      "sha256": "2652801cef937f4345ec5a80b51d9aed135d4ee9e7c54da291d9cd1f64828f4b"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/final-source-review.json",
+      "sha256": "c70eee1a13c21cedc5e5aa1b9fed7c67f582053e3fea201c0288b677b8e10022"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/public-source-inventory-v2.json",
+      "sha256": "4b99ee6ca629b2a2168f51ad9e95e7816cb706dcd1bf6f68ab8bfc7067a7e0e3"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/local-commit-review-v2.json",
+      "sha256": "39b7630af939724b72aba7ed6b2c251c1b1a070b0dcbb56865e201cc7b207b0b"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/offline-browser-result-v2.json",
+      "sha256": "4fa862a05d09d56990c9bf348efa337b1ffe1b5357106c4fa4ec5ec92741caa6"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/offline-network-fence.mjs",
+      "sha256": "0d1bdcbbdd35be914788fb8b3e8610d4809304550007a3589965a7254be3a626"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/smoke-export.mjs",
+      "sha256": "cc3773a670ef86de21b27e9d0eb2bb564be42e11fe2ebc620096208caa51b34a"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/npm-audit-final.json",
+      "sha256": "2039303ccff2f8d1cd0856b93e6d82eb9a73b9a40976dbb0ec87ce7ffb09f11d"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/remote-readonly-observations.json",
+      "sha256": "0f398f008416862296242cff20056ac1594dbc8c1b87404b9ae1453bacb68ab4"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/vercel-create-proposal.json",
+      "sha256": "28d957f3aa624357afc3c1fb031c3288286af5e140ddd9c2833d3759335bab69"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/build-verification.json",
+      "sha256": "160ff9947259ea14cc816cac651626b5df8fd3858a257bec80bebbdf01745c12"
+    },
+    {
+      "path": "artifacts/publication-review-20261029-v3/source-inventory.md",
+      "sha256": "aad3a2d41bb920bb2f8789390f5a8212d5a8c427bbb8019d294093b0158142ce"
+    },
+    {
+      "path": "artifacts/publication/mitsa-export-tests-v3.json",
+      "sha256": "05516aeab2401e249bd28a3f51eff1b6417c2a67c4122e9b81e7e4dea26af58d"
+    }
+  ],
+  "push": {
+    "authorized": false,
+    "maximumPushOperations": 1,
+    "refspec": "4b7fdd29ac3c232ffae96dba6bef74ba1b046f66:refs/heads/main",
+    "force": false,
+    "tags": false,
+    "otherRefs": false,
+    "requireRemoteEmpty": true,
+    "requireNoAutomaticDeployment": true
+  },
+  "preservation": {
+    "originalHistoryCopied": false,
+    "hostedAuthChanges": 0,
+    "databaseChanges": 0,
+    "emails": 0,
+    "registrationActivated": false,
+    "strictOptionA": "BLOCKED_SU-519045",
+    "GProviderReadonlyAuthorized": false
+  },
+  "vercel": {
+    "project": "mitsa-inventory",
+    "hostname": "mitsa-inventory.vercel.app",
+    "prepared": true,
+    "created": false,
+    "deployed": false,
+    "globallyAvailableGuaranteed": false,
+    "cleanBackendRequiresSeparateApproval": true
+  }
+}

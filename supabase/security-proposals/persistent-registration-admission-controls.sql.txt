@@ -1,0 +1,16 @@
+-- REVIEW ONLY. STRICT POLICY MUST FIRST PASS ITS SEPARATELY APPROVED TESTS.
+-- $1 = exact already-approved generation. No bounded-policy fallback.
+-- Checks are not evidence that Supabase's terminal session issue is fixed.
+-- The operator must validate the approved evidence before sending this query.
+update private.registration_control c
+set admission_enabled=true,session_policy_ready=true
+where c.singleton and c.approval_generation=$1::uuid and c.stopped_at is null
+ and not c.admission_enabled and not c.session_policy_ready and c.session_policy='strict'
+ and c.profile='isolated-development' and c.project_ref='mjtejwafxriwntweussc'
+ and c.origin='http://127.0.0.1:3000' and c.delivery_enabled and c.transport_ready
+ and c.worker_id is not null and c.worker_until>statement_timestamp()
+ and c.heartbeat_at between statement_timestamp()-interval '15 seconds' and statement_timestamp()+interval '1 second'
+ and c.terms_id='98b7abf1-bca4-474f-aee4-e851b4f28d84'::uuid
+ and c.privacy_id='40714378-eb52-46cf-a7cf-760db4100456'::uuid
+ and exists(select 1 from foundation_probe.environment_identity where singleton and marker='fireworks-foundation-proof-01a12e38')
+returning admission_enabled,delivery_enabled,transport_ready,session_policy_ready;

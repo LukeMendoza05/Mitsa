@@ -1,0 +1,169 @@
+{
+  "scope": "D-auth-metadata-audit-readonly-v1",
+  "status": "PREPARED_NOT_APPROVED_NOT_EXECUTED",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "limits": {
+    "databaseConnections": 1,
+    "databaseRequests": 6,
+    "selectStatements": 4,
+    "readOnlyTransactionStatements": 2,
+    "runtimeSeconds": 120,
+    "writes": 0,
+    "authRequests": 0,
+    "edgeRequests": 0,
+    "smtpConnections": 0,
+    "workerLaunches": 0,
+    "emails": 0
+  },
+  "evidenceWindow": {
+    "start": "2026-10-24T02:55:33.452Z",
+    "end": "2026-10-27T00:56:16.503Z",
+    "meaning": "Conservative enclosing window; not a proven mutation interval"
+  },
+  "queries": {
+    "guard": {
+      "sha256": "ef43b2bfc8504a436896e0cda7654e447ccd8e1cb1dbaa4f257ab6db70d34128",
+      "sql": "select\n (select marker from foundation_probe.environment_identity where singleton) as marker,\n (select not (admission_enabled or delivery_enabled or transport_ready or session_policy_ready) and session_policy='strict' and terms_id is null and privacy_id is null from private.registration_control where singleton) as controls_closed,\n (select not (registration_enabled or external_mail_enabled or eligibility_approved or legal_publication_enabled or disposal_enabled) from private.release_gates where singleton) as release_closed,\n (select not (enabled or smtp_enabled) from private.pilot_registration_window where singleton) as pilot_closed,\n (select coalesce(jsonb_agg(jsonb_build_object('relation',v.relation,'column',v.column_name,'required',v.required,'present',a.attnum is not null,'readable',coalesce(has_column_privilege(c.oid,a.attnum,'SELECT'),false)) order by v.relation,v.column_name),'[]'::jsonb)\n  from (values ('auth.users','id',true),('auth.users','created_at',true),('auth.users','updated_at',true),('auth.users','last_sign_in_at',true),('auth.users','email_confirmed_at',true),('auth.users','phone_confirmed_at',true),('auth.users','confirmation_sent_at',true),('auth.users','recovery_sent_at',true),('auth.users','email_change_sent_at',true),('auth.users','phone_change_sent_at',true),('auth.users','reauthentication_sent_at',true),('auth.users','banned_until',true),('auth.users','deleted_at',true),('auth.users','is_anonymous',true),('auth.users','is_sso_user',true),('auth.users','is_super_admin',true),('auth.users','aud',true),('auth.users','role',true),('auth.mfa_factors','user_id',true),('auth.mfa_factors','factor_type',true),('auth.mfa_factors','status',true),('auth.mfa_factors','created_at',true),('auth.mfa_factors','updated_at',true),('auth.audit_log_entries','payload',false),('auth.audit_log_entries','created_at',false)) v(relation,column_name,required)\n  left join pg_class c on c.oid=to_regclass(v.relation)\n  left join pg_attribute a on a.attrelid=c.oid and a.attname=v.column_name and a.attnum>0 and not a.attisdropped) as columns"
+    },
+    "user": {
+      "sha256": "1f92a2004e10326c0ae3a580e37af5bdd68b53a2595d8b4dd8ac29e72a92ce1e",
+      "sql": "select created_at,updated_at,last_sign_in_at,email_confirmed_at,phone_confirmed_at,\n confirmation_sent_at,recovery_sent_at,email_change_sent_at,phone_change_sent_at,reauthentication_sent_at,\n banned_until,deleted_at,is_anonymous,is_sso_user,is_super_admin is true as privileged_auth_flag,\n aud='authenticated' as expected_audience,role='authenticated' as expected_auth_role\n from auth.users where id=$1::uuid"
+    },
+    "factors": {
+      "sha256": "0e43a8c82d51ec6d0ff5bb196df68421ae6974f9e1ee403537a8d1df37b906bc",
+      "sql": "select\n case when factor_type::text in ('totp','phone','webauthn') then factor_type::text else 'other' end as kind,\n case when status::text in ('verified','unverified') then status::text else 'other' end as state,\n count(*)::int as count,min(created_at) as first_created_at,max(updated_at) as last_updated_at\n from auth.mfa_factors where user_id=$1::uuid group by 1,2 order by 1,2"
+    },
+    "audit": {
+      "sha256": "96d5235afe7a3a2ec3df7d57ac5abfd3270c11877a1d7e93a3c8a120cc7e2fda",
+      "sql": "with scoped as (select\n  case when payload->>'action' in ('login','logout','invite_accepted','user_signedup','user_invited','user_deleted','user_modified','user_recovery_requested','user_reauthenticate_requested','user_confirmation_requested','user_repeated_signup','user_updated_password','token_revoked','token_refreshed','factor_in_progress','factor_unenrolled','challenge_created','verification_attempted','factor_deleted','factor_updated','identity_linked','identity_unlinked','passkey_created','passkey_updated','passkey_deleted','recovery_codes_generated','recovery_codes_verified','recovery_codes_regenerated','recovery_codes_deleted') then payload->>'action' else 'other' end as action,\n  case when payload->>'actor_id'=$1::text then 'actor' else 'explicit_target' end as relation,created_at\n  from auth.audit_log_entries\n  where (payload->>'actor_id'=$1::text or payload->'traits'->>'user_id'=$1::text)\n   and created_at >= $2::timestamptz and created_at <= $3::timestamptz\n  order by created_at desc limit 201)\n select action,relation,count(*)::int as count,min(created_at) as first_at,max(created_at) as last_at,\n (select count(*)=201 from scoped) as truncated from scoped group by action,relation order by action,relation"
+    }
+  },
+  "transactionSql": {
+    "begin": "begin isolation level repeatable read read only",
+    "success": "commit",
+    "failure": "rollback"
+  },
+  "sources": [
+    {
+      "path": "scripts/lib/registration-auth-metadata-review.mjs",
+      "sha256": "ca1bd641d806cfe8df4ced6d51ccbd4e0a9860f22a7fd676b1566ace971ebd9a"
+    },
+    {
+      "path": "tests/unit/registration-auth-metadata-review.test.ts",
+      "sha256": "520692f6f2053d860aa20d69e3c01d00a66a2fe2da1182002e13c68fb4fc433c"
+    },
+    {
+      "path": "scripts/lib/registration-preservation-diff.mjs",
+      "sha256": "c3c34a6f48538e8e31dc5f764dcc046e8cbeb6ff67a19731d179a922826a0dc5"
+    },
+    {
+      "path": "tests/unit/registration-preservation-diff.test.ts",
+      "sha256": "c9cbd91f82da52583453817ed90855e54ecd189b6f35530b8ffdbac1135ed501"
+    },
+    {
+      "path": ".tools/prepare-auth-metadata-review.mjs",
+      "sha256": "f7e144eb4681cfb6ce9be817c3622c1035d06f79d38f568de0e91bc9d31152d2"
+    },
+    {
+      "path": "artifacts/registration-parser-source-archive.json",
+      "sha256": "d289fc44dab6cb0f1741026b17d55b20eb0d8851850c4ffc954d57f79777f78a"
+    },
+    {
+      "path": "docs/stage-d-auth-metadata-inspection-approval.md",
+      "sha256": "a45632e623df4866562f007f9208edd0a53aaed184f8cf030a2b165a80f0b9a4"
+    },
+    {
+      "path": "docs/auth-preservation-classification-design.md",
+      "sha256": "cac893baff011a2553e64dce7b7befc5d6bae2b13aabf27341b44d9474d3b38e"
+    }
+  ],
+  "frozenEvidence": [
+    {
+      "path": "config/registration-transport-probe-review.json",
+      "sha256": "00290c2e2713d8d94ab1fac20cfc4791b57eb4e55595440094e0ce41eae3a841"
+    },
+    {
+      "path": "config/registration-completion-review.json",
+      "sha256": "4d95fe61174d0854f60cda37321ea789a4d6cb57f723aca895410a1367f7bb86"
+    },
+    {
+      "path": "config/registration-preservation-drift-review.json",
+      "sha256": "1119c4a840b3363ef381c438f39b4d978272d1787e67b0f498f63d71b5d8d5d3"
+    },
+    {
+      "path": "artifacts/registration-preservation-drift-result.json",
+      "sha256": "9da539cbb4a10e3a4e32713192542f7f01ddeb9d17f8316275b24d49be325fc6"
+    },
+    {
+      "path": ".secrets/stage-c3ba-notices-retry-01/preservation-342ae160-a906-4a28-9ad0-837ad83a2e02.json",
+      "sha256": "d30f8699237c4861934a86d8a192748306edbe6a9a39ec38a14095cad626368a"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-evidence-38a75fe0-9b3b-4062-9372-3bb494ac43c3.json",
+      "sha256": "65387473d1c7fa058216f17a4075b12eb834553ada8ffeaefe679a070a8ec841"
+    },
+    {
+      "path": ".secrets/stage-c3ba-notices-retry-01/preservation-342ae160-a906-4a28-9ad0-837ad83a2e02.pgp",
+      "sha256": "737c6ddc429e746c27a7e383016f41a80d40cac00f4ab00531ffe4aeaad3e5b9"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-evidence-38a75fe0-9b3b-4062-9372-3bb494ac43c3.pgp",
+      "sha256": "6a9b657fe864c1e5b8391bbd010b5191798d751d770cf4373b531b3ff61b653d"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/budget.json",
+      "sha256": "30e31fddb89de2d6f2350c4c486f704a45f7d7b78552634eeddb72cf5d0eafc5"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/connections-budget.json",
+      "sha256": "e0436fa524d5776b0260ee82935965bcd6680b153526dcae051938d2436c2a5e"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/management-budget.json",
+      "sha256": "9f9e174ec0908fc494b2a7dabe98bbb946dd9fc4d5bf4c63714edcb3c25ee80a"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-budget.json",
+      "sha256": "35f96800186d210ff29145d0aead5a71376a13debde17fa456a1e978178c7aff"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/attempt.json",
+      "sha256": "d74ae6fc7d5d40c1db669d1f23b7d7e043db791f0d426d2b2538397460d37a48"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/child-started.json",
+      "sha256": "f3372d2d368894ddd99f744b442b0c7ba7ad7fc2285d155ad072ec7eff8ee7fd"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/child-terminal.json",
+      "sha256": "0bd456f334105a64569c98f407af77a8b868619ba70f39aaa00bbe1aac450e34"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-approval.json",
+      "sha256": "0a973682f1e7a3b6c83e39e23e2bb4be3c8cf68e559fc057ab8ce05744afdfe0"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/drift-diagnostic-attempt.json",
+      "sha256": "5e86d286a6795f829108798317a738d100e364d64d13b3eabb14eeba1a3d827d"
+    }
+  ],
+  "existingBudget": {
+    "databaseRequests": 120,
+    "readQueries": 116,
+    "transactionQueries": 4,
+    "writeQueries": 0,
+    "databaseConnections": 2,
+    "secretMetadataRequests": 1
+  },
+  "maximumCumulativeAfter": {
+    "databaseRequests": 126,
+    "readQueries": 120,
+    "transactionQueries": 6,
+    "writeQueries": 0,
+    "databaseConnections": 3,
+    "secretMetadataRequests": 1
+  },
+  "approvalCreated": false,
+  "hostedExecutionAvailable": false
+}

@@ -1,0 +1,27 @@
+{
+  "version": "2026-10-14-proposed",
+  "status": "proposed",
+  "legalApprovalRequired": true,
+  "categories": [
+    { "id": "account-profile", "period": { "days": 30 }, "trigger": "Approved deletion becomes executable, including ownership resolution", "purpose": "Verified account closure", "disposal": "Revoke sessions; delete ordinary profile and provider account through supported operations; separate justified history" },
+    { "id": "unverified-registration", "period": { "days": 14 }, "trigger": "Signup", "purpose": "Remove abandoned accounts", "disposal": "Delete unverified unused account after checking dependent records" },
+    { "id": "workspace-membership", "period": { "days": 30 }, "trigger": "Removal or account deletion", "purpose": "Bound former-member identifying details", "disposal": "Revoke access promptly; delete/minimize unnecessary roster details; preserve justified audit history" },
+    { "id": "invitation-token", "period": { "days": 30 }, "trigger": "Acceptance, expiry or revocation", "purpose": "Bound replay/dispute investigation", "disposal": "Delete token hash; never persist plaintext token" },
+    { "id": "invitation-recipient", "period": { "days": 90 }, "trigger": "Acceptance, expiry or revocation", "purpose": "Delivery and membership disputes", "disposal": "Purge recipient and delivery details; minimize retained audit event" },
+    { "id": "registration-intent", "period": { "days": 1 }, "trigger": "Issuance for unused intents; finalization for completed intents", "purpose": "Short-lived signup enforcement", "disposal": "Delete temporary nonce hashes and input; retain legal acceptance separately" },
+    { "id": "authentication-log", "period": { "days": 90 }, "trigger": "Event", "purpose": "Account abuse investigation", "disposal": "Delete/redact application events; confirm managed provider log retention separately" },
+    { "id": "authentication-ip", "period": { "days": 30 }, "trigger": "Event", "purpose": "Short investigation window for raw IP addresses", "disposal": "Remove raw IP unless a scoped incident hold applies" },
+    { "id": "mfa-recovery-case", "period": { "years": 2 }, "trigger": "Case closure", "purpose": "Evidence of independently authorized recovery", "disposal": "Purge/minimize case summary after expiry and holds" },
+    { "id": "mfa-recovery-evidence", "period": { "days": 30 }, "trigger": "Final decision", "purpose": "Minimize sensitive identity evidence", "disposal": "Delete evidence objects and working copies; never collect TOTP secrets" },
+    { "id": "privacy-request-case", "period": { "years": 3 }, "trigger": "Case closure", "purpose": "Evidence of rights handling", "disposal": "Purge/minimize request and decision records" },
+    { "id": "privacy-request-evidence", "period": { "days": 30 }, "trigger": "Final decision", "purpose": "Bound identity verification evidence", "disposal": "Delete evidence and working copies" },
+    { "id": "privacy-export", "period": { "days": 7 }, "trigger": "Export creation", "purpose": "Bound downloadable personal-data copies", "disposal": "Delete export object; expire access links earlier" },
+    { "id": "operational-accounting", "period": { "manual": true }, "trigger": "Accountant/legal-approved statutory filing clock, ordinarily five years where applicable", "purpose": "Applicable tax/accounting duties; not a blanket schedule for all application data", "disposal": "Selective deletion/anonymization after approved classification and holds" },
+    { "id": "operational-other", "period": { "days": 90 }, "trigger": "Approved workspace closure, only for unreferenced nonstatutory records", "purpose": "Bound unnecessary operational data", "disposal": "Delete or irreversibly anonymize after reference and legal checks" },
+    { "id": "administrative-audit", "period": { "years": 5 }, "trigger": "Event; use longer approved linked-record schedule where necessary", "purpose": "Access, administration and ownership accountability", "disposal": "Narrowly controlled expiry disposal; ordinary users cannot rewrite history" },
+    { "id": "terms-acceptance", "period": { "years": 10 }, "trigger": "Relevant agreement ends", "purpose": "Proposed contractual-claims evidence, subject to explicit legal necessity review", "disposal": "Delete identifying acceptance evidence; nonpersonal policy text may remain" },
+    { "id": "notification-metadata", "period": { "days": 90 }, "trigger": "Terminal delivery outcome", "purpose": "Delivery diagnosis", "disposal": "Purge recipient/delivery metadata; queued message payloads have a separate shorter lifecycle" },
+    { "id": "notification-payload", "period": { "manual": true }, "trigger": "Terminal delivery/failure or bounded retry window", "purpose": "Keep message content only for delivery", "disposal": "Delete payload promptly; never store raw invitation tokens" },
+    { "id": "backup-snapshot", "period": { "days": 30 }, "trigger": "Snapshot creation", "purpose": "Bound disaster-recovery copies", "disposal": "Expire encrypted snapshots/objects; replay approved deletion restrictions before restored data is served; verify provider residual-copy behavior separately" }
+  ]
+}

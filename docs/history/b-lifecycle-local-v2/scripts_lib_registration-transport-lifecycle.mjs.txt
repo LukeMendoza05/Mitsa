@@ -1,0 +1,19 @@
+// Inactive correction candidate. Not wired into the consumed hosted B runner.
+import assert from 'node:assert/strict';
+
+// Call only after transport/database cleanup has completed. Remove only our
+// emergency handler: normal IPC closure must not become a false failure.
+export function disconnectCompletedTransportChild(ipc, emergencyDisconnect) {
+  assert.equal(typeof emergencyDisconnect, 'function');
+  ipc.removeListener('disconnect', emergencyDisconnect);
+  if (ipc.connected) ipc.disconnect();
+}
+
+// Process startup consumes the same overall budget; it cannot earn a fresh
+// five-minute timer after fork() returns.
+export function remainingTransportRuntime({claimedAt, notAfter, now = Date.now()}) {
+  const start = Date.parse(claimedAt), approvalEnd = Date.parse(notAfter);
+  assert([start, approvalEnd, now].every(Number.isFinite));
+  assert(approvalEnd > start && now >= start);
+  return Math.max(0, Math.min(start + 300000, approvalEnd) - now);
+}

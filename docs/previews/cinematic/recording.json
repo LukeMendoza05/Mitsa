@@ -1,0 +1,10 @@
+{
+  "actualBrowserViewport": true,
+  "codec": "Playwright WebM",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "sequence": "slow forward to 50%, hold 3s, continue to 100%, reverse through 50% to start",
+  "includesInitialLoad": true
+}

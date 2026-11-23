@@ -12,3 +12,16 @@ playwright-report/
 supabase/.temp/
 *.tsbuildinfo
 .DS_Store
+
+# Local execution evidence and human approval/support material stay private.
+# Reviewed source proposals remain on disk; ignoring never deletes evidence.
+artifacts/
+docs/support/
+docs/*approval*.md
+.aws/
+.codex/
+.agents/
+*.log
+
+.vercel
+.env*

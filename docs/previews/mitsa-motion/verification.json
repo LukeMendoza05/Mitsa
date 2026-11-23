@@ -1,0 +1,17 @@
+{
+  "browserDesktopOnlyMobileExclusions": 6,
+  "integrationPassed": 26,
+  "cls": 0,
+  "browserPassed": 52,
+  "lab": "Local Edge, unthrottled; not field or physical-device performance",
+  "unitPassed": 43,
+  "date": "2026-10-13",
+  "lcpEnhancedMilliseconds": 220,
+  "glbBytes": 534976,
+  "frameP95Milliseconds": 16.9,
+  "renderedTriangles": 11470,
+  "baselineJavaScriptGzipBytes": 141969,
+  "drawCalls": 23,
+  "enhancedTotalJavaScriptGzipBytes": 447502,
+  "finalTargetedBrowserPassed": 26
+}

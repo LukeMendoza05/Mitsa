@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "project": "mjtejwafxriwntweussc",
+  "databaseMarker": "fireworks-foundation-proof-01a12e38",
+  "functionName": "mitsa-registration-service",
+  "entrypoint": "supabase/functions/mitsa-registration-service/index.ts",
+  "importMap": "supabase/functions/mitsa-registration-service/deno.json",
+  "verifyJwt": false,
+  "enabled": false,
+  "localEngine": "legacy",
+  "origin": "http://127.0.0.1:3000",
+  "smokeMethods": ["GET", "POST", "GET"],
+  "legacy": {
+    "name": "mitsa-registration-intent",
+    "version": 3,
+    "verifyJwt": false,
+    "bundleSha256": "70003dc2425a7c00b75ffeda59881a752e1dbb8cb1b95f3afcaddc66bd241af5"
+  },
+  "files": [
+    {"path":"supabase/functions/mitsa-registration-service/index.ts","sha256":"248965336eda834de507f842487673619dec677cf13d3947c500b22d66d485f0"},
+    {"path":"supabase/functions/mitsa-registration-service/deno.json","sha256":"1b6167a0ee26abd3478ff5918e2de9eb6bc87d7c01f63892e1aeeea5277b6d8f"},
+    {"path":"supabase/functions/mitsa-registration-service/deno.lock","sha256":"ce70e91004a0d31208a73048996e177b3adebb246cc1a422ace2c4e247d9b825"},
+    {"path":"supabase/functions/_shared/registration-service.ts","sha256":"8dc648df54856937a6e0cce0b556297fd14b3146a4ddd96ac04abfc3592b452c"},
+    {"path":"supabase/functions/_shared/registration-service-auth.ts","sha256":"74fb4d841f021c5db64856fc638e2268197faee13a22edddcaeba5b8330cca3f"},
+    {"path":"supabase/functions/_shared/registration-intent-auth.ts","sha256":"969dab701f69c29f2acc33de991e47fe7c883ba50eddcc849e3aded215e1669b"},
+    {"path":"src/lib/auth/persistent-registration.ts","sha256":"bbd62568f1b1e6cea779f4efeb60fa1ac89ca35d57202523e8e5c91128341cf3"}
+  ]
+}

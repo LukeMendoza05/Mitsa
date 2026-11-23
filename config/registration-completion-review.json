@@ -1,0 +1,491 @@
+{
+  "version": 1,
+  "preparedAt": "2026-10-23T23:43:27.089Z",
+  "reviewId": "2515785f-49d0-4f3c-b9d7-a4ce1ec006d2",
+  "status": "PREPARED_NOT_APPROVED_NOT_ACTIVATED",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "origin": "http://127.0.0.1:3000",
+  "privateFixtures": {
+    "path": ".secrets/registration-completion/fixtures.json",
+    "sha256": "96a33eed03ce68e18d47374cf750159b133f5b941882de033d1278334f00262d",
+    "labels": [
+      "c3b-a",
+      "c3b-b",
+      "e-a",
+      "e-b"
+    ],
+    "accountsCreated": 0,
+    "addressesPrinted": false
+  },
+  "sources": [
+    {
+      "path": "config/registration-deployments.json",
+      "sha256": "d3669d5f44875330a7671ea9d6ca3549b756c4ab009f0af25ec2b87fd68a1427"
+    },
+    {
+      "path": "config/stage-c1-identity-boundary-baseline.json",
+      "sha256": "dc8d1a11cfc823e9f38d588586fe94385a2b4c99daa4744c401a3ab4f4414777"
+    },
+    {
+      "path": "config/stage-c2-disabled-service-proposal.json",
+      "sha256": "1e2f924797c5c3e0c99b61add63092abbb91c2c79a3277701d0ef5ac9ac88b41"
+    },
+    {
+      "path": "next.config.ts",
+      "sha256": "7633177eb6d238aeaa02990de3543f762cb79874b47a786e4c2c92ea8b595196"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "c7e9159c15084c03ca2585cfa5541df98e109724f399c73b47e03d3025294bb9"
+    },
+    {
+      "path": "package.json",
+      "sha256": "90e184aa4373b32b3817781d99c844963742cd811c1e4decd5a1f99d6bf5ba07"
+    },
+    {
+      "path": "scripts/lib/gmail-credentials.mjs",
+      "sha256": "d188009c6a0c08827d15491e30e6d429152cffded6e86184cde4fc7b135bd9cf"
+    },
+    {
+      "path": "scripts/lib/persistent-mail-worker.ts",
+      "sha256": "1a8801c4b6ca8809ffb544d2227a10ac2f77fea190fb5f55b3816146d347ba70"
+    },
+    {
+      "path": "scripts/lib/registration-mail-test-scope.mjs",
+      "sha256": "7288509bf3500a3d52ef840e1d1cec1a04a09dbb79bd66846a9fcbc8b2ffe4ad"
+    },
+    {
+      "path": "scripts/persistent-registration-worker-review.mjs",
+      "sha256": "f6086afc659688c5d480ab849d80995abbd958978934492b221aa68c96c9ada7"
+    },
+    {
+      "path": "scripts/persistent-registration-worker.mjs",
+      "sha256": "9ddd9602855ec3a1ee8ad6f54cf4e8f76e9a5d8a2e5be66bca6b6ebf7963053c"
+    },
+    {
+      "path": "scripts/supervise-registration-worker.ps1",
+      "sha256": "6205971f1745fe9a78b8decb9eee8ea82a0bc6e07d9133b62f0171547c3e4a5a"
+    },
+    {
+      "path": "src/app/auth/account/route.ts",
+      "sha256": "73980d2db8a34e9046afd667fb97405ef90582d60cfe9e541030a5c4a47797bb"
+    },
+    {
+      "path": "src/app/auth/confirm/route.ts",
+      "sha256": "2ebe9ed8aa54692ea40cf73eccaa55a7451efab5fd67162221787a089a1949b2"
+    },
+    {
+      "path": "src/app/auth/email/code/route.ts",
+      "sha256": "105e6d11852385636e1b8ecbc0e7ecb8d8a32fb951c1be4e0aee125c2b1d4c39"
+    },
+    {
+      "path": "src/app/auth/email/renew/route.ts",
+      "sha256": "5fad3b9b369fc0230c81a1880efe9874d8872e841ae15ef22815921e36b25a66"
+    },
+    {
+      "path": "src/app/auth/email/route.ts",
+      "sha256": "50cbbfe656bbfcc71da75b3e507b9518cd7de672bf095f4262def5c42129c273"
+    },
+    {
+      "path": "src/app/auth/email/status/route.ts",
+      "sha256": "be8a549844689a320671358be1d3204ec877df93346042fe9571ec8de927dc12"
+    },
+    {
+      "path": "src/app/auth/invitations/accept/route.ts",
+      "sha256": "ed7130469fe0e92544ffac36ec42df332ab8533d7006d08bc2691d3923f57cb5"
+    },
+    {
+      "path": "src/app/auth/invitations/manage/route.ts",
+      "sha256": "99c1290a1e954f96caef3fea63c9b46ab7bbb70fac7449d6b161449c9e4017dc"
+    },
+    {
+      "path": "src/app/auth/login/route.ts",
+      "sha256": "fa1e2d77195e0244d459bdc6e33748118d5956289ec120c6724548a47900b1dd"
+    },
+    {
+      "path": "src/app/auth/logout/route.ts",
+      "sha256": "8d8ee4d56051204528f4ee09f1d42b97ccbbd1f4ff7bf34243adae9721906b39"
+    },
+    {
+      "path": "src/app/auth/mfa/route.ts",
+      "sha256": "7c692c91410bb0c11bdff9d4eaf20aab981bee944bbf3b496dd1337ee423694b"
+    },
+    {
+      "path": "src/app/auth/operator/requests/route.ts",
+      "sha256": "6df1ddf0e2c36e820a4a7c7e48847d7a9b77fa855fcf295572b2cb008339a830"
+    },
+    {
+      "path": "src/app/auth/password/challenge/route.ts",
+      "sha256": "7162bf06dcef93ddac0b477dc4876ee42194a5b915eb849f61583ab07b3123de"
+    },
+    {
+      "path": "src/app/auth/password/request/route.ts",
+      "sha256": "13da9ef073a4157aefc882ce710a0bab327fd434e43a31fc14b30124df0c7d1a"
+    },
+    {
+      "path": "src/app/auth/password/reset/route.ts",
+      "sha256": "1e513caa7631daa5f051a36e61655b6f608c00e375da5e68956229cd55ef5077"
+    },
+    {
+      "path": "src/app/auth/privacy/export/[requestId]/route.ts",
+      "sha256": "72176f81c280b8f1b69cfc55ff5849e9c847b7cd3d0e9c8c67473e6a29e80b5f"
+    },
+    {
+      "path": "src/app/auth/privacy/request/route.ts",
+      "sha256": "9f891bea14b47f6434bae4e9ee56d2778de9614afce4c7775edfc658d762c71f"
+    },
+    {
+      "path": "src/app/auth/register/route.ts",
+      "sha256": "d7205606c2d1e18147895fe12e8a84ba9b2affbc6dec6affaf8b518676245289"
+    },
+    {
+      "path": "src/app/auth/registration/status/route.ts",
+      "sha256": "1b520b41588b050b2e59c9928feda923542c2f5c59cc2acba77ce446f59f9c44"
+    },
+    {
+      "path": "src/app/auth/security/route.ts",
+      "sha256": "3019eece1d06c6966404865badab52ea240fa0dba3cb3f70b4c9d7cf9b68b5b4"
+    },
+    {
+      "path": "src/app/auth/terms/route.ts",
+      "sha256": "3641b70b882c87522192e488978936621b5bab170a4c76bd81284366d893d80d"
+    },
+    {
+      "path": "src/app/auth/workspace/route.ts",
+      "sha256": "43dbc466bcbef449baabe6e178b997644cd171b778e7bedd055918c2c5cedd42"
+    },
+    {
+      "path": "src/app/auth/workspaces/route.ts",
+      "sha256": "617d91fe3df2e271fa6513f907b8041ceefcaa99d6803e82c1873a93f6a7f81c"
+    },
+    {
+      "path": "src/lib/auth/challenge-diagnostic.ts",
+      "sha256": "a1c1e790f48283219bd88a07a95f90b8a79a085c4593f7c6e06ececdd49af578"
+    },
+    {
+      "path": "src/lib/auth/deployment-profile.ts",
+      "sha256": "4b83d2469ec5477c029a5950a1a21f6200400eeee78a7a9538580806a76f6cd0"
+    },
+    {
+      "path": "src/lib/auth/developer-access.ts",
+      "sha256": "5c7f36a21e2768988801c1423b5c00ea11848a1213bb5107409d67eaf31819d6"
+    },
+    {
+      "path": "src/lib/auth/development-registration.ts",
+      "sha256": "edc139626719da84f88647de190933ea0bab29497a903d530eaa853728b995e5"
+    },
+    {
+      "path": "src/lib/auth/email-code-settings.ts",
+      "sha256": "a81a13e53ee0b0f280e9e9a126b7b8b6a3f54d82b2791d95310a735c2179dcd1"
+    },
+    {
+      "path": "src/lib/auth/email-verification.ts",
+      "sha256": "22aae6370251cf115b2212ef63f6b749c5c5dffc02d3d5ba2fd9a9466c74e183"
+    },
+    {
+      "path": "src/lib/auth/expiry-feedback.ts",
+      "sha256": "fb42e6c9c83b32831566b178bd854ceb65f778638988729e4170708ed1390a08"
+    },
+    {
+      "path": "src/lib/auth/feedback.ts",
+      "sha256": "7f6f0c4b299a38aba8a8dc77179a448db8df54d98681b8be5591aeb7e52fe142"
+    },
+    {
+      "path": "src/lib/auth/forms.ts",
+      "sha256": "16e2f85ed66a28fd047b91b0b920f561053d32983b2141c630a891ac85446306"
+    },
+    {
+      "path": "src/lib/auth/persistent-registration.ts",
+      "sha256": "bbd62568f1b1e6cea779f4efeb60fa1ac89ca35d57202523e8e5c91128341cf3"
+    },
+    {
+      "path": "src/lib/auth/persistent-signup.ts",
+      "sha256": "e96676ec08098c987d006a80ab53d162eb54edba51e29e1aa3904171adb26862"
+    },
+    {
+      "path": "src/lib/auth/registration-policy.ts",
+      "sha256": "61aca78e0690470f3c98aef91569cf38e53149a4062627c2021a2ec0ab065436"
+    },
+    {
+      "path": "src/lib/auth/registration-service.ts",
+      "sha256": "d67b4a0514f585e1972f569644721540e67333b77e7d80682cab478b83e7192e"
+    },
+    {
+      "path": "src/lib/auth/registration.ts",
+      "sha256": "dc28f87db7f25c160938a1d152c445bb3d88f84838c7ac429b2f85a5e039d989"
+    },
+    {
+      "path": "src/lib/auth/signup-challenge.ts",
+      "sha256": "46110c5730a4c5e1efba1e52f056771b98bb527eb3db94270d3f9887d6d4879a"
+    },
+    {
+      "path": "src/lib/mail/frame.ts",
+      "sha256": "b4f015d9cf5025898390dd512e30a5e1baa531e294b30d85c60b4973f19fff6c"
+    },
+    {
+      "path": "src/lib/mail/messages.ts",
+      "sha256": "f5f8f43682e9eb9a787e6027f7341280dfd019d033108733fa44349faf0bf476"
+    },
+    {
+      "path": "src/lib/mail/resend.ts",
+      "sha256": "1319cbcb6864faadf6d8e258057fcf0e584098d152eab52d6f1ac1f284624132"
+    },
+    {
+      "path": "src/lib/mail/smtp.ts",
+      "sha256": "e0f5c0f0c6128ec7217b3e37de9bbf4a65fe695dd73105b09c386d37fa529211"
+    },
+    {
+      "path": "src/lib/mail/verification-template.ts",
+      "sha256": "cd558bbcb0a3bec7a1598b67cbbb93a1861c2d83e7edba51e4385a9d071f50e5"
+    },
+    {
+      "path": "src/lib/security/auth-flow.ts",
+      "sha256": "cb8f49844024a9e3fa45b85ba112c41be0c4d3a581762e4e27a2464eaaee88d3"
+    },
+    {
+      "path": "src/lib/security/enrollment-cookie.ts",
+      "sha256": "bf8f45543e8c51bd871c1eeac30203a544543320683e7f3666c6f04a025328ca"
+    },
+    {
+      "path": "src/lib/security/mfa-state.ts",
+      "sha256": "a6024fe9e5c60dc7a78f204110abe1748049c28a138d18e54aa94e473c70c457"
+    },
+    {
+      "path": "src/lib/security/session-audit.ts",
+      "sha256": "80e6685b34069119255c3576367a645bafd5fa01ff080b2f7a7d4fb1b160280c"
+    },
+    {
+      "path": "src/lib/supabase/server.ts",
+      "sha256": "61a9ea10b84a179e4f3d0d46b75ab36129b6683f9f68a80126a7d5f228494e8e"
+    },
+    {
+      "path": "src/lib/workspace-management.ts",
+      "sha256": "0e5fb56f7919f497e220d13ad87d7d396bd37da8839de16c1fbe49503c183b8f"
+    },
+    {
+      "path": "src/lib/workspaces.ts",
+      "sha256": "6bf155b313c46613de8048ced02e53be7252d4f946c7582ff9dbea02b84b5259"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-intent-auth.ts",
+      "sha256": "969dab701f69c29f2acc33de991e47fe7c883ba50eddcc849e3aded215e1669b"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-service-auth.ts",
+      "sha256": "74fb4d841f021c5db64856fc638e2268197faee13a22edddcaeba5b8330cca3f"
+    },
+    {
+      "path": "supabase/functions/_shared/registration-service.ts",
+      "sha256": "8dc648df54856937a6e0cce0b556297fd14b3146a4ddd96ac04abfc3592b452c"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/deno.json",
+      "sha256": "1b6167a0ee26abd3478ff5918e2de9eb6bc87d7c01f63892e1aeeea5277b6d8f"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/deno.lock",
+      "sha256": "ce70e91004a0d31208a73048996e177b3adebb246cc1a422ace2c4e247d9b825"
+    },
+    {
+      "path": "supabase/functions/mitsa-registration-service/index.ts",
+      "sha256": "248965336eda834de507f842487673619dec677cf13d3947c500b22d66d485f0"
+    },
+    {
+      "path": "supabase/prepared/20261023122336_mitsa_registration_identity_boundary.sql",
+      "sha256": "f9e47b2203b5ebf6ac5761a240e51dc1186113a1b21302ba43cfe710e4a276b0"
+    },
+    {
+      "path": "supabase/security-proposals/one-hour-development-session.sql.txt",
+      "sha256": "d75e725a24782ce301b8a766f1ff4e25cfe059b7a97977253746a70d5eb136dc"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-admission-controls.sql.txt",
+      "sha256": "63e454ab374f128b61d94440bee47b52d8b933f8ab5412ef7c640b15fe6ff966"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-delivery-controls.sql.txt",
+      "sha256": "1b010b2c4bcd33edae3765f4ef81b9de95f0468bc3bf53ebb5f16acdd76343c3"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-operational-stop.sql.txt",
+      "sha256": "c8229637ef6f7f3089eb20222adf8054107a2b8cf65aca9c8d826da2c43388e6"
+    },
+    {
+      "path": "supabase/security-proposals/persistent-registration-test-notices.sql.txt",
+      "sha256": "ced89e0a97f9b96cb25902ce6ed4ae97a2b8c15df520ab81beab9e22c6f16538"
+    }
+  ],
+  "prerequisites": {
+    "strictOptionA": "UNRESOLVED; readiness remains false",
+    "C1": "installed",
+    "C2": "deployed disabled",
+    "C3A": "eight slots passed; budget exhausted",
+    "authHookSelectors": "unchanged",
+    "providerChanges": []
+  },
+  "sections": {
+    "C3B": {
+      "dependsOn": [
+        "Security accepted and enforced",
+        "D transport/generation authorization"
+      ],
+      "fixtures": [
+        "c3b-a",
+        "c3b-b"
+      ],
+      "newTestNoticeRows": 2,
+      "newAccounts": 2,
+      "authRequests": 30,
+      "signup": 5,
+      "resend": 4,
+      "verifyOtp": 8,
+      "recovery": 4,
+      "passwordUpdates": 2,
+      "signIn": 4,
+      "signOut": 2,
+      "refresh": 1,
+      "externalEmailsWithinD": 6,
+      "newMfaFactors": 0,
+      "newWorkspaces": 0,
+      "signedCommands": 48
+    },
+    "D": {
+      "dependsOn": [
+        "Security accepted and enforced",
+        "explicit delivery authorization"
+      ],
+      "fixtures": [
+        "c3b-a",
+        "c3b-b",
+        "e-a",
+        "e-b"
+      ],
+      "newAccounts": 0,
+      "authRequests": 0,
+      "externalEmailsAggregate": 14,
+      "c3bEmails": 6,
+      "eEmails": 6,
+      "fEmails": 2,
+      "hourlyMaximum": 10,
+      "rollingDayMaximum": 20,
+      "recipientMinimumSeconds": 60,
+      "smtpVerifyConnections": 12,
+      "workerRuntimeMinutesAggregate": 300,
+      "workerLaunches": 5,
+      "generations": 1,
+      "newWindowsStartupTasks": 0
+    },
+    "E": {
+      "dependsOn": [
+        "C3B passed",
+        "D delivery authorization",
+        "Security passed or separately accepted exact policy"
+      ],
+      "fixtures": [
+        "e-a",
+        "e-b"
+      ],
+      "newAccounts": 2,
+      "authRequests": 60,
+      "signup": 4,
+      "resend": 4,
+      "verifyOtp": 8,
+      "recovery": 4,
+      "passwordUpdates": 4,
+      "signIn": 8,
+      "signOut": 6,
+      "mfaOperations": 12,
+      "refresh": 2,
+      "getUser": 8,
+      "externalEmailsWithinD": 6,
+      "newMfaFactors": 2,
+      "newWorkspaces": 2,
+      "newLocations": 2,
+      "newOwnerMemberships": 2,
+      "signedCommands": 80,
+      "resourceAuthorizationRequests": 48
+    },
+    "F": {
+      "dependsOn": [
+        "E passed",
+        "D runtime/delivery authorization"
+      ],
+      "fixtures": [
+        "e-a",
+        "e-b",
+        "c3b-b"
+      ],
+      "newAccounts": 0,
+      "newMfaFactors": 0,
+      "newWorkspaces": 0,
+      "authRequests": 12,
+      "signIn": 2,
+      "mfaOperations": 4,
+      "refresh": 2,
+      "signOut": 2,
+      "resend": 1,
+      "verifyOtp": 1,
+      "externalEmailsWithinD": 2,
+      "nextRestarts": 2,
+      "workerCrashRestarts": 2,
+      "simulatedLocalOutages": 2,
+      "signedCommands": 48,
+      "resourceAuthorizationRequests": 24
+    },
+    "Security": {
+      "selected": "Strict Option A",
+      "providerTicket": "SU-519045",
+      "newLiveTestsAuthorized": false,
+      "boundedPolicyAccepted": false,
+      "managedAuthWritesAllowed": false,
+      "exactProviderTestBudget": "requires provider guidance; not invented or preapproved"
+    },
+    "Activation": {
+      "dependsOn": [
+        "C3B",
+        "D",
+        "E",
+        "F",
+        "Security",
+        "reviewed policy applicability"
+      ],
+      "approved": false,
+      "ordinaryAddresses": true,
+      "developerAllowlist": false,
+      "recurringSignupLease": false,
+      "profile": "isolated-development",
+      "productionAllowed": false
+    }
+  },
+  "aggregate": {
+    "newAccounts": 4,
+    "newVerifiedMfaFactors": 2,
+    "newWorkspaces": 2,
+    "newLocations": 2,
+    "newOwnerMemberships": 2,
+    "authRequests": 102,
+    "signedCommands": 176,
+    "resourceAuthorizationRequests": 72,
+    "externalEmails": 14,
+    "productionActions": 0,
+    "retainedIdentityAuthRequests": 0
+  },
+  "exclusions": [
+    "provider changes",
+    "Auth-managed-table changes",
+    "retained identity mutation",
+    "invitation delivery",
+    "bulk email",
+    "production",
+    "public hosting",
+    "one-hour policy acceptance"
+  ],
+  "notYetProven": [
+    "provider redirect query preservation",
+    "actual persistent-engine hook/capture/worker round trip",
+    "new persistent-engine user onboarding",
+    "real worker outage and restart",
+    "Strict Option A"
+  ]
+}

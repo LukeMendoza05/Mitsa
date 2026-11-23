@@ -1,0 +1,10 @@
+import assert from'node:assert/strict';import{readFileSync}from'node:fs';import{createHash}from'node:crypto';import{spawnSync}from'node:child_process';
+const read=p=>JSON.parse(readFileSync(p,'utf8')),hash=p=>createHash('sha256').update(readFileSync(p)).digest('hex');
+const r=read('config/phase3-p3c-result.json'),review=read('config/phase3-p3c-review.json'),root='.secrets/phase3-p3c-20261031-v1';
+assert.equal(r.status,'INCONCLUSIVE');assert.equal(r.fullPersistedSettingsVerified,false);assert.equal(r.projectId,'prj_kd0rBsWC3pzvbY6LGeTUGUEwxiDD');assert.equal(r.reviewSha256,hash('config/phase3-p3c-review.json'));for(const s of review.sources)assert.equal(hash(s.path),s.sha256);
+assert.equal(hash(root+'/evidence-index.json'),r.evidenceIndexSha256);for(const s of read(root+'/evidence-index.json').files)assert.equal(hash(s.path),s.sha256);
+assert.equal(hash('config/phase3-p3a-result.json'),r.P3AResultSha256);assert.equal(hash('config/phase3-p3b-result.json'),r.P3BResultSha256);assert.equal(hash(r.reportPath),r.reportSha256);
+for(const s of read('config/phase3-p3d-current-review.json').sources)assert.equal(hash(s.path),s.sha256);
+const before=hash(root+'/ledger.json'),denied=spawnSync(process.execPath,['artifacts/phase3-preview-review-20261029-v3/p3c-budget.mjs','reserve','read','sealed-denial-check'],{stdio:'pipe'});assert.notEqual(denied.status,0);assert.equal(hash(root+'/ledger.json'),before);
+assert.equal(r.allDeploymentsAuthenticationVerified,true);assert.equal(r.deployments,0);assert.equal(r.environmentEntries,0);assert.equal(r.supabaseOperations,0);assert.equal(r.registrationEnabled,false);assert.equal(r.emailDeliveryEnabled,false);assert.equal(r.strictOptionA,'BLOCKED_SU-519045');
+console.log(JSON.stringify({localVerification:'PASSED',P3C:r.status,projectId:r.projectId,pinnedSourcesMatch:true,privateEvidenceIntegrity:true,budgetsSealed:true,extraRequestDenied:true,fullSettingsVerified:false,deployed:false,hostedRequestsDuringVerifier:0}));

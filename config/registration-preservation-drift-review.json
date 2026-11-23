@@ -1,0 +1,77 @@
+{
+  "preparedAt": "2026-10-27T00:29:20.970Z",
+  "status": "PREPARED_NOT_APPROVED_NOT_EXECUTED",
+  "scope": "D-preservation-drift-readonly-v1",
+  "project": "mjtejwafxriwntweussc",
+  "marker": "fireworks-foundation-proof-01a12e38",
+  "limits": {
+    "databaseRequests": 51,
+    "readQueries": 49,
+    "transactionQueries": 2,
+    "databaseConnections": 1,
+    "runtimeSeconds": 120,
+    "writeQueries": 0,
+    "authRequests": 0,
+    "edgeRequests": 0,
+    "metadataRequests": 0,
+    "workerLaunches": 0,
+    "smtpConnections": 0,
+    "emails": 0
+  },
+  "sources": [
+    {
+      "path": "scripts/registration-preservation-drift.mjs",
+      "sha256": "9d72e4b091558b7891e8f0d87153b4883242a23144360f6d603384893b7530ed"
+    },
+    {
+      "path": "scripts/lib/registration-preservation-diff.mjs",
+      "sha256": "3465f0ebafd74e591497778d6ea991fb37e34268d0c5d2183fa5ca318fdee2b5"
+    },
+    {
+      "path": "tests/unit/registration-preservation-diff.test.ts",
+      "sha256": "4db94e9cf813b11612ab9f3a982155fc6df3b3494d1a608eb936124d689d4b18"
+    },
+    {
+      "path": "scripts/lib/registration-transport-probe.mjs",
+      "sha256": "020fa7bd9bf9c5f19437bf98b6444f5c42924a85b9474e277ad17d02471353ce"
+    },
+    {
+      "path": "scripts/postgres-config.mjs",
+      "sha256": "d98198eeb6b06c38567c41547c8aff20c0c08c94721d841b2d55b5aa488bea98"
+    },
+    {
+      "path": "scripts/test-target.mjs",
+      "sha256": "6fb5624daa225fbcc879bcd1bd5bd9935ef6e3eb578eb1eb4ab06beab799bf33"
+    },
+    {
+      "path": ".tools/stage-c3-collect.mjs",
+      "sha256": "09e9d45ba5f3358d6bf263001f4ca30eae02a549a6acc9ae6800929cb60fa1f7"
+    },
+    {
+      "path": "config/test-target.json",
+      "sha256": "626e06d3d6e2fef3c74a2dbd4a052c818a4db609168e8f283f29cf489eedb89e"
+    },
+    {
+      "path": "config/supabase-ca.crt",
+      "sha256": "700723581420dd1ac98fd7e9ac529f0ef210eadcaf87fc868a3ad7d114c2f3b7"
+    },
+    {
+      "path": "docs/stage-d-preservation-drift-approval.md",
+      "sha256": "297696febe7aa2ef8c8f16f9f27bb6adaad8e962e72c21a520292d75dab87cda"
+    }
+  ],
+  "budgetBaselines": [
+    {
+      "path": ".secrets/registration-completion/transport-probe/budget.json",
+      "sha256": "90228b861b32ec67566eac31196fb58b07c24320b148e97b2755469a2e83acd3"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/connections-budget.json",
+      "sha256": "7498d0242132ef32edec25dbf7b25f1eacc34857530b5172b38d48789ee0a034"
+    },
+    {
+      "path": ".secrets/registration-completion/transport-probe/management-budget.json",
+      "sha256": "9f9e174ec0908fc494b2a7dabe98bbb946dd9fc4d5bf4c63714edcb3c25ee80a"
+    }
+  ]
+}
