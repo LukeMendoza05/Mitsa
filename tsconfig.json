@@ -41,6 +41,9 @@
   "exclude": [
     "node_modules",
     ".tools",
-    ".superpowers"
+    ".superpowers",
+    "playwright.config.ts",
+    "playwright.email.config.ts",
+    "vitest.config.ts"
   ]
 }

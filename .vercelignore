@@ -15,8 +15,6 @@ coverage/
 artifacts/
 docs/
 tests/
-!tests/support/browser-origin.ts
-!tests/support/email-format-config.mjs
 scripts/
 assets/
 supabase/migrations/
