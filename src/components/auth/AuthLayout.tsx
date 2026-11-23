@@ -21,6 +21,6 @@ export function AuthLayout({mode,children}:{mode:"login"|"signup"|"verify"|"reco
       </aside>
       <section className={s.formColumn} aria-label={mode==="login"?"Sign in to Mitsa":mode==="verify"?"Verify your Mitsa email":mode==="recovery"?"Recover your Mitsa account":"Create your Mitsa account"}>{children}</section>
     </main>
-    <footer className={s.footer}><div><Wordmark/><p>Fireworks inventory and business management.</p></div><nav aria-label="Mitsa account footer"><a href="/privacy">Privacy draft</a><a href="/terms">Terms draft</a><a href="/cookies">Storage draft</a></nav></footer>
+    <footer className={s.footer}><div><Wordmark/><p>Fireworks inventory and business management.</p></div><nav aria-label="Mitsa account footer"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/cookies">Cookies (draft)</a></nav></footer>
   </div>;
 }

@@ -11,7 +11,7 @@ export function Wordmark() {
 export function Footer({application=false}:{application?:boolean}={}) {
   return <footer className={s.footer}><div className={s.container}>
     <div className={s.footerTop}><div><Wordmark /><p>{brand.category}.</p></div>
-      <nav className={s.footerNav} aria-label="Footer navigation">{application?<><a href="/workspaces">Workspaces</a><a href="/settings/account">Account settings</a><a href="/privacy">Privacy draft</a><a href="/terms">Terms draft</a></>:<>{navigation.map(([label, href]) => <a href={`/${href}`} key={href}>{label}</a>)}<a href="/login">Sign In</a></>}</nav>
+      <nav className={s.footerNav} aria-label="Footer navigation">{application?<><a href="/workspaces">Workspaces</a><a href="/settings/account">Account settings</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></>:<>{navigation.map(([label, href]) => <a href={`/${href}`} key={href}>{label}</a>)}<a href="/login">Sign In</a></>}</nav>
     </div>
     <div className={s.footerBottom}><p>Product preview · Business workflows are in development.</p><p>Considered software. Clearer days.</p></div>
   </div></footer>;

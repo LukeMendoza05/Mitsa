@@ -76,7 +76,7 @@ export function SignupForm({enabled,termsId,isTest,initialError,captchaSiteKey,n
       {captchaSiteKey?<><input name="captchaToken" type="hidden" value={challengeToken}/><SignupChallenge siteKey={captchaSiteKey} nonce={nonce} resetVersion={challengeReset} onToken={setChallengeToken}/></>:null}
       <label className={site.checkField}><input id={id("accepted")} name="accepted" type="checkbox" required aria-invalid={errors.accepted?true:undefined} aria-describedby={errors.accepted?`${id("accepted")}-error`:undefined}/><span>I have read and accept the {isTest?"development agreement":"Terms of Use"}{privacyId?' and acknowledge the Privacy Notice':''}.</span></label>
       {errors.accepted?<p id={`${id("accepted")}-error`} className={s.fieldError}>{errors.accepted}</p>:null}
-      <div className={`${site.authLinks} ${s.agreementLinks}`}><a href={isTest?'/terms#test-agreement':'/terms'}>Read the agreement</a><a href="/privacy">Privacy Policy draft</a></div>
+      <div className={`${site.authLinks} ${s.agreementLinks}`}><a href={isTest?'/terms#test-agreement':'/terms'}>Read the agreement</a><a href="/privacy">Privacy Policy</a></div>
       <button className={site.button} type="submit" disabled={uncertain||restartAllowed||Boolean(captchaSiteKey&&!challengeToken)}> {pending?"Creating account…":"Create account"}</button>
       {captchaSiteKey&&!challengeToken&&enabled?<p className={s.smallPrint}>Complete human verification to enable Create account.</p>:null}
     </fieldset>

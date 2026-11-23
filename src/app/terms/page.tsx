@@ -1,18 +1,8 @@
 import type { Metadata } from "next";
-import { LegalDraft } from "@/components/site/LegalDraft";
-import { registrationContext } from "@/lib/auth/registration";
+import { LegalPublished } from "@/components/site/LegalPublished";
+import { TERMS_TEXT } from "@/lib/legal/published";
 
-export const metadata: Metadata = { title: "Terms of Use — Draft", description: "Review draft of Mitsa’s Terms of Use and the current isolated test agreement." };
-export default async function TermsPage() {
-  const { policy } = await registrationContext();
-  return <LegalDraft title="Terms of Use">
-    <section id="test-agreement"><h2>Current isolated test agreement</h2>{policy?.status === "test" ? <><p>Version: {policy.version}. This is the exact test agreement used by the isolated account flow; the production Terms draft below is not substituted for it.</p><blockquote>{policy.content}</blockquote></> : <p>The isolated test agreement is unavailable. Registration remains closed until its current version can be verified.</p>}</section>
-    <section><h2>Service and eligibility</h2><p>Mitsa is a fireworks inventory and business management platform in development. Access currently supports synthetic testing of accounts, workspaces and authorization. Production eligibility, minimum age and the responsibilities of business representatives require product and legal approval before launch.</p><p>Using Mitsa or creating a workspace does not establish a fireworks licence, business permit or regulatory compliance. Business operators remain responsible for the permissions and records applicable to their activities.</p></section>
-    <section><h2>Your account and workspace</h2><p>Keep account credentials private and provide accurate information when real registration is approved. Do not share accounts or misrepresent another business. A workspace has one primary Business Owner; Admin and Staff access is granted through authorized membership workflows.</p><p>Business Owners and Admins must verify a trusted authenticator for privileged workspace access. Staff access is restricted to assigned locations. Password recovery does not remove MFA requirements or grant workspace membership.</p></section>
-    <section><h2>Authorized use</h2><p>Use only workspaces and records you are authorized to access. Do not attempt to bypass security, elevate your role, access unrelated businesses, interfere with availability or introduce unlawful content. The isolated development environment must not contain real customer or operational data.</p></section>
-    <section><h2>Business records and administration</h2><p>Ownership transfer requires independently verified confirmations and an atomic change. Account or workspace closure must resolve ownership and relevant records first. Necessary business or audit histories may need to be retained under an approved legal schedule; a deletion request does not promise immediate erasure of every linked record.</p></section>
-    <section><h2>Availability and planned features</h2><p>Inventory, checkout, sales, shipments and reporting are not working operational modules in this release. Illustrative landing-page figures are fictional. Do not rely on development previews to operate a real business or establish accounting balances.</p></section>
-    <section><h2>Items requiring approval</h2><p>The legal operator, contact details, applicable eligibility rules, governing law, dispute process, termination procedures, liability terms, service commitments and any future commercial terms must be reviewed before these Terms become effective. No pricing, warranty or production compliance promise is made by this draft.</p></section>
-    <section><h2>Acceptance and changes</h2><p>Account flows record the exact reviewed agreement version accepted by a user. Acceptance is explicit and is not preselected. A new version must be created for material text changes; an existing accepted version is not silently rewritten.</p></section>
-  </LegalDraft>;
+export const metadata: Metadata = { title: "Terms of Use", description: "Published Terms of Use for Mitsa." };
+export default function TermsPage() {
+  return <LegalPublished title="Terms of Use" text={TERMS_TEXT} version="2026-11-23.1" />;
 }

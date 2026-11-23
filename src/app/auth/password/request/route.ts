@@ -26,7 +26,16 @@ export async function POST(request:NextRequest) {
     }
     return destination('sent=1');
   }
-  if (!input.success || process.env.MITSA_AUTH_MAIL_MODE !== "isolated-capture") return destination("error=unavailable");
+  if (!input.success) return destination('error=input');
+  const publicMode=process.env.MITSA_REGISTRATION_MODE==='public';
+  if(publicMode){
+    if(!await verifyRecoveryChallenge(form.get('captchaToken'),env.origin))return destination('error=challenge');
+    if(emailActionLimit(input.data,'resend')){
+      try{await client.auth.resetPasswordForEmail(input.data,{redirectTo:`${env.origin}/auth/email`});}catch{/* Generic response; never retry an uncertain provider call. */}
+    }
+    return destination('sent=1');
+  }
+  if (process.env.MITSA_AUTH_MAIL_MODE !== "isolated-capture") return destination('error=unavailable');
   // Never reveal existence. The test hook independently enforces its explicit
   // recipient allowlist and captures mail; a regex is not authorization.
   const runtime=await developmentRegistrationRuntime(env.origin);
