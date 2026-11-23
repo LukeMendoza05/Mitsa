@@ -3,6 +3,7 @@ import { createHash, createHmac } from "node:crypto";
 import { registrationIntentHandler, type IntentInput } from "../../supabase/functions/_shared/registration-intent";
 import { hash, signIntentRequest, verifyIntentRequest } from "../../supabase/functions/_shared/registration-intent-auth";
 import { registrationConfigured } from "../../supabase/functions/_shared/registration-intent-config";
+import pinnedTarget from "../../config/test-target.json";
 
 const origin = "http://127.0.0.1:3000";
 const secret = "42".repeat(32); // Synthetic fixture, never a configured credential.
@@ -20,7 +21,9 @@ function setup(signingKey = secret) {
 
 describe("private registration Edge boundary", () => {
   it("rejects every missing required environment value and any other project", () => {
-    const config = { SUPABASE_URL: "https://mjtejwafxriwntweussc.supabase.co", SUPABASE_SERVICE_ROLE_KEY: "synthetic-service-key", MITSA_PUBLISHABLE_KEY: "synthetic-public-key", MITSA_APP_ORIGIN: origin, MITSA_REGISTRATION_INTENT_KEY: secret };
+    // Edge config is pinned to the deployed project; the test env must match it.
+    // The HMAC audience below stays on the stable logical dev audience.
+    const config = { SUPABASE_URL: `https://${pinnedTarget.projectRef}.supabase.co`, SUPABASE_SERVICE_ROLE_KEY: "synthetic-service-key", MITSA_PUBLISHABLE_KEY: "synthetic-public-key", MITSA_APP_ORIGIN: origin, MITSA_REGISTRATION_INTENT_KEY: secret };
     expect(registrationConfigured(config)).toBe(true);
     for (const key of Object.keys(config)) expect(registrationConfigured({ ...config, [key]: "" })).toBe(false);
     expect(registrationConfigured({ ...config, SUPABASE_URL: "https://another-project.supabase.co" })).toBe(false);

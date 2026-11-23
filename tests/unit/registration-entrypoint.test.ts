@@ -1,9 +1,12 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from "vitest";
 import { signIntentRequest } from "../../supabase/functions/_shared/registration-intent-auth";
+import pinnedTarget from "../../config/test-target.json";
 
 const mocks=vi.hoisted(()=>({ createClient:vi.fn(),rpc:vi.fn() }));
 vi.mock("@supabase/supabase-js",()=>({createClient:mocks.createClient}));
-const config={SUPABASE_URL:"https://mjtejwafxriwntweussc.supabase.co",SUPABASE_SERVICE_ROLE_KEY:"synthetic-service",MITSA_PUBLISHABLE_KEY:"synthetic-public",MITSA_APP_ORIGIN:"http://127.0.0.1:3000",MITSA_REGISTRATION_INTENT_KEY:"e1".repeat(32)};
+// The Edge config is pinned to the deployed project; follow the pin instead of
+// hardcoding a dev URL so offline fixtures match the configured target.
+const config={SUPABASE_URL:`https://${pinnedTarget.projectRef}.supabase.co`,SUPABASE_SERVICE_ROLE_KEY:"synthetic-service",MITSA_PUBLISHABLE_KEY:"synthetic-public",MITSA_APP_ORIGIN:"http://127.0.0.1:3000",MITSA_REGISTRATION_INTENT_KEY:"e1".repeat(32)};
 const modulePath="../../supabase/functions/mitsa-registration-intent/index.ts";
 async function entry(env:Record<string,string|undefined>) {
   const serve=vi.fn();
