@@ -67,3 +67,29 @@ Only essential session and security cookies are used. They are HttpOnly, SameSit
 ## 9. Changes
 Material policy changes are published as a new version with a new effective date; renewed Terms acceptance may be required.
 `;
+
+export const COOKIES_TEXT = `# Cookies & Local Storage
+
+**Operator:** D Extacy Fireworks  
+**Privacy contact:** mitsa.transactional.support@gmail.com  
+**Effective:** 23 November 2026  
+**Version:** 2026-11-23.1
+
+## Essential storage
+Mitsa's account foundation uses essential session and security cookies only. Authentication is handled on the server; application JavaScript is never given the session or refresh-token values. A cookie may be split into several chunks when necessary.
+
+- **Supabase session cookies** — maintain and refresh sign-in. HttpOnly, SameSite Lax, and Secure in production. Provider-managed validity, refresh and revocation apply; signing out clears the application session.
+- **Authenticator setup cookie** — encrypted, identity/session-bound setup context. HttpOnly and SameSite Strict, with a five-minute limit; cleared after completion, cancellation or expiry. Secure in production.
+- **Email and recovery context** — encrypted confirmation context expires after ten minutes. Opening an email link stages it without consuming the provider token. The link context is HttpOnly and SameSite Lax; the confirmed recovery context is HttpOnly and SameSite Strict, bound to the verified account and session. Secure in production.
+- **Invitation context** — encrypted invitation context expires after one hour. HttpOnly, SameSite Lax, and Secure in production. Acceptance still requires the verified invited email, an active invitation and explicit confirmation; the invitation itself expires after seven days.
+- **Provider PKCE context** — Supabase uses a temporary code-verifier cookie for verification flows, with the same HttpOnly, SameSite Lax and production Secure protections as the provider cookies.
+
+## Local storage and optional technologies
+No advertising, marketing analytics or optional tracking storage is intentionally enabled. Landing-page scrolling and three-dimensional previews do not require an advertising tracker. Fonts and visual assets are served by Mitsa.
+
+## Your controls
+Signing out ends the application session. Browser controls can remove site data, but doing so may sign you out or interrupt a verification flow. Removing local cookies does not delete the provider account or resolve workspace ownership.
+
+## Changes
+The final storage inventory was approved for publication on 23 November 2026. Material changes to essential storage will be published as a new version. No optional storage is enabled by implication, and refusing optional storage would never prevent essential authentication.
+`;
