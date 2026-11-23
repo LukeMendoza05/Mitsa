@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const config: NextConfig = {
   poweredByHeader: false,
+  experimental: { agentUpgrade: "security" },
   logging: { incomingRequests: { ignore: [/\/auth\/(email|confirm)/, /\/invitations\//] } },
   async headers() {
     return [{ source: "/:path*", headers: [
